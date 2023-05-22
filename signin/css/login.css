@@ -1,26 +1,6 @@
+/* 임시용 폰트 설정 */
 * {
   font-family: pretendard;
-}
-
-.form-container {
-  min-height: 100vh;
-  background-color: #f8f8f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.signin-form {
-  overflow-y: auto;
-  margin: 30px;
-  width: 450px;
-  height: 500px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: 0 0 3px #e7e7e7;
 }
 
 .form-label {
@@ -60,12 +40,17 @@
   margin-top: -3px;
 }
 
+.logo {
+  transform: scale(.8);
+  margin-bottom: 10px;
+}
+
 .mb-3 {
   position: relative;
 }
 
 .passwd-toggle {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: rgb(57, 86, 194);
   position: absolute;
@@ -73,11 +58,47 @@
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
+  background-color: #fff;
 }
 
-/* 추가적인 스타일링 */
 .passwd-toggle:hover {
   color: rgb(57, 86, 194);
 }
 
+/* 미디어 쿼리 */
+
+@media only screen and (min-width: 768px) {
+  .form-container {
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .signin-form {
+    overflow-y: auto;
+    margin: 30px;
+    width: 450px;
+    height: 500px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 0 3px #e7e7e7;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .signin-form {
+    padding-top: 30px;
+    width: 100%; /* 화면 너비에 꽉 차도록 설정 */
+    height: 100%; /* 높이를 자동으로 조정하여 내용에 맞게 표시 */
+    margin: 0; /* 여백 제거 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
 
