@@ -7,24 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./main.css">
+    <!-- defer를 사용하여 head에 script태그를 둘 수 있음 -->
     <script defer src="./main.js"></script>
+    <!-- fontawesome버튼 icon -->
     <script defer src="https://kit.fontawesome.com/7baf097671.js" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- 별점 라이브러리   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 
 <body>
+    <!-- header -->
     <div class="navbar">
         <!-- {/* 로고 이미지 */} -->
-        <img src="https://www.success-corp.co.jp/wp-content/themes/success-v0_0_21/img/logo-success.svg" alt="サクセス – 東京都品川区のソーシャルゲーム開発、ブラウザゲーム開発、家庭用ゲーム開発のゲーム会社" class='mainImg'>       
+        <a href="">
+          <img src="https://www.success-corp.co.jp/wp-content/themes/success-v0_0_21/img/logo-success.svg" alt="サクセス – 東京都品川区のソーシャルゲーム開発、ブラウザゲーム開発、家庭用ゲーム開発のゲーム会社" class='mainImg'>       
+        </a>
 
         <!-- {/* 검색창 form */} -->
         <form id='inputForm' action="처리할 url" method="전송방식">
+          <!-- 가게정보 입력 -->
           <div class="input-group">
             <span class="input-group-text">가게정보를 입력해주세요</span>
             <input type="text" aria-label="First name" class="form-control" placeholder='지하철 역 이름'/>
             <input type="text" aria-label="Last name" class="form-control" placeholder='가게 이름'/>
           </div>
-          
+
+          <!-- 태그 선택 -->
           <select class="form-select" aria-label="Default select example" size="1">
             <option selected>태그</option>
             <option value="1">나베</option>
@@ -40,106 +52,272 @@
             <option value="11">초밥</option>
             <option value="12">텐뿌라</option>
           </select>
-
+          <!-- 검색버튼 -->
           <button type="button" class="btn btn-warning">검색</button>
         </form>
-
+        
+        <!-- 로그인 a태그 -->
         <div class='loginForm'>
             <a href="#" class="loginA">
               로그인
             </a>
         </div>
+    <!-- header닫는태그 -->
+    </div>
 
-        <div>
-          <img id="currentImg">
+    <!-- 메뉴 -->
+    <div class="navbar menu">
+      <ul class="menuList">
+          <li class="menuContent"><a href="">맛집목록</a></li>
+          <li class="menuContent"><a href="">조원 소개</a></li>
+          <li class="menuContent"><a href="">현지학기제</a></li>
+          <li class="menuContent"><a href="">자유게시판</a></li>
+      </ul>
+      
+    <!-- 메뉴 닫는태그 -->
+    </div>
+    
+    <!-- 이미지 스크롤 -->
+    <div class="scroll-container">
+      <!-- 이동버튼 -->
+      <i class="fa-solid fa-square-caret-left"></i>
+      <i class="fa-solid fa-square-caret-right"></i>
+      
+      <!-- 이미지 정렬 -->
+      <div class="responsive">
+        <!-- 각 이미지의 가게정보를 잘 보여주기위한 검은 블럭 (숨겨져있음) -->
+        <div class="gallery">
+          <!-- 해당 가게로 이동하기위해 a태그사용 -->
+          <a target="_blank" href="img_5terre.jpg">
+            <img width="100%" src="https://img07.shop-pro.jp/PA01427/480/product/139107724.jpg?cmsp_timestamp=20210819094934" alt="Cinque Terre">
+            <!-- 검은 블럭위로 나오는 가게정보 -->
+            <div class="overlay">
+              <div class="title overlaytext">모츠나베</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"니홍노 모쯔나붸 맛쉬써용~"</div>
+              <div class="overlaytext tag material-symbols-outlined">sell</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                4.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3000명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">3000명</div>
+            </div>
+          </a>
         </div>
-
-      </div>
-
-      <div class="navbar menu">
-        <ul class="menuList">
-            <li class="menuContent"><a href="">맛집목록</a></li>
-            <li class="menuContent"><a href="">조원 소개</a></li>
-            <li class="menuContent"><a href="">서비스 소개</a></li>
-        </ul>
+        <!-- 가게 이름 -->
+        <div class="desc">모츠나베</div>
       </div>
       
-      <div class="scroll-container">
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_5terre.jpg">
-              <img width="100%" src="https://img07.shop-pro.jp/PA01427/480/product/139107724.jpg?cmsp_timestamp=20210819094934" alt="Cinque Terre">
-            </a>
-            <div class="desc">모츠나베</div>
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_forest.jpg">
+            <img width="100%" src="https://d38te30w4m8d2r.cloudfront.net/img/goods/1/S20090003_1.jpg" alt="Forest">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">돈코츠 라멘</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"본고장 하카타의 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">2330명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">1920명</div>
           </div>
         </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_forest.jpg">
-              <img width="100%" src="https://d38te30w4m8d2r.cloudfront.net/img/goods/1/S20090003_1.jpg" alt="Forest">
-            </a>
-            <div class="desc">돈코츠 라멘</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_lights.jpg">
-              <img width="100%" src="https://m.media-amazon.com/images/I/61Fsbg0Q+eL._SL500_.jpg" alt="Northern Lights">
-            </a>
-            <div class="desc">말린 전갱이</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_mountains.jpg">
-              <img width="100%" src="https://m.media-amazon.com/images/I/616TUbbcToL._AC_.jpg" alt="Mountains">
-            </a>
-            <div class="desc">야키토리</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_mountains.jpg">
-              <img width="100%" src="https://shop.r10s.jp/enya1/cabinet/sq-item-m/gyutan-steak-mega1.jpg" alt="Mountains">
-            </a>
-            <div class="desc">스테이크</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_mountains.jpg">
-              <img width="100%" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/koki08/20200423/20200423202705.jpg" alt="Mountains">
-            </a>
-            <div class="desc">중화요리</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_mountains.jpg">
-              <img width="100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEfXkLkEprVO9oBbxACDq0VWVVAyd8wFd4hQ&usqp=CAU" alt="Mountains">
-            </a>
-            <div class="desc">카츠야</div>
-          </div>
-        </div>
-        
-        <div class="responsive">
-          <div class="gallery">
-            <a target="_blank" href="img_mountains.jpg">
-              <img width="100%" src="https://tshop.r10s.jp/nipponselect/cabinet/item/t03/t03480004.jpg" alt="Mountains">
-            </a>
-            <div class="desc">닭껍질 구이</div>
-          </div>
-        </div>
-        <i class="fa-solid fa-square-caret-left"></i>
-        <i class="fa-solid fa-square-caret-right"></i>
-        <div class="clearfix"></div>
+        <div class="desc">돈코츠 라멘</div>
       </div>
+      
+
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_lights.jpg">
+            <img width="100%" src="https://m.media-amazon.com/images/I/61Fsbg0Q+eL._SL500_.jpg" alt="Northern Lights">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">숙성회</div>
+      </div>
+      
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_mountains.jpg">
+            <img width="100%" src="https://m.media-amazon.com/images/I/616TUbbcToL._AC_.jpg" alt="Mountains">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">야키토리</div>
+      </div>
+      
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_mountains.jpg">
+            <img width="100%" src="https://shop.r10s.jp/enya1/cabinet/sq-item-m/gyutan-steak-mega1.jpg" alt="Mountains">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">스테이크</div>
+      </div>
+      
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_mountains.jpg">
+            <img width="100%" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/koki08/20200423/20200423202705.jpg" alt="Mountains">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">중화요리</div>
+      </div>
+      
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_mountains.jpg">
+            <img width="100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEfXkLkEprVO9oBbxACDq0VWVVAyd8wFd4hQ&usqp=CAU" alt="Mountains">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">카츠야</div>
+      </div>
+      
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="img_mountains.jpg">
+            <img width="100%" src="https://tshop.r10s.jp/nipponselect/cabinet/item/t03/t03480004.jpg" alt="Mountains">
+          </a>
+          <div class="overlay">
+            <div class="title overlaytext">숙성회</div>
+              <div class="location overlaytext">2 Chome-1-17 Daimyo, Chuo Ward, Fukuoka, 810-0041 일본</div>
+              <div class="review overlaytext">"숙성된 회가 쫀득쫀득하니 어쩌구저쩌구"</div>
+
+              <div class="overlaytext star">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                5.0
+              </div>
+
+              <div class="overlaytext bookmark material-symbols-outlined">bookmark</div>
+              <div class="overlaytext bookmarker">3530명</div>
+              <div class="overlaytext comment material-symbols-outlined">chat</div>
+              <div class="overlaytext commenter">2023명</div>
+          </div>
+        </div>
+        <div class="desc">닭껍질 구이</div>
+      </div>
+      
+      
+    <!-- 이미지 스크롤 닫는태그 -->
+    </div>
+
 </body>
 
 </html>
