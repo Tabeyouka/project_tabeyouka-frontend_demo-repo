@@ -1,3 +1,7 @@
+* {
+  font-family: pretendard;
+}
+
 .navbar {
   display: flex;
   justify-content: center;
@@ -37,7 +41,7 @@
 }
 
 
-.mainImg {
+.titleImg {
   margin: 0 100px;
   width: 200px;
   height: auto;
@@ -145,6 +149,45 @@ div.scroll-container {
 }
 
 
+.randImg {
+  width: 100%;
+  max-height: 750px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainImg {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+}
+
+.randImg > div {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  background-color: #f1f1f1;
+}
+
+.randImg > div > img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
 /* 이미지 크기, display, 정렬방식 등 */
 
 div.gallery img {
@@ -198,26 +241,6 @@ div.desc {
 }
 
 
-@media only screen and (max-width: 600px) {
-  .responsive {
-    width: 49.99999%;
-    margin: 6px 0;
-  }
-
-  .fa-solid {
-    display: none;
-  }
-
-  div.scroll-container {
-    height: 150px;
-  }
-
-  div.desc {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-}
-
 
 /* 이미지 hover시 가게정보 스타일 */
 div.gallery {
@@ -251,7 +274,7 @@ div.gallery {
 
 .location {
   font-size: 22px;
-  top: 20%;
+  top: 25%;
 }
 
 .review {
@@ -264,6 +287,12 @@ div.gallery {
   top: 62%;
 }
 
+.overlay .tags {
+  left: 16%;
+  top: 62%;
+  font-size: 23px;
+}
+
 .star {
   top: 70%;
   font-size: 28px;
@@ -273,34 +302,128 @@ div.gallery {
   color: rgb(255, 221, 0);
 }
 
-.overlay .bookmark {
+.overlay .call {
   left: 6.5%;
   top: 82%;
   font-size: 38px;
 }
 
-.overlay .bookmarker {
+.overlay .callNumber {
   left: 16%;
   top: 82%;
   font-size: 23px;
 }
 
 .overlay .comment {
-  left: 40%;
-  top: 82%;
+  left: 50%;
+  top: 71%;
   font-size: 38px;
 }
 
 .overlay .commenter {
-  left: 50%;
-  top: 82%;
+  left: 60%;
+  top: 71%;
   font-size: 23px;
 }
+
 
 .responsive:hover .overlay {
   bottom: 0;
   height: 100%;
 }
 
+@media (max-width: 600px) {
 
+  div.scroll-container {
+    margin: 15px;
+    height: 300px;
+  }
 
+  div.gallery img {
+    padding: 5px;
+  }
+  
+  .responsive {
+    padding: 0 3px;
+    flex: 0 0 50%;
+  }
+
+  .fa-solid {
+    font-size: 2rem;
+  }
+
+  .fa-solid:hover {
+    font-size: 2.5rem;
+  }
+
+  div.desc {
+    font-size: 16px;
+    padding: 5px;
+    text-align: center;
+  }
+
+  .overlaytext {
+
+    left: 4%;
+  }
+
+  .title {
+    font-size: 18px;
+    top: 7%;
+  }
+
+  .location {
+    font-size: 16px;
+    top: 25%;
+  }
+
+  .review {
+    font-size: 16px;
+    top: 46%;
+  }
+
+  .overlay .tag {
+    font-size: 20px;
+    top: 62%;
+  }
+
+  .overlay .tags {
+    left: 13%;
+    top: 61%;
+    font-size: 16px;
+  }
+
+  .star {
+    top: 70%;
+    font-size: 18px;
+  }
+
+  .overlay .call {
+    left: 3.5%;
+    top: 82%;
+    font-size: 20px;
+  }
+
+  .overlay .callNumber {
+    left: 13%;
+    top: 82%;
+    font-size: 16px;
+  }
+
+  .overlay .comment {
+    left: 45%;
+    top: 72%;
+    font-size: 20px;
+  }
+
+  .overlay .commenter {
+    left: 54%;
+    top: 71%;
+    font-size: 16px;
+  }
+
+  .fa-solid {
+    font-size: 0px;
+  }
+
+}
