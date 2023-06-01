@@ -151,7 +151,7 @@ loginForm.addEventListener('submit', event => {
         const mainScript = document.createElement("script");
         mainScript.src = "../../main/main.js";
         document.body.appendChild(mainScript);
-      })
+      })   
       .catch((error) => {
         console.error("Error:", error);
       });
