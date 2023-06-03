@@ -2,6 +2,7 @@
   font-family: pretendard;
 }
 
+/* 헤더 */
 .navbar {
   display: flex;
   justify-content: center;
@@ -10,7 +11,8 @@
   height: 100px;
   background-color: #eee;
 }
-  
+
+/* input form */
 #inputForm {
   padding: 0;
   margin: 20px 0;
@@ -19,7 +21,6 @@
   width: 1000px;
   height: 50px;
 }
-
 
 .form-select {
   max-width: 120px;
@@ -31,8 +32,7 @@
   width: 90px;
 }
 
-
-
+/* Login Form */
 .loginForm {
   display: flex;
   justify-content: center;
@@ -40,16 +40,25 @@
   width: 350px;
 }
 
-
-.titleImg {
-  margin: 0 100px;
-  width: 200px;
-  height: auto;
+.loginForm a {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
 }
 
-/* 미디어 쿼리를 사용하여 웹의 사이즈에 따라 스타일을 조정합니다. */
+.loginForm a:hover {
+  color: gray;
+  transition: 0.2s;
+}
 
-/* 작은 화면 */
+
+.titleImg {
+  width: 350px;
+  height: 90px;
+  margin-left: 50px;
+}
+
+/* 스마트폰 반응형 */
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;
@@ -86,8 +95,7 @@
   }
 }
 
-/* 메뉴 스타일 */
-
+/* Menu */
 .menu {
   border: 0.1px rgba(165, 165, 165, 0.733) solid;
   background-color: rgb(225, 225, 225);
@@ -103,7 +111,7 @@
 }
 
 .menuList a {
-  color: inherit;
+  color: black;
   text-decoration: none;
 }
 
@@ -113,7 +121,6 @@
 }
 
 .menuContent {
-    
   margin-left: 60px;
 }
 
@@ -133,60 +140,76 @@
   }
 }
 
-/* 이미지 스크롤 스타일 */
-
-
+/* 이미지 스크롤 */
 div.scroll-container {
-  display: flex; /* div 영역을 Flex Container로 지정*/
-  flex-wrap: nowrap; /* Flex Container 내부를 줄바꿈 금지로 설정 */
-  overflow-x: scroll; /* div 내부 콘텐츠를 스크롤 가능하게 설정 */
-  -ms-overflow-style: none; /* 스크롤바 숨김 */
-  scrollbar-width: none; /* 새로운 표준에서 스크롤바 숨김 */
-  background-color: hsl(0, 0%, 85%);
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+ scrollbar-width: none;
+  background-color: white;
+  box-shadow: 0 0 5px rgb(148, 148, 148);
+  border-radius: 15px;
   padding: 10px;
-  margin: 30px 70px 0 70px;
+  margin: 30px 70;
   height: 500px;
 }
 
-
-.randImg {
+.img-container {
+  position: relative;
   width: 100%;
-  max-height: 750px;
-  overflow: hidden;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-.mainImg {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-  top: 0;
-  left: 0;
-  transition: opacity 0.3s ease-in-out;
+.img-container img {
   position: absolute;
-}
-
-.randImg > div {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
-  background-color: #f1f1f1;
-}
-
-.randImg > div > img {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 1;
+  transition: opacity 1.5s ease-in-out;
 }
 
+.img-container-text {
+  position: absolute; 
+  top: 32%;
+  left: 23.5%;
+  color: white;
+  padding: 10px;
+  font-size: 90px;
+  font-style: oblique;
+  text-shadow: 10px 10px 10px #39bdff;
+  font-weight: bold;
+  border-radius: 5px;
+  animation: mymove 5s infinite;
+  word-break: keep-all;
+}
 
+@keyframes mymove {
+  50% {text-shadow: 5px 5px 5px rgb(255, 255, 255);
+      color: #39bdff;}
+}
+
+@media (max-width: 600px) {
+
+  .img-container {
+    width: 100%;
+    height: 30%;
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .img-container-text {
+    font-size: 50px;
+  }
+}
 
 /* 이미지 크기, display, 정렬방식 등 */
 
@@ -213,7 +236,7 @@ div.gallery img {
 .fa-solid {
   color: #2c4ba9;
   position: absolute;
-  top: 40%;
+  top: 100%;
   transform: translateY(-50%);
   font-size: 3.5rem;
   transition: font-size 0.2s ease-in-out, color 0.5s ease-in-out;
@@ -242,7 +265,7 @@ div.desc {
 
 
 
-/* 이미지 hover시 가게정보 스타일 */
+
 div.gallery {
   position: relative;
 }
@@ -258,6 +281,7 @@ div.gallery {
   height: 0;
   transition: .5s ease;
   border-radius: 15%;
+  word-break: keep-all;
 }
 
 .overlaytext {
@@ -326,7 +350,7 @@ div.gallery {
   font-size: 23px;
 }
 
-
+/* 이미지 hover시 가게정보 스타일 */
 .responsive:hover .overlay {
   bottom: 0;
   height: 100%;
@@ -334,96 +358,101 @@ div.gallery {
 
 @media (max-width: 600px) {
 
-  div.scroll-container {
-    margin: 15px;
-    height: 300px;
-  }
+div.scroll-container {
+  margin: 15px;
+  height: 300px;
+}
 
-  div.gallery img {
-    padding: 5px;
-  }
-  
-  .responsive {
-    padding: 0 3px;
-    flex: 0 0 50%;
-  }
+div.gallery img {
+  padding: 5px;
+}
 
-  .fa-solid {
-    font-size: 2rem;
-  }
+.responsive {
+  padding: 0 3px;
+  flex: 0 0 50%;
+}
 
-  .fa-solid:hover {
-    font-size: 2.5rem;
-  }
+.fa-solid {
+  font-size: 2rem;
+}
 
-  div.desc {
-    font-size: 16px;
-    padding: 5px;
-    text-align: center;
-  }
+.fa-solid:hover {
+  font-size: 2.5rem;
+}
 
-  .overlaytext {
+div.desc {
+  font-size: 16px;
+  padding: 5px;
+  text-align: center;
+}
 
-    left: 4%;
-  }
+.overlaytext {
 
-  .title {
-    font-size: 18px;
-    top: 7%;
-  }
+  left: 4%;
+}
 
-  .location {
-    font-size: 16px;
-    top: 25%;
-  }
+.title {
+  font-size: 18px;
+  top: 7%;
+}
 
-  .review {
-    font-size: 16px;
-    top: 46%;
-  }
+.location {
+  font-size: 16px;
+  top: 25%;
+}
 
-  .overlay .tag {
-    font-size: 20px;
-    top: 62%;
-  }
+.review {
+  font-size: 16px;
+  top: 46%;
+}
 
-  .overlay .tags {
-    left: 13%;
-    top: 61%;
-    font-size: 16px;
-  }
+.overlay .tag {
+  font-size: 20px;
+  top: 62%;
+}
 
-  .star {
-    top: 70%;
-    font-size: 18px;
-  }
+.overlay .tags {
+  left: 13%;
+  top: 61%;
+  font-size: 16px;
+}
 
-  .overlay .call {
-    left: 3.5%;
-    top: 82%;
-    font-size: 20px;
-  }
+.star {
+  top: 70%;
+  font-size: 18px;
+}
 
-  .overlay .callNumber {
-    left: 13%;
-    top: 82%;
-    font-size: 16px;
-  }
+.overlay .call {
+  left: 3.5%;
+  top: 82%;
+  font-size: 20px;
+}
 
-  .overlay .comment {
-    left: 45%;
-    top: 72%;
-    font-size: 20px;
-  }
+.overlay .callNumber {
+  left: 13%;
+  top: 82%;
+  font-size: 16px;
+}
 
-  .overlay .commenter {
-    left: 54%;
-    top: 71%;
-    font-size: 16px;
-  }
+.overlay .comment {
+  left: 45%;
+  top: 72%;
+  font-size: 20px;
+}
 
-  .fa-solid {
-    font-size: 0px;
-  }
+.overlay .commenter {
+  left: 54%;
+  top: 71%;
+  font-size: 16px;
+}
+
+.fa-solid {
+  font-size: 0px;
+}
+
+.responsive .overlay {
+  bottom: 0;
+  height: 100%;
+}
 
 }

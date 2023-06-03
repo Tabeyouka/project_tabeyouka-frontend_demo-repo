@@ -95,7 +95,6 @@ const storeAddress = document.querySelectorAll('.location');
 const tags = document.querySelectorAll('.tags');
 const storePoint = document.querySelectorAll('.star');
 const votes = document.querySelectorAll('.commenter');
-const phoneNumber = document.querySelectorAll('.callNumber');
 
 const imageChange = () => {
   
@@ -109,7 +108,6 @@ const imageChange = () => {
       const title = (result.title);
       const address = (result.address);
       const menu_type = (result.menu_type);
-      const phone_number = (result.phone_number);
       const total_points = (result.total_points);
       const total_votes = (result.total_votes);
 
@@ -120,7 +118,7 @@ const imageChange = () => {
       storePoint[i].innerHTML += PointCalculation(total_points);
       storePoint[i].innerHTML += ` ${total_points}`;
       votes[i].innerText = `${total_votes}명`;
-      phoneNumber[i].innerText = `${phone_number}`;
+      
 
     }).catch(function(error) {
       console.log('에러',error);
@@ -131,87 +129,25 @@ const imageChange = () => {
 imageChange();
 
 
+let images = document.querySelectorAll(".img-container img");
+let current = 0;
 
+setInterval(() => {
+  for (let i = 0; i < images.length; i++) {
+    images[i].style.opacity = 0;
+  }
+  // 1번이미지 투명도 1
+  images[current].style.opacity = 1;
+  // current가 마지막번호일때 0으로 초기화
+  current = (current + 1) % images.length;
+  // current(순서)가 0일때 투명도 변경시작
+  if (current === 0) {
+    setTimeout(() => {
+      for (let i = 0; i < images.length; i++) {
+        images[i].style.opacity = 1;
+      }
+    }, 1000);
+  }
 
-// 1. a태그로 해당가게 href 추가 (현재 가게정보 페이지가 없기에 추후에 추가)
-// 2. a태그 속 img태그 주소를 불러와 변경 (이미지 주소값 추가까지 대기)
-// 3. overlay클래스의 가게이름, 주소, 리뷰 innerText 변경
-// 4. 받아온 data의 평점을 계산하여 별 이미지 변경, innerText(평점)변경
-// 5. 북마커, 댓글 갯수 Text수정
-
-
-// // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
-// const loginButton = document.querySelector('.loginA');
-
-// loginButton.addEventListener('click', () => {
-//   console.log('a');
-//   fetch('login.html') // 서버에서 main.html 파일을 가져옴
-//     .then(response => response.text()) // 가져온 파일의 내용을 텍스트 형태로 변환
-//     .then(html => {
-//       console.log(html);
-//       // main.html을 삽입할 login.html 요소를 선택 (login.html를 구성하는 body 속 요소 전체를 div 태그로 묶음)
-//       const appContainer = document.querySelector('.main-container');
-  
-//       // 기존 요소 삭제
-//       appContainer.remove(); 
-//       console.log(appContainer);
-//       // main.html 파일에서 가져온 요소들을 삽입
-//       appContainer.innerHTML = html;
-  
-//       // main.html 파일에 포함된 CSS 파일을 가져와서 head 요소에 삽입
-//       // "stylesheet"이라는 rel 속성을 가진 모든 link 요소들을 배열로 가져옴
-  
-//       const stylesheets = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
-//       stylesheets.forEach(stylesheet => { // 각 stylesheet 요소를 반복
-//       // href 속성 값을 가져옴 (이 값은 스타일시트의 URL)
-//       const href = stylesheet.getAttribute('href'); 
-//       //  상대 URL을 절대 URL로 변환
-//       const fullURL = new URL(href, window.location.href).href;
-//       const newStylesheet = document.createElement('link');
-//      // 새로운 link 요소를 생성하고, rel 속성을 "stylesheet"으로 설정
-//       newStylesheet.rel = 'stylesheet';
-//       newStylesheet.href = fullURL;
-//     // 새로운 link 요소를 문서의 head에 추가하여 스타일시트가 로드되고 페이지에 적용
-//         document.head.appendChild(newStylesheet);
-//       });
-  
-//       // main.html 파일에 포함된 JS 파일을 가져와서 body 요소에 삽입 (방식은 위와 동일)
-//       const scripts = Array.from(document.querySelectorAll('script[src]'));
-//       scripts.forEach(script => {
-//         const src = script.getAttribute('src');
-//         const fullURL = new URL(src, window.location.href).href;
-//         const newScript = document.createElement('script');
-//         newScript.src = fullURL;
-//         document.body.appendChild(newScript);
-//       });
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-  
-// })
-
-
-
-// const images = [
-//   "https://me-pousse.com/wp-content/uploads/2018/03/kusidajinjya-1024x683.jpg",
-//   "https://a3.cdn.japantravel.com/photo/290-216180/1440x960!/fukuoka-fukuoka-prefecture-216180.jpg",
-//   "https://www.seabourn.com/content/dam/sbn/inventory-assets/ports/FUA/port-fukuoka-japan-1334x1001.jpg",
-// ];
-// let index = 0;
-// const mainImg = document.querySelector(".mainImg");
-// const nextImg = document.querySelector(".nextImg");
-// mainImg.style.opacity = "1";
-// setInterval(() => {
-//   console.dir(nextImg);
-//   nextImg.src = images[(index + 1) % images.length];
-//   index++;
-//   index %= images.length;
-//   nextImg.classList.add("show");
-//   mainImg.classList.remove("show");
-//   setTimeout(() => {
-//     mainImg.src = images[index];
-//     mainImg.style.opacity = "1";
-//     nextImg.classList.remove("show");
-//   }, 300);
-// }, 4000);
+}, 5000);
+    
