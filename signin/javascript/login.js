@@ -52,7 +52,7 @@ function handlePasswordBlur(event) {
 }
 
 // 토글 선택자(오류 메시지 노출 시 위치 조정, 비밀번호 토글 사용)
-const passwdToggle = document.querySelector('.passwd-toggle');
+const passwdToggle = document.querySelector(".passwd-toggle");
 
 // 오류 메시지를 보여주는 함수
 function showErrorMessage(element, message) {
@@ -64,30 +64,28 @@ function showErrorMessage(element, message) {
 function createErrorMessage() {
   var errorMessage = document.createElement("div");
   errorMessage.className = "error-msg";
-  passwdToggle.style.top = "48px"
+  passwdToggle.style.top = "48px";
   return errorMessage;
 }
 
 // 비밀번호 토글
-const passwdInput = document.querySelector('#passwd-input');
+const passwdInput = document.querySelector("#passwd-input");
 
-passwdToggle.addEventListener('click', function() {
-  if (passwdInput.type === 'password') {
-    passwdInput.type = 'text';
-    passwdToggle.textContent = '숨기기';
+passwdToggle.addEventListener("click", function () {
+  if (passwdInput.type === "password") {
+    passwdInput.type = "text";
+    passwdToggle.textContent = "숨기기";
   } else {
-    passwdInput.type = 'password';
-    passwdToggle.textContent = '보이기';
+    passwdInput.type = "password";
+    passwdToggle.textContent = "보이기";
   }
 });
 
-
-
 // 서버 통신
-const loginForm = document.querySelector('.signin-form');
+const loginForm = document.querySelector(".signin-form");
 let errorMsg = null; // 오류 메시지 변수를 전역으로 선언
 
-loginForm.addEventListener('submit', event => {
+loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const email = emailInput.value;
@@ -100,7 +98,7 @@ loginForm.addEventListener('submit', event => {
       errorMsg.remove(); // 기존 오류 메시지 삭제
     }
     errorMsg = createErrorMessage(); // 새로운 오류 메시지 생성
-    showErrorMessage(errorMsg, '이메일과 비밀번호를 올바르게 입력해주세요.');
+    showErrorMessage(errorMsg, "이메일과 비밀번호를 올바르게 입력해주세요.");
     passwordInput.parentNode.appendChild(errorMsg);
     return; // 전송 막기
   }
@@ -108,63 +106,62 @@ loginForm.addEventListener('submit', event => {
   // 서버로 전송할 데이터를 객체 형식으로 만듦
   const data = {
     email: email,
-    password: password
+    password: password,
   };
 
-
-  fetch('http://localhost:8080/api/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  credentials: 'include',
-  body: JSON.stringify(data)
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('서버 응답이 실패했습니다.');
-    }
-
-    return response.json();
+  fetch("http://localhost:8080/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(data),
   })
-  .then(result => {
-    // 로그인 성공 시 SPA로 메인 페이지 요소들을 보여줍니다.
-    fetch('./../main/main.html', { credentials: 'include' }) // 메인 페이지 요청에도 쿠키를 포함합니다.
-      .then((response) => response.text())
-      .then((html) => {
-        // 로그인.html의 내용을 제거하고 메인.html의 내용을 추가합니다.
-        document.documentElement.innerHTML = "";
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("서버 응답이 실패했습니다.");
+      }
 
-        const range = document.createRange();
-        const parsedHTML = range.createContextualFragment(html);
-        document.body.appendChild(parsedHTML);
+      return response.json();
+    })
+    .then((result) => {
+      // 로그인 성공 시 SPA로 메인 페이지 요소들을 보여줍니다.
+      fetch("./../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함합니다.
+        .then((response) => response.text())
+        .then((html) => {
+          // 로그인.html의 내용을 제거하고 메인.html의 내용을 추가합니다.
+          document.documentElement.innerHTML = "";
 
-        const appContainer = document.querySelector(".app-container");
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
 
-        // 메인.html과 관련된 CSS 파일을 추가합니다.
-        const mainStyle = document.createElement("link");
-        mainStyle.rel = "stylesheet";
-        mainStyle.href = "./../main/main.css";
-        document.head.appendChild(mainStyle);
+          const appContainer = document.querySelector(".app-container");
 
-        // 메인.html과 관련된 JavaScript 파일을 추가합니다.
-        const mainScript = document.createElement("script");
-        mainScript.src = "./../main/main.js";
-        document.body.appendChild(mainScript);
-      })
-      .catch((error) => {
-        console.error("에러:", error);
-      });
-  })
-  .catch(error => {
-    // 에러 처리
-    console.error('에러:', error);
+          // 메인.html과 관련된 CSS 파일을 추가합니다.
+          const mainStyle = document.createElement("link");
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "./../main/main.css";
+          document.head.appendChild(mainStyle);
 
-    if (errorMsg) {
-      errorMsg.remove(); // 기존 오류 메시지 삭제
-    }
-    errorMsg = createErrorMessage(); // 새로운 오류 메시지 생성
-    showErrorMessage(errorMsg, '아이디 또는 비밀번호가 틀렸습니다.');
-    passwordInput.parentNode.appendChild(errorMsg);
-  });
+          // 메인.html과 관련된 JavaScript 파일을 추가합니다.
+          const mainScript = document.createElement("script");
+          mainScript.src = "./../main/main.js";
+          document.body.appendChild(mainScript);
+        })
+        .catch((error) => {
+          console.error("에러:", error);
+        });
+    })
+    .catch((error) => {
+      // 에러 처리
+      console.error("에러:", error);
+
+      if (errorMsg) {
+        errorMsg.remove(); // 기존 오류 메시지 삭제
+      }
+      errorMsg = createErrorMessage(); // 새로운 오류 메시지 생성
+      showErrorMessage(errorMsg, "아이디 또는 비밀번호가 틀렸습니다.");
+      passwordInput.parentNode.appendChild(errorMsg);
+    });
 });
