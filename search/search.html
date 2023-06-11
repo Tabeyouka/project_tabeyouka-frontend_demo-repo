@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link  href="./search.css" type="text/css" rel="stylesheet">
+    <!-- defer를 사용하여 head에 script태그를 둘 수 있음 (script를 백그라운드에서 다운로드)-->
+    <script defer src="./search.js" type="text/js"></script>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- fontawesome버튼 icon --> 
+    <script defer src="https://kit.fontawesome.com/7baf097671.js" crossorigin="anonymous"></script>
+    <!-- 별점 라이브러리   -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- 구글 머터리얼 아이콘 -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <!-- 글꼴 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+</head>
+
+<body>
+    
+    <!-- header -->
+    <div class="navbar">
+
+        <!-- {/* 로고 이미지 */} -->
+        <a href="">
+            <img src="/image/tabeyoukaLogo.png" alt="titleImg" class='titleImg'>       
+        </a>
+
+        <!-- {/* 검색창 form */} -->
+        <!-- action="처리할 url" method="전송방식" -->
+        <form id='inputForm' >
+            <!-- 가게정보 입력 -->
+            <div class="input-group">
+            <span class="input-group-text">가게정보를 입력해주세요 Search</span>
+            <input type="text" class="form-control" placeholder='후쿠오카에서 맛집을 찾아보자!'/>
+            </div>
+
+            <button type="submit" class="btn btn-warning">검색</button>
+        </form>
+            
+        <!-- 로그인 태그 --> 
+        <div class='loginContainer'>
+            <span class="loginText">로그인</span>
+        </div>
+        <!-- header닫는태그 -->
+    </div>
+
+    <!-- 메뉴 -->
+    <div class="navbar menu">
+        <ul class="menuList">
+            <li class="menuContent"><a href="">조원 소개</a></li>
+            <li class="menuContent"><a href="">현지학기제</a></li>
+            <li class="menuContent"><a href="">자유게시판</a></li>
+        </ul>
+    </div>
+
+    <div class="searchInfo-container">
+        <div class="sidenav">
+            <a class="material-symbols-outlined up" href="#">expand_less</a>
+            <a href="">홈으로</a>
+            <a href="#">조원소개</a>
+            <a href="#">현지학기제</a>
+            <a href="#">자유게시판</a>
+            <a class="material-symbols-outlined down" href="#footer-section">expand_more</a>
+        </div>
+        <ol class="searchInfo-space">
+            
+            <li class="searchInfo-infoContainer">
+
+                <a href="#">
+                    <div class="info-header">
+                        
+                        <img src="https://static.onecms.io/wp-content/uploads/sites/43/2022/05/26/8805-CrispyFriedChicken-mfs-3x2-072.jpg" alt="">
+
+                        <div class="info">
+                            <div class="info-title-container">
+                                <h1 class="info-title">치킨매니아</h1>
+                            </div>
+
+                            <div class="info-tag-container">
+                                <p>#치킨, 맥주</p>
+                            </div>
+
+                            <div class="rate">
+                                <p class="score">87점</p>
+                                <span>|</span>
+                                <p class="fa fa-star checked"></p>
+                                <p class="user-score">4.3</p>
+                                <span>|</span>
+                                <p class="comment">20명</p>
+                            </div>
+
+                            <div class="review-container">
+                                "
+                                <span class="review">정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 
+                                    정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 
+                                    정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 
+                                </span>
+                                "
+                            </div> 
+                        </div>
+
+                    </div>
+                    <div class="location-container">
+                        <p class="location">대구광역시 서구 서대구로5길 46-1</p>
+                    </div>
+
+                </a>
+                
+            </li>
+
+        </ol>
+        
+    </div>
+
+    
+    <footer id="footer-section">
+        <div class="container">
+            
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="index.html"><img src="/image/tabeyouka:white.png" class="img-fluid" alt="logo"></a>
+                            </div>
+                            <div class="footer-text">
+                                <p>食べようか！は福岡で食べようか！という軽い言葉で結束感を与えてくれます。
+                                  食べようか！는 후쿠오카에서 먹을까!라는 가벼운 말로 결속감을 줍니다.
+                                </p>
+                            </div>
+                            <div class="footer-social-icon">
+                                <span>Follow us</span>
+                                <a href="https://github.com/Tabeyouka"><i class="fab fa-github fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>GitHub Links</h3>
+                            </div>
+                            <ul>
+                                <li>김정원</li>
+                                <li><a href="https://github.com/jeongwonkimT3T">Link</a></li>
+                                <li>김유민</li>
+                                <li><a href="https://github.com/devYuMinKim">Link</a></li>
+                                <li>김현</li>
+                                <li><a href="https://github.com/Hyn2">Link</a></li>
+                                <li>조현준</li>
+                                <li><a href="https://github.com/JOHYEONJUN39">Link</a></li>
+                                <li>우성준</li>
+                                <li><a href="https://github.com/hipo-panda">Link</a></li>
+                                <li>안영진</li>
+                                <li><a href="https://github.com/0gene68">Link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+  
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                      <div class="footer-widget">
+                          <div class="footer-widget-heading">
+                              <h3>Emails</h3>
+                          </div>
+                          <ul>
+                              <li>김정원</li>
+                              <li>sen1000nes@gmail.com</li>
+                              <li>김유민</li>
+                              <li>gimyumin40@gmail.com</li>
+                              <li>김현</li>
+                              <li>justin010129@gmail.com</li>
+                              <li>조현준</li>
+                              <li>lhslhs301@gmail.com</li>
+                              <li>우성준</li>
+                              <li>w6238w2@gmail.com</li>
+                              <li>안영진</li>
+                              <li>yeonghun8309@gmail.com</li>
+                          </ul>
+                      </div>
+                  </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; None</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                        <div class="footer-menu">
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">조원소개</a></li>
+                                <li><a href="#">현지학기제</a></li>
+                                <li><a href="#">자유게시판</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

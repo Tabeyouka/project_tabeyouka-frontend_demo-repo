@@ -1,0 +1,415 @@
+
+* {
+    font-family: pretendard;
+  }
+
+  /* 헤더 */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 100px;
+    background-color: #eee;
+}
+  
+  /* input form */
+#inputForm {
+    padding: 0;
+    margin: 20px 0;
+    outline: 0;
+    display: flex;
+    width: 1000px;
+    height: 50px;
+}
+  
+.form-select {
+    max-width: 120px;
+    margin-left: 5px;
+}
+  
+.btn-warning {
+    margin-left: 4px;
+    width: 90px;
+}
+  
+  /* Login Form */
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+}
+  
+.loginContainer span {
+    font-size: 24px;
+    cursor: pointer;
+}
+  
+.titleImg {
+    width: 350px;
+    height: 90px;
+    margin-left: 50px;
+}
+  
+  /* 스마트폰 반응형 */
+@media (max-width: 600px) {
+    .navbar {
+      flex-direction: column;
+      height: auto;
+      padding: 10px;
+    }
+  
+    #inputForm {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      margin: 10px 0;
+    }
+  
+    .mainImg {
+      margin: 0 100px;
+      width: 200px;
+      height: auto;
+    }
+  
+    .loginContainer {
+      margin-bottom: 10px;
+    }
+  
+    .form-select {
+      margin-left: 5px;
+      margin-right: 5px;
+      flex-grow: 1;
+    }
+  
+    .btn-warning {
+      margin-left: 4px;
+      width: 90px;
+    }
+}
+  
+  /* Menu */
+.menu {
+    border: 0.1px rgba(165, 165, 165, 0.733) solid;
+    background-color: rgb(225, 225, 225);
+    height: 50px;
+    width: auto;
+}
+  
+.menuList {
+    list-style: none;
+    display: flex;
+    position: relative;
+    left: 415px;
+    font-size: 20px;
+}
+  
+.menuList a {
+    color: black;
+    text-decoration: none;
+}
+  
+.menuList a:hover {
+    color: gray;
+    transition: 0.2s;
+}
+  
+.menuContent {
+    margin-left: 60px;
+}
+  
+@media (max-width: 600px) {
+    .menuList {
+      justify-content: center;
+      left: 0px;
+    }
+    
+    .menuContent {
+      font-size: 18px;
+      margin: 0 40px;
+    }
+    
+    .menu {
+      width: 100%;
+    }
+}
+
+/* 헤더종료 */
+
+
+
+
+/* 가게정보 컨테이너 */
+
+.searchInfo-container {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  background-color: #eee;
+  }
+  
+.searchInfo-space {
+  box-shadow: 0 0 5px rgb(148, 148, 148);
+  width: 1000px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  list-style: none;
+}
+
+.searchInfo-space h1 {
+  margin-bottom: 10px
+}
+
+.searchInfo-space button {
+  width: 200px;
+  height: 50px;
+}
+
+.searchInfo-infoContainer {
+  width: 100%;
+  height: 300px;
+  margin-top: 5%;
+}
+
+.searchInfo-infoContainer a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: rgb(32, 32, 32);
+}
+
+.info-header {
+  display: flex;
+  width: 100%;
+  height: 250px;
+  box-shadow: 0 0 5px rgb(148, 148, 148);
+  background-color: #eee;
+}
+
+.info-header img {
+  object-fit: cover;
+  width: 250px;
+  height: 250px;
+  border-radius: 14px;
+}
+
+.info {
+  display: flex;
+  width: 74%;
+  flex-direction: column;
+  padding: 2px 0px 2px 16px;
+}
+
+.info-title-container {
+  display: flex;
+  max-width: 1120px;
+  padding-top: 20px;
+}
+
+.info-title {
+  white-space: nowrap;
+  overflow: hidden;
+  /* 넘어가면...표시 */
+  text-overflow: ellipsis;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.info-tag-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  font-size: 28px;
+}
+
+.rate {
+  font-size: 22px;
+  display: flex;
+  font-weight: 500;
+  gap: 8px;
+}
+
+.review-container {
+  display: flex;
+  font-size: 20px;
+  font-weight: 300;
+  font-weight: normal;
+  padding-bottom: 3px;
+}
+
+.review {
+  white-space: nowrap;
+  overflow: hidden;
+  /* 넘어가면...표시 */
+  text-overflow: ellipsis;
+}
+
+.fa-star {
+  color: rgb(255, 200, 0);
+  margin-top: 6px;
+}
+
+.location-container {
+  display: flex;
+  font-size: 20px;
+  font-weight: 300;
+  font-weight: normal;
+  padding: 10px 0 10px 10px;
+}
+
+.location {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+#footer-section {
+	background: #3d3d3d;
+	position: relative;
+}
+
+.footer-content {
+	position: relative;
+	z-index: 2;
+}
+.footer-pattern img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 330px;
+	background-size: cover;
+	background-position: 100% 100%;
+}
+.footer-logo {
+	margin-bottom: 30px;
+}
+.footer-logo img {
+  max-width: 200px;
+}
+.footer-text p {
+	margin-bottom: 14px;
+	font-size: 14px;
+	color: #fff;
+	line-height: 28px;
+}
+.footer-social-icon span {
+	color: #fff;
+	display: block;
+	font-size: 20px;
+	font-weight: 700;
+	font-family: 'Poppins', sans-serif;
+	margin-bottom: 20px;
+}
+.footer-social-icon a {
+	color: #fff;
+	font-size: 16px;
+	margin-right: 15px;
+}
+.footer-social-icon i {
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	line-height: 38px;
+	border-radius: 50%;
+}
+
+.footer-widget-heading h3 {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 40px;
+	position: relative;
+}
+.footer-widget-heading h3::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: -15px;
+	height: 2px;
+	width: 50px;
+	background: #ff5e14;
+}
+.footer-widget ul li {
+	display: inline-block;
+	float: left;
+	width: 50%;
+	margin-bottom: 12px;
+	color: #fff;
+}
+.footer-widget ul li a:hover{
+	color: #ff5e14;
+}
+.footer-widget ul li a {
+	color: #878787;
+	text-transform: capitalize;
+}
+
+.copyright-area{
+	background: #202020;
+	padding: 25px 0;
+}
+.copyright-text p {
+	margin: 0;
+	font-size: 14px;
+	color: #878787;
+}
+
+.footer-menu li {
+	display: inline-block;
+	margin-left: 20px;
+}
+.footer-menu li:hover a{
+	color: #ff5e14;
+}
+.footer-menu li a {
+	font-size: 14px;
+	color: #878787;
+}
+
+.sidenav {
+  width: 130px;
+  position: fixed;
+  z-index: 1;
+  top: 210px;
+  right: 200px;
+  background: #fff;
+  box-shadow: 0 0 5px rgb(148, 148, 148);
+  overflow-x: hidden;
+  border-radius: 15px;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #2196F3;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+
+
+
+@media (max-height: 600px) {
+  .sidenav {
+    
+  }
+}
