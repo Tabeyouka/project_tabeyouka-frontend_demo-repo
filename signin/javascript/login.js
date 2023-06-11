@@ -125,11 +125,11 @@ loginForm.addEventListener("submit", (event) => {
       return response.json();
     })
     .then((result) => {
-      // 로그인 성공 시 SPA로 메인 페이지 요소들을 보여줍니다.
-      fetch("./../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함합니다.
+
+      fetch("./../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
         .then((response) => response.text())
         .then((html) => {
-          // 로그인.html의 내용을 제거하고 메인.html의 내용을 추가합니다.
+          // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
           document.documentElement.innerHTML = "";
 
           const range = document.createRange();
@@ -138,13 +138,13 @@ loginForm.addEventListener("submit", (event) => {
 
           const appContainer = document.querySelector(".app-container");
 
-          // 메인.html과 관련된 CSS 파일을 추가합니다.
+          // 메인.html과 관련된 CSS 파일 추가
           const mainStyle = document.createElement("link");
           mainStyle.rel = "stylesheet";
           mainStyle.href = "./../main/main.css";
           document.head.appendChild(mainStyle);
 
-          // 메인.html과 관련된 JavaScript 파일을 추가합니다.
+          // 메인.html과 관련된 JavaScript 파일 추가
           const mainScript = document.createElement("script");
           mainScript.src = "./../main/main.js";
           document.body.appendChild(mainScript);
