@@ -111,60 +111,60 @@ loginForm.addEventListener('submit', event => {
     password: password
   };
 
-  fetch('http://localhost:8080/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('서버 응답이 실패했습니다.');
-      }
-      return response.json();
-    })
-    .then(result => {
-      // 서버 응답 처리
-      console.log(result);
 
-      // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
-      fetch("./../main/main.html")
+  fetch('http://localhost:8080/api/login', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  credentials: 'include',
+  body: JSON.stringify(data)
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('서버 응답이 실패했습니다.');
+    }
+
+    return response.json();
+  })
+  .then(result => {
+    // 로그인 성공 시 SPA로 메인 페이지 요소들을 보여줍니다.
+    fetch('./../main/main.html', { credentials: 'include' }) // 메인 페이지 요청에도 쿠키를 포함합니다.
       .then((response) => response.text())
       .then((html) => {
-        // login.html 내용 제거 및 main.html 내용 추가
+        // 로그인.html의 내용을 제거하고 메인.html의 내용을 추가합니다.
         document.documentElement.innerHTML = "";
-    
+
         const range = document.createRange();
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
-    
+
         const appContainer = document.querySelector(".app-container");
-    
-        // main.html과 관련된 CSS 파일 추가
+
+        // 메인.html과 관련된 CSS 파일을 추가합니다.
         const mainStyle = document.createElement("link");
         mainStyle.rel = "stylesheet";
-        mainStyle.href = "../../main/main.css";
+        mainStyle.href = "./../main/main.css";
         document.head.appendChild(mainStyle);
-    
-        // main.html과 관련된 JavaScript 파일 추가
+
+        // 메인.html과 관련된 JavaScript 파일을 추가합니다.
         const mainScript = document.createElement("script");
-        mainScript.src = "../../main/main.js";
+        mainScript.src = "./../main/main.js";
         document.body.appendChild(mainScript);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("에러:", error);
       });
-    })
-    .catch(error => {
-      // 에러 처리
-      console.error('Error:', error);
+  })
+  .catch(error => {
+    // 에러 처리
+    console.error('에러:', error);
 
-      if (errorMsg) {
-        errorMsg.remove(); // 기존 오류 메시지 삭제
-      }
-      errorMsg = createErrorMessage(); // 새로운 오류 메시지 생성
-      showErrorMessage(errorMsg, '아이디 또는 비밀번호가 틀렸습니다.');
-      passwordInput.parentNode.appendChild(errorMsg);
-    });
-}); 
+    if (errorMsg) {
+      errorMsg.remove(); // 기존 오류 메시지 삭제
+    }
+    errorMsg = createErrorMessage(); // 새로운 오류 메시지 생성
+    showErrorMessage(errorMsg, '아이디 또는 비밀번호가 틀렸습니다.');
+    passwordInput.parentNode.appendChild(errorMsg);
+  });
+});
