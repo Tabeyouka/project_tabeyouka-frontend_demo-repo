@@ -1,0 +1,180 @@
+* {
+  font-family: pretendard;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 헤더 */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100px;
+  background-color: #eee;
+}
+
+/* input form */
+#inputForm {
+  padding: 0;
+  margin: 20px 0;
+  outline: 0;
+  display: flex;
+  width: 1000px;
+  height: 50px;
+}
+
+.form-select {
+  max-width: 120px;
+  margin-left: 5px;
+}
+
+.btn-warning {
+  margin-left: 4px;
+  width: 90px;
+}
+
+/* Login Form */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+}
+
+.loginContainer span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.titleImg {
+  width: 350px;
+  height: 90px;
+  margin-left: 50px;
+}
+
+/* 스마트폰 반응형 */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  #inputForm {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .mainImg {
+    margin: 0 100px;
+    width: 200px;
+    height: auto;
+  }
+
+  .loginContainer {
+    margin-bottom: 10px;
+  }
+
+  .form-select {
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-grow: 1;
+  }
+
+  .btn-warning {
+    margin-left: 4px;
+    width: 90px;
+  }
+}
+
+/* Menu */
+.menu {
+  border: 0.1px rgba(165, 165, 165, 0.733) solid;
+  background-color: rgb(225, 225, 225);
+  height: 50px;
+  width: auto;
+}
+
+.menuList {
+  list-style: none;
+  display: flex;
+  position: relative;
+  left: 415px;
+  font-size: 20px;
+}
+
+.menuList a {
+  color: black;
+  text-decoration: none;
+}
+
+.menuList a:hover {
+  color: gray;
+  transition: 0.2s;
+}
+
+.menuContent {
+  margin-left: 60px;
+}
+
+@media (max-width: 600px) {
+  .menuList {
+    justify-content: center;
+    left: 0px;
+  }
+  
+  .menuContent {
+    font-size: 18px;
+    margin: 0 40px;
+  }
+  
+  .menu {
+    width: 100%;
+  }
+}
+
+
+
+.post-container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 5px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.submit-btn {
+  float: right;
+}
+
+.list-btn {
+  width: 67.66px;
+  height: 44px;
+}

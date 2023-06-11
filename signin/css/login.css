@@ -75,6 +75,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .signin-form {
     overflow-y: auto;
     margin: 30px;
@@ -92,13 +93,15 @@
 @media only screen and (max-width: 767px) {
   .signin-form {
     padding-top: 30px;
-    width: 100%; /* 화면 너비에 꽉 차도록 설정 */
-    height: 100%; /* 높이를 자동으로 조정하여 내용에 맞게 표시 */
-    margin: 0; /* 여백 제거 */
+    width: 100%;
+    /* 화면 너비에 꽉 차도록 설정 */
+    height: 100%;
+    /* 높이를 자동으로 조정하여 내용에 맞게 표시 */
+    margin: 0;
+    /* 여백 제거 */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
   }
 }
-
