@@ -52,7 +52,7 @@
 .passwd-toggle {
   font-size: 13px;
   font-weight: 600;
-  color: rgb(57, 86, 194);
+  color: #acacac;
   position: absolute;
   top: 73%;
   right: 10px;
@@ -62,7 +62,7 @@
 }
 
 .passwd-toggle:hover {
-  color: rgb(57, 86, 194);
+  color: rgb(212, 163, 27);
 }
 
 /* 미디어 쿼리 */
