@@ -206,46 +206,49 @@ function filterArrayByWord(originalArray, word) {
 
 
 
-// 자유게시판 연결
-const board = document.querySelector('.board');
-board.addEventListener('click', () => {
-  fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-    .then((response) => response.text())
-    .then((html) => {
-      // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
-      // document.documentElement.innerHTML = "";
-      while (document.documentElement.firstChild) {
-        document.documentElement.removeChild(document.documentElement.firstChild);
-      }
-      
-      const search_html = document.querySelector('html');
-      const head = document.createElement('head');
-      const body = document.createElement('body');
-      search_html.appendChild(head);
-      search_html.appendChild(body);
+function addEventToElement(elementSelector) {
+  const element = document.querySelector(elementSelector);
+  element.addEventListener('click', () => {
+    fetch("/community/list.html", { credentials: "include" })
+      .then((response) => response.text())
+      .then((html) => {
+        // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+        while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+        
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
 
-      const range = document.createRange();
-      const parsedHTML = range.createContextualFragment(html);
-      document.body.appendChild(parsedHTML);
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
 
-      // 메인.html과 관련된 CSS 파일 추가
-      const mainStyle = document.createElement("link");
-      mainStyle.rel = "stylesheet";
-      mainStyle.href = "/community/css/list.css";
-      mainStyle.type = "text/css";
-      
-      document.head.appendChild(mainStyle);
+        // 메인.html과 관련된 CSS 파일 추가
+        const mainStyle = document.createElement("link");
+        mainStyle.rel = "stylesheet";
+        mainStyle.href = "/community/css/list.css";
+        mainStyle.type = "text/css";
+        
+        document.head.appendChild(mainStyle);
 
-      // 메인.html과 관련된 JavaScript 파일 추가
-      const mainScript = document.createElement("script");
-      mainScript.src = "/community/js/list.js";
-      document.body.appendChild(mainScript);
-    })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
+        // 메인.html과 관련된 JavaScript 파일 추가
+        const mainScript = document.createElement("script");
+        mainScript.src = "/community/js/list.js";
+        document.body.appendChild(mainScript);
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  });
+}
 
-})
+addEventToElement('.board');
+addEventToElement('.board_sideBar');
+
 
 
 // 로그인 연결
@@ -286,4 +289,87 @@ clickLogin.addEventListener('click', () => {
   })
 }); 
 
+
+// 현지학기제 연결
+function addEventTo_introduce(elementSelector) {
+  const element = document.querySelector(elementSelector);
+  element.addEventListener('click', () => {
+  fetch("/introducepage/introduce.html", { credentials: "include" }) 
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/introducepage/introduceC.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/introducepage/introduceJ.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+  })
+};
+
+addEventTo_introduce('.introduce');
+addEventTo_introduce('.introduce_sideBar');
+
+// 조원소개 연결
+function addEventTo_teammate(elementSelector) {
+  const element = document.querySelector(elementSelector);
+  element.addEventListener('click', () => {
+  fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/teammate/teammate.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/teammate/teammate.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+  })
+};
+addEventTo_teammate('.teammate');
+addEventTo_teammate('.teammate_sideBar');
 })();
