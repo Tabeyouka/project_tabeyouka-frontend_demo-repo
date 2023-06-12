@@ -58,7 +58,8 @@
     <div class="modal-head">
       <h5>조원 추가</h5>
     </div>
-    <div class="add-modal-form">
+    <div class="modal-form">
+      <img src="" id="addPreview">
       <h6>학번</h6>
       <input type="text" id="addStudentId">
       <h6>이름</h6>
@@ -69,12 +70,12 @@
       <input type="text" id="addDescription">
       <h6>깃허브 링크</h6>
       <input type="text" id="addGithubLink">
-      <h6>이미지 추가</h6>
-      <input type="file" id="addProfileImage">
+      <label id="profileImgLabel" for="addProfileImage">이미지 로고 들어갈 자리</label>
+      <input type="file" id="addProfileImage" value="프로필 사진">
       </div>
-      <div class="modal-footer">
-        <button id="submit">추가</button>
-        <button id="closeModal">닫기</button>
+      <div class="modal-foot">
+        <button id="addSubmit">추가</button>
+        <button id="closeAddModal">닫기</button>
       </div>
     </div>
   </div>
@@ -83,21 +84,22 @@
       <div class="modal-head">
         <h5>조원 정보 수정</h5>
       </div>
-      <div class="edit-modal-form">
+      <div class="modal-form">
+        <img src="" id="addPreview">
         <h6>학번</h6>
-        <input type="text" id="editStudentId">
+        <input type="text" id="addStudentId">
         <h6>이름</h6>
-        <input type="text" id="editName">
-        <h6>이미지 추가</h6>
-        <input type="text" id="editProfileImage">
+        <input type="text" id="addName">
         <h6>파트</h6>
-        <input type="text" id="editPart">
+        <input type="text" id="addPart">
         <h6>소개</h6>
-        <input type="text" id="editDescription">
+        <input type="text" id="addDescription">
         <h6>깃허브 링크</h6>
-        <input type="text" id="editGithubLink">
+        <input type="text" id="addGithubLink">
+        <label id="profileImgLabel" for="addProfileImage">이미지 로고 들어갈 자리</label>
+        <input type="file" id="addProfileImage" value="프로필 사진">
       </div>
-      <div class="modal-footer">
+      <div class="modal-foot">
         <button id="editSubmit">추가</button>
         <button id="closeEditModal">닫기</button>
       </div>

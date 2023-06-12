@@ -151,18 +151,18 @@
   margin: 0;
 }
 
-#toggleButton {
+/* #toggleButton {
   border: none;
   border-top: whitesmoke 3px solid;
   background-color: white;
   width: 100px;
   height: 80px;
-}
+} */
 
-#toggleButton:hover {
+/* #toggleButton:hover {
   font-size: 101%;
   color:#b2afaf;
-}
+} */
 
 .addButton {
   background-color: white;
@@ -276,28 +276,48 @@
   padding: 2%;
 }
 
-.add-modal-form .edit-modal-form {
+.modal-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 4%;
+  margin: 4% 0;
   align-items: center;
 }
 
-.modal-form input {
+#addPreview {
+  border: rgba(0, 0, 0, 0.662) 4px solid; /* 있는게 나을지 없는게 나을지 */
+  border-radius: 50%;
+  width: 200px;
+  height: 200px; 
+}
+
+#profileImgLabel {
+  margin-top: 13px;
+}
+
+#addProfileImage {
+  display: none;
+}
+
+.modal-form input
+{
   width: 200px;
 }
 
-.modal-form h6 {
+.modal-form h6
+{
   margin: 13px 0;
 }
 
-.modal-footer {
+.modal-foot {
   border-top: 0.5px solid #dee2e6;
+  text-align: right;
 }
 
-.modal-footer button {
+.modal-foot button {
   width: 60px;
   border-radius: 10%;
+  border: none;
+  margin: 5% 2%;
 }
 
 .editModal {
