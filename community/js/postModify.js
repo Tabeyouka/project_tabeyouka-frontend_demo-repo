@@ -13,7 +13,7 @@ fetch("http://localhost:8080/api/community", {
   const text = document.querySelector('#text');
   // console.log(title);
 
-
+  /* 기존 제목과 내용을 각각 제목/내용 입력 칸에 추가함 */
   // title.textContent = data.posts.data[1].title;
   // text.textContent = data.posts.data[1].text;
 })
