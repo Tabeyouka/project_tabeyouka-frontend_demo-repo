@@ -1,5 +1,5 @@
-(() => {
-  // input 요소 클릭 이벤트 
+
+// input 요소 클릭 이벤트 
 let input = document.querySelector('.form-control');
 
 // 클릭 시 주황색 실선 표시
@@ -10,31 +10,54 @@ input.addEventListener('click', function() {
 input.addEventListener('blur', function() {
   this.style.borderBottom = 'none';
 });   
-  
 
 
 
+// 이미지 슬라이더
 const scrollContainer = document.querySelector('.scroll-container');
 const prev = document.querySelector('.fa-square-caret-left');
 const next = document.querySelector('.fa-square-caret-right');
+const responsive = document.querySelectorAll('.responsive');
 
-const scrollWidth = scrollContainer.scrollWidth;
-// 버튼이동
-prev.addEventListener('click', () => {
-  // 현재 scrollLeft 값에서 460만큼 왼쪽으로 이동
-  scrollContainer.scrollTo({
-    left: scrollContainer.scrollLeft - 460,
-    behavior: 'smooth'
-  });
-});
+let responsiveWidth; // 변수 선언
+
+const updateResponsiveWidth = () => {
+  responsiveWidth = responsive[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
+};
+
+updateResponsiveWidth(); // 초기화
+
+window.addEventListener('resize', updateResponsiveWidth); // 윈도우 크기 변경 시 업데이트
 
 next.addEventListener('click', () => {
-  // 현재 scrollLeft 값에서 460만큼 오른쪽으로 이동
+  const currentPosition = scrollContainer.scrollLeft;
+  let nextPosition = currentPosition + responsiveWidth;
+
+  if (nextPosition + scrollContainer.clientWidth > scrollContainer.scrollWidth) {
+    nextPosition = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+  }
+
   scrollContainer.scrollTo({
-    left: scrollContainer.scrollLeft + 460,
+    left: nextPosition,
     behavior: 'smooth'
   });
 });
+
+prev.addEventListener('click', () => {
+  const currentPosition = scrollContainer.scrollLeft;
+  let prevPosition = currentPosition - responsiveWidth;
+
+  if (prevPosition < 0) {
+    prevPosition = 0;
+  }
+
+  scrollContainer.scrollTo({
+    left: prevPosition,
+    behavior: 'smooth'
+  });
+});
+
+
 
 
 // 평점계산 로직
@@ -154,32 +177,8 @@ setInterval(() => {
 
 }, 5000);
 
-const clickLogin = document.querySelector('.loginText');
 
-clickLogin.addEventListener('click', () => {
-  // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
-  fetch("/signin/login.html")
-  .then((response) => response.text())
-  .then((html) => {
-    // login.html 내용 제거 및 main.html 내용 추가
-    document.documentElement.innerHTML = "";
 
-    const range = document.createRange();
-    const parsedHTML = range.createContextualFragment(html);
-    document.body.appendChild(parsedHTML);
-
-    
-    const mainStyle = document.createElement("link");
-    mainStyle.rel = "stylesheet";
-    mainStyle.href = "/signin/css/login.css";
-    document.head.appendChild(mainStyle);
-
-    // main.html과 관련된 JavaScript 파일 추가
-    const mainScript = document.createElement("script");
-    mainScript.src = "/signin/javascript/login.js";
-    document.body.appendChild(mainScript);
-  })
-})
 
 
 
@@ -204,11 +203,11 @@ submit.addEventListener('submit', async (e) => {
   }
   const searchResults = await requestSearch();
   
-  fetch("/search/search.html")
+  fetch("/search/search.html", { credentials: "include" })
   .then((response) => response.text())
   .then((html) => {
     
-
+    
     // document.documentElement.innerHTML = "";
     while (document.documentElement.firstChild) {
       document.documentElement.removeChild(document.documentElement.firstChild);
@@ -346,14 +345,11 @@ submit.addEventListener('submit', async (e) => {
       a.appendChild(locationContainer);
       locationContainer.appendChild(location);
       
-    }
-    
+    };
 
-  })
-
+  });
   
-  
-})
+});
 
 // 검색어 필터
 function filterArrayByWord(originalArray, word) {
@@ -375,4 +371,64 @@ function filterArrayByWord(originalArray, word) {
 }
 
 
-})();
+// 자유게시판 연결
+const board = document.querySelector('.board');
+board.addEventListener('click', () => {
+  fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+      document.documentElement.innerHTML = "";
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/community/css/list.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/community/js/list.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+
+})
+
+
+// 로그인 연결
+const clickLogin = document.querySelector('.loginText');
+clickLogin.addEventListener('click', () => {
+  // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
+  fetch("/signin/login.html", { credentials: "include" })
+  .then((response) => response.text())
+  .then((html) => {
+    // login.html 내용 제거 및 main.html 내용 추가
+    document.documentElement.innerHTML = "";
+
+    const range = document.createRange();
+    const parsedHTML = range.createContextualFragment(html);
+    document.body.appendChild(parsedHTML);
+
+    
+    const mainStyle = document.createElement("link");
+    mainStyle.type = "text/css"
+    mainStyle.rel = "stylesheet";
+    mainStyle.href = "/signin/css/login.css";
+    document.head.appendChild(mainStyle);
+
+    // main.html과 관련된 JavaScript 파일 추가
+    const mainScript = document.createElement("script");
+    mainScript.src = "/signin/javascript/login.js";
+    document.body.appendChild(mainScript);
+    
+    
+  })
+});
