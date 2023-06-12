@@ -1,4 +1,4 @@
-
+(() => {
 // 이메일 입력 필드에 blur 이벤트 핸들러 등록
 const emailInput = document.querySelector("#email-input");
 emailInput.addEventListener("blur", handleEmailBlur);
@@ -127,7 +127,7 @@ loginForm.addEventListener("submit", (event) => {
     })
     .then((result) => {
 
-      fetch("../../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+      fetch("/main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
         .then((response) => response.text())
         .then((html) => {
           // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
@@ -150,13 +150,13 @@ loginForm.addEventListener("submit", (event) => {
           // 메인.html과 관련된 CSS 파일 추가
           const mainStyle = document.createElement("link");
           mainStyle.rel = "stylesheet";
-          mainStyle.href = "../../main/main.css";
+          mainStyle.type = "text/css";
+          mainStyle.href = "/main/main.css";
           document.head.appendChild(mainStyle);
 
           // 메인.html과 관련된 JavaScript 파일 추가
           const mainScript = document.createElement("script");
-          mainScript.src = "../../main/main.js";
-          mainScript.type = "text/javascript"; // MIME 유형 설정
+          mainScript.src = "/main/main.js";
           document.body.appendChild(mainScript);
         })
         .catch((error) => {
@@ -176,3 +176,44 @@ loginForm.addEventListener("submit", (event) => {
     });
 });
 
+// 회원가입 이동
+const signupButton = document.querySelector(".signupButton");
+signupButton.addEventListener('click', () => {
+  fetch("/Register/Register.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+
+      const appContainer = document.querySelector(".app-container");
+
+      // 메인.html과 관련된 CSS 파일 추가
+      const mainStyle = document.createElement("link");
+      mainStyle.rel = "stylesheet";
+      mainStyle.type = "text/css";
+      mainStyle.href = "/Register/main.css";
+      document.head.appendChild(mainStyle);
+
+      // 메인.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/Register/Register.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+})
+
+})();
