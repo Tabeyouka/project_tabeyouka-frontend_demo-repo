@@ -27,13 +27,14 @@ const updateResponsiveWidth = () => {
 
 updateResponsiveWidth(); // 초기화
 
-window.addEventListener('resize', updateResponsiveWidth); // 윈도우 크기 변경 시 업데이트
+window.addEventListener('resize', updateResponsiveWidth); // 윈도우 크기 변경 시 요소 width 업데이트
 
 next.addEventListener('click', () => {
   const currentPosition = scrollContainer.scrollLeft;
-  let nextPosition = currentPosition + responsiveWidth;
-
+  let nextPosition = currentPosition + responsiveWidth; // 슬라이더 현재 위치 + 요소 width
+  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
   if (nextPosition + scrollContainer.clientWidth > scrollContainer.scrollWidth) {
+    // 다음 위치 = 전체너비 - 가시영역 너비
     nextPosition = scrollContainer.scrollWidth - scrollContainer.clientWidth;
   }
 
@@ -44,9 +45,11 @@ next.addEventListener('click', () => {
 });
 
 prev.addEventListener('click', () => {
+  // 슬라이더 현재위치
   const currentPosition = scrollContainer.scrollLeft;
+  // 다음 위치 = 현재위치 - 요소너비
   let prevPosition = currentPosition - responsiveWidth;
-
+  // 0보다 내려갈수없음
   if (prevPosition < 0) {
     prevPosition = 0;
   }
@@ -377,8 +380,15 @@ board.addEventListener('click', () => {
   fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
     .then((response) => response.text())
     .then((html) => {
-      // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
-      document.documentElement.innerHTML = "";
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
 
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
@@ -410,8 +420,15 @@ clickLogin.addEventListener('click', () => {
   fetch("/signin/login.html", { credentials: "include" })
   .then((response) => response.text())
   .then((html) => {
-    // login.html 내용 제거 및 main.html 내용 추가
-    document.documentElement.innerHTML = "";
+    while (document.documentElement.firstChild) {
+      document.documentElement.removeChild(document.documentElement.firstChild);
+    }
+
+    const search_html = document.querySelector('html');
+    const head = document.createElement('head');
+    const body = document.createElement('body');
+    search_html.appendChild(head);
+    search_html.appendChild(body);
 
     const range = document.createRange();
     const parsedHTML = range.createContextualFragment(html);
@@ -432,4 +449,92 @@ clickLogin.addEventListener('click', () => {
     
   })
 });
+
+// 현지학기제 연결
+const introduce = document.querySelector('.introduce');
+introduce.addEventListener('click', () => {
+  fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/introducepage/introduceC.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/introducepage/introduceJ.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+
+})
+
+
+// 조원소개 연결
+const teammate = document.querySelector('.teammate');
+teammate.addEventListener('click', () => {
+  fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/teammate/teammate.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/teammate/teammate.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+
+})
+
+// async function login_state() {
+//   const response = await fetch(`http://localhost:8080/api/get-login-status`,
+//   {
+//     method: 'GET',
+//   });
+//   const data = await response.json();
+//   console.log(data);
+//   return data;
+// }
+// login_state();
 })();
