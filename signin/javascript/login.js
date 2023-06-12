@@ -1,3 +1,4 @@
+
 // 이메일 입력 필드에 blur 이벤트 핸들러 등록
 const emailInput = document.querySelector("#email-input");
 emailInput.addEventListener("blur", handleEmailBlur);
@@ -130,7 +131,15 @@ loginForm.addEventListener("submit", (event) => {
         .then((response) => response.text())
         .then((html) => {
           // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
-          document.documentElement.innerHTML = "";
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
 
           const range = document.createRange();
           const parsedHTML = range.createContextualFragment(html);
@@ -166,3 +175,4 @@ loginForm.addEventListener("submit", (event) => {
       passwordInput.parentNode.appendChild(errorMsg);
     });
 });
+
