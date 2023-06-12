@@ -395,4 +395,80 @@ function filterArrayByWord(originalArray, word) {
   return filteredArray;
 }
 
+// 현지학기제 연결
+const introduce = document.querySelector('.introduce');
+introduce.addEventListener('click', () => {
+  fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/introducepage/introduceC.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/introducepage/introduceJ.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+
+})
+
+
+// 조원소개 연결
+const teammate = document.querySelector('.teammate');
+teammate.addEventListener('click', () => {
+  fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    .then((response) => response.text())
+    .then((html) => {
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.type = "text/css"
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "/teammate/teammate.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "/teammate/teammate.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
+
+})
 })();
