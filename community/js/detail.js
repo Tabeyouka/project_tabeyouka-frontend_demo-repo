@@ -13,8 +13,7 @@ input.forEach(function(element) {
 });
 
 // fetch를 위한 함수
-// url, method, headers, body를 파라미터로 받아 
-// method, headers, body를 options 객체로 묶어 fetch 함수로 전달
+// url, method, headers, body를 파라미터로 받아 method, headers, body를 options 객체로 묶어 fetch 함수로 전달
 const fetchData = (url, method, headers = { }, body) => {
   const options = {
     method: method,
