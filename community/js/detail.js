@@ -38,42 +38,6 @@ const formatDate = (dateString) => {
   return `${year}-${month}-${day}`;
 }
 
-/* 
-  1. 사용자가 로그인한 상태가 아님
-  - list.html에서 작성 버튼을 눌렀을 때 
-    alert('로그인이 필요한 서비스입니다') 띄우고
-    login.html로 넘어가서 로그인 작업 수행함
-  2. 사용자가 로그인한 상태임
-  - 사용자가 로그인했다면 post.html에서 제목과 본문 작성(, 이미지 첨부)
-    후에 등록을 누르면 board.html로 넘어감
-    board.html에서는 게시글 정보(제목, 작성자, 작성일자)가 나타나 있도록
-    board.html에서 목록 버튼을 눌렀을 때 list.html로 이동
-*/
-
-
-// 사용자 로그인 정보를 가져와서 게시글 정보 요청
-// fetchData('http://localhost:8080/api/login', 'POST', 
-// {'Content-Type': 'application/json' }, JSON.stringify())
-//   .then((user) => {
-//     fetchData(`http://localhost:8080/api/community`, 'GET', {
-//       'Content-Type': 'application/json'
-//     })
-//       .then((res) => {
-//         const posts = res.posts;
-
-//         if (posts.length > 0) {
-//           const firstPost = posts[0]; // 첫 번째 게시글 정보를 가져옴
-
-//           title.textContent = firstPost.title;
-//           writer.textContent = firstPost.author_id;
-//           date.textContent = firstPost.updated_at;
-//           content.textContent = firstPost.text;
-//         }
-//       })
-//       .catch((err) => console.log(err));
-//   })
-//   .catch((err) => console.log(err));
-
 /* 게시글의 제목 */
 const title = document.querySelector('.title b');
 
@@ -97,7 +61,7 @@ fetchData("http://localhost:8080/api/community", "GET",
   date.textContent = formatDate(res.posts.data[0].created_at);
   content.textContent = res.posts.data[0].text;
 })
-.catch(err => console.log("오류가 발생했습니다:", err));
+.catch(err => console.log("오류 발생:", err));
 
 /* 게시글 목록 버튼: 누르면 게시글 목록 페이지로 넘어감 */
 const listBtn = document.querySelector('.list');
@@ -129,8 +93,7 @@ deleteBtn.addEventListener('click', () => {
       alert('게시글 삭제에 실패하였습니다.');
     });
 
-    // 삭제된 게시글을 list.html에서 삭제함
-
+    // 삭제된 게시글을 list.html에서 삭제함(로직 추가 예정)
   } 
 })
 
@@ -165,34 +128,12 @@ registerBtn.addEventListener('click', () => {
   })
 })
 
-
-// commentInput.addEventListener('input', () => {
-//   commentData.comment.id = 1;
-//   commentData.comment.text = commentInput.value;
-//   commentData.comment.author_id = 1;
-//   commentData.comment.post_id = 1;
-//   commentData.comment.created_at = "댓글 작성 시간";
-//   commentData.comment.updated_at = "댓글 수정 시간";
-//   console.log(commentData);
-//   console.log(commentInput.value);
-// })
-
-// const registerBtn = document.querySelector('.com-register-btn');
-// registerBtn.addEventListener('click', () => {
-//   fetchData("http://localhost:8080/api/community/{community}/comments/{comment}", "POST",
-//   { "Content-Type ": "application/json" },
-//   JSON.stringify(commentData.comment.text))
-//   .then((res) => {
-    
-//   })
-// })
-
 const comModifyBtn = document.querySelector('.com-modify-btn');
 
 const comDeleteBtn = document.querySelector('.com-delete-btn');
 comDeleteBtn.addEventListener('click', () => {
   let checkDelete = confirm('정말로 댓글을 삭제하시겠습니까?');
   if(checkDelete) {
-    fetchData("localhost")
+
   }
 })
