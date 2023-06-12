@@ -1,3 +1,4 @@
+(() => {
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const passwordCheck = document.querySelector("#passwordCheck");
@@ -81,6 +82,41 @@ const sendDataToServer = () => {
       // 예: 응답 확인, 페이지 리디렉션 등
       console.log("응답 받음:", response);
       // 원하는 작업을 여기에 추가하세요.
+      // 로그인 연결
+      
+      // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
+      fetch("/signin/login.html", { credentials: "include" })
+      .then((response) => response.text())
+      .then((html) => {
+        while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+    
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
+
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
+
+        
+        const mainStyle = document.createElement("link");
+        mainStyle.type = "text/css"
+        mainStyle.rel = "stylesheet";
+        mainStyle.href = "/signin/css/login.css";
+        document.head.appendChild(mainStyle);
+
+        // main.html과 관련된 JavaScript 파일 추가
+        const mainScript = document.createElement("script");
+        mainScript.src = "/signin/javascript/login.js";
+        document.body.appendChild(mainScript);
+        
+        
+      });
+      
     })
     .catch((error) => {
       // 오류 처리
@@ -94,3 +130,6 @@ submitButton.addEventListener("click", (e) => {
   e.preventDefault(); // 폼 제출 기본 동작 막기
   sendDataToServer();
 });
+
+
+})();

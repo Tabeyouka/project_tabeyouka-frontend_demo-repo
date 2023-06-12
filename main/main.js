@@ -1,4 +1,4 @@
-
+(() => {
 // input 요소 클릭 이벤트 
 let input = document.querySelector('.form-control');
 
@@ -432,3 +432,4 @@ clickLogin.addEventListener('click', () => {
     
   })
 });
+})();
