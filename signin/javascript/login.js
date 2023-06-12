@@ -126,7 +126,7 @@ loginForm.addEventListener("submit", (event) => {
     })
     .then((result) => {
 
-      fetch("./../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+      fetch("../../main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
         .then((response) => response.text())
         .then((html) => {
           // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
@@ -141,12 +141,13 @@ loginForm.addEventListener("submit", (event) => {
           // 메인.html과 관련된 CSS 파일 추가
           const mainStyle = document.createElement("link");
           mainStyle.rel = "stylesheet";
-          mainStyle.href = "./../main/main.css";
+          mainStyle.href = "../../main/main.css";
           document.head.appendChild(mainStyle);
 
           // 메인.html과 관련된 JavaScript 파일 추가
           const mainScript = document.createElement("script");
-          mainScript.src = "./../main/main.js";
+          mainScript.src = "../../main/main.js";
+          mainScript.type = "text/javascript"; // MIME 유형 설정
           document.body.appendChild(mainScript);
         })
         .catch((error) => {
