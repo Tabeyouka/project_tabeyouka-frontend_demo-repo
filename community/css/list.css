@@ -187,12 +187,12 @@ body {
   text-align: center;
 }
 
-.title {
+#post-list .title {
   cursor: pointer;
 }
 
-.row:nth-child(n+2) .title {
-  cursor:pointer;
+#post-list .row:hover {
+  background-color: #f1f1f1;
 }
 
 .btn-secondary {
@@ -240,10 +240,11 @@ body {
 }
 
 .line-sort {
-  height: 140px;
+  height: 60px;
 }
 
 .search-form {
+  width: auto;
   float: right;
 }
 
@@ -252,3 +253,12 @@ body {
   display: inline;
 }
 
+.community-text {
+  width: 60%;
+  display: inline;
+}
+
+.search-btn {
+  width: 53.8px;
+  height: 38.13px;
+}
