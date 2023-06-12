@@ -1,0 +1,280 @@
+* {
+  font-family: pretendard;
+}
+
+/* 헤더 */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100px;
+  background-color: #eee;
+}
+
+/* input form */
+#inputForm {
+  padding: 0;
+  margin: 20px 0;
+  outline: 0;
+  display: flex;
+  width: 1000px;
+  height: 50px;
+}
+
+.form-select {
+  max-width: 120px;
+  margin-left: 5px;
+}
+
+.btn-warning {
+  margin-left: 4px;
+  width: 90px;
+}
+
+/* Login Form */
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+}
+
+.loginForm a {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+
+.loginForm a:hover {
+  color: gray;
+  transition: 0.2s;
+}
+
+.titleImg {
+  width: 350px;
+  height: 90px;
+  margin-left: 50px;
+}
+
+/* 스마트폰 반응형 */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  #inputForm {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .mainImg {
+    margin: 0 100px;
+    width: 200px;
+    height: auto;
+  }
+
+  .loginForm {
+    margin-bottom: 10px;
+  }
+
+  .form-select {
+    margin-left: 5px;
+    margin-right: 5px;
+    flex-grow: 1;
+  }
+
+  .btn-warning {
+    margin-left: 4px;
+    width: 90px;
+  }
+}
+
+/* Menu */
+.menu {
+  border: 0.1px rgba(165, 165, 165, 0.733) solid;
+  background-color: rgb(225, 225, 225);
+  height: 50px;
+}
+
+.menuList {
+  list-style: none;
+  display: flex;
+  position: relative;
+  left: 415px;
+  font-size: 20px;
+}
+
+.menuList a {
+  color: black;
+  text-decoration: none;
+}
+
+.menuList a:hover {
+  color: gray;
+  transition: 0.2s;
+}
+
+.menuContent {
+  margin-left: 60px;
+}
+
+@media (max-width: 600px) {
+  .menuList {
+    justify-content: center;
+    left: 0px;
+  }
+
+  .menuContent {
+    font-size: 18px;
+    margin: 0 40px;
+  }
+
+  .menu {
+    width: 100%;
+  }
+}
+
+/* 리뷰페이지 */
+
+#reviewSecton {
+  background-color: white;
+  /* border: 1px solid lightyellow; */
+  border-top: none;
+  width: 50%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.titleSection {
+  border-bottom: 1px solid lightgray;
+}
+
+.tags {
+  color: rgb(175, 171, 171);
+}
+
+.imageSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 10px;
+}
+
+.mainName {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.mainImg {
+  margin-top: 10px;
+  width: 40%;
+  align-items: center;
+  justify-content: center;
+}
+
+.informationSection {
+  font-size: 18px;
+  border-bottom: 2px solid black;
+}
+
+.informationTitle {
+  color: gray;
+  padding-right: 25px;
+}
+
+.informationSection table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+/* 리뷰 댓글 */
+
+.review {
+  padding-top: 10px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+#comment-layout {
+  border: 1px solid lightgray;
+  border-left: none;
+  border-right: none;
+}
+
+.reply-body {
+  /* border-bottom: 1px solid lightgray; */
+  padding-left: 15px;
+  margin-top: 10px;
+}
+
+.reply-content {
+  padding-left: 20px;
+}
+
+#comment-area-layout {
+  border: 1px solid lightgray;
+  margin-top: 50px;
+  border-left: none;
+  border-right: none;
+}
+
+#comment-input {
+  width: 98%;
+  height: 10vh;
+  margin-left: 20px;
+  display: block;
+  margin-top: 10px;
+  border: 1px solid lightgray;
+}
+
+#comment-btn {
+  background-color: gray;
+  border: none;
+  padding: 5px 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: white;
+}
+
+.rating {
+  width: 180px;
+}
+
+.rating__star {
+  cursor: pointer;
+  color: #dabd18b2;
+}
+
+/* 
+address
+: 
+"후쿠오카현 후쿠오카시 주오구 하루요시 2-12-5"
+id
+: 
+5
+image
+: 
+"http://localhost:8080/storage/images/restaurant_images/150x150_square_9c297f9f2943674a787a65127e229bc2.jpg"
+menu_type
+: 
+"호르몬(내장), 이자카야"
+phone_number
+: 
+null
+title
+: 
+"yakinikushimpaku"
+total_points
+: 
+0
+total_votes
+: 
+0 */
