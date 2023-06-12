@@ -132,26 +132,75 @@
 }
 
 /* 조원 */
-.teamName {
+
+.team {
   padding: 30px;
   text-align: center;
 }
 
-.teammateRow {
-  display: flex;
-  flex-direction:row;
-  justify-content: center;
-  flex-wrap: wrap;
+.team h1 {
+  margin: 10px 0;
 }
 
-.member {
-  border-radius: 25px;
-  padding: 25px 15px;
-  background-color: gainsboro;
+.teammateRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  overflow-x: scroll;
+  margin: 0;
+}
+
+#toggleButton {
+  border: none;
+  border-top: whitesmoke 3px solid;
+  background-color: white;
+  width: 100px;
+  height: 80px;
+}
+
+#toggleButton:hover {
+  font-size: 101%;
+  color:#b2afaf;
+}
+
+.addButton {
+  background-color: white;
+  border: none;
+  border-bottom: grey 1px solid;
+  margin: 10px 42.4%;
+}
+
+.addButton:hover {
+  font-size: 101%;
+  color:grey;
+}
+
+.teammate {
+  border-radius: 3%;
+  padding: 15px 15px;
+  background-color: rgba(245, 224, 246, 0.27);
   margin: 50px 30px;
   width: 230px;
+  height: 450px;
   box-shadow: 0 2px 5px #ccc;
   text-align: center;
+}
+
+.teammate:hover {
+  transform: scale(1.1);
+}
+
+.btnDiv {
+  text-align: right;
+}
+
+.deleteBtn {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  height: 20px;
+  width: 20px;
+  color: #b2afaf;
 }
 
 .profileImage {
@@ -161,11 +210,15 @@
 }
 
 .profileImage img {
-  border: rgba(0, 0, 0, 0.662) 4px solid;
+  border: rgba(0, 0, 0, 0.662) 4px solid; /* 있는게 나을지 없는게 나을지 */
   border-radius: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.description {
+  height: 100px;
 }
 
 .githubLink {
@@ -183,5 +236,81 @@
   width: 100%;
   height: 90%;
   position: absolute;
+}
+
+.modal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0%;
+  transition: opacity 0.8s;
+}
+
+.modal.opacityQue {
+  opacity: 98%;
+  transition: opacity 0.8s;
+}
+
+.modal-main {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 20px;
+  width: 500px;
+  max-width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  text-align: center;
+  border-radius: 1.5%;
+  border: 0.5px solid black;
+}
+
+
+.modal-head {
+  display: flex;
+  justify-content: center;
+  border-bottom: 0.5px solid #dee2e6;
+  padding: 2%;
+}
+
+.add-modal-form .edit-modal-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4%;
+  align-items: center;
+}
+
+.modal-form input {
+  width: 200px;
+}
+
+.modal-form h6 {
+  margin: 13px 0;
+}
+
+.modal-footer {
+  border-top: 0.5px solid #dee2e6;
+}
+
+.modal-footer button {
+  width: 60px;
+  border-radius: 10%;
+}
+
+.editModal {
+  display: none;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0%;
+  transition: opacity 0.8s;
+}
+
+.editModal.editOpacityQue {
+  opacity: 98%;
+  transition: opacity 0.8s;
 }
 

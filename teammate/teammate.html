@@ -15,7 +15,7 @@
 
   <!-- {/* 로고 이미지 */} -->
   <a href="">
-      <img src="/main/tabeyoukaLogo.png" alt="titleImg" class='titleImg'>    
+      <img src="/image/tabeyoukaLogo.png" alt="titleImg" class='titleImg'>    
   </a>
 
   <!-- {/* 검색창 form */} -->
@@ -46,68 +46,62 @@
 </div>
 
 <!-- 조원 -->
-<div class="teamName"><h1>안녕하세요</h1></div>
-<div class="teammateRow">
-  <div id="1" class="member">
-    <div class="profileImage"><img src="" alt="ProfileImage"></div>
-    <div class="studentName"></div>
-    <div class="studentId"></div>
-    <div class="part"></div>
-    <div class="description"></div>
-    <div class="githubLink">
-      <a href="https://github.com/hyn2">
-        <img src="/image/githublogo.png" alt="github">
-      </a>
+
+<div class="teammate-container">
+  <div class="teammateRow"></div>
+  <div class="team">
+    <h1>Contributor Of TabeYouka</h1>
+  </div>
+</div>
+<div class="modal">
+  <div class="modal-main">
+    <div class="modal-head">
+      <h5>조원 추가</h5>
+    </div>
+    <div class="add-modal-form">
+      <h6>학번</h6>
+      <input type="text" id="addStudentId">
+      <h6>이름</h6>
+      <input type="text" id="addName">
+      <h6>파트</h6>
+      <input type="text" id="addPart">
+      <h6>소개</h6>
+      <input type="text" id="addDescription">
+      <h6>깃허브 링크</h6>
+      <input type="text" id="addGithubLink">
+      <h6>이미지 추가</h6>
+      <input type="file" id="addProfileImage">
+      </div>
+      <div class="modal-footer">
+        <button id="submit">추가</button>
+        <button id="closeModal">닫기</button>
+      </div>
     </div>
   </div>
-  <div id="2" class="member">
-    <div class="profileImage"><img src="" alt="ProfileImage"></div>
-    <div class="studentName"></div>
-    <div class="studentId"></div>
-    <div class="part"></div>
-    <div class="description"></div>
-    <div class="githubLink">
-      <a href="https://github.com/hyn2">
-        <img src="/image/githublogo.png" alt="github">
-      </a>
+  <div class="editModal">
+    <div class="modal-main">
+      <div class="modal-head">
+        <h5>조원 정보 수정</h5>
+      </div>
+      <div class="edit-modal-form">
+        <h6>학번</h6>
+        <input type="text" id="editStudentId">
+        <h6>이름</h6>
+        <input type="text" id="editName">
+        <h6>이미지 추가</h6>
+        <input type="text" id="editProfileImage">
+        <h6>파트</h6>
+        <input type="text" id="editPart">
+        <h6>소개</h6>
+        <input type="text" id="editDescription">
+        <h6>깃허브 링크</h6>
+        <input type="text" id="editGithubLink">
+      </div>
+      <div class="modal-footer">
+        <button id="editSubmit">추가</button>
+        <button id="closeEditModal">닫기</button>
+      </div>
     </div>
-  </div>
-  <div id="3" class="member">
-    <div class="profileImage"><img src="" alt="ProfileImage"></div>
-    <div class="studentName"></div>
-    <div class="studentId"></div>
-    <div class="part"></div>
-    <div class="description"></div>
-    <div class="githubLink">
-      <a href="https://github.com/hyn2">
-        <img src="/image/githublogo.png" alt="github">
-      </a>
-    </div>
-  </div>
-  <div id="4" class="member">
-    <div class="profileImage"><img src="" alt="ProfileImage"></div>
-    <div class="studentName"></div>
-    <div class="studentId"></div>
-    <div class="part"></div>
-    <div class="description"></div>
-    <div class="githubLink">
-      <a href="https://github.com/hyn2">
-        <img src="/image/githublogo.png" alt="github">
-      </a>
-    </div>
-  </div>
-  <div id="5" class="member">
-    <div class="profileImage"><img src="" alt="ProfileImage"></div>
-    <div class="studentName"></div>
-    <div class="studentId"></div>
-    <div class="part"></div>
-    <div class="description"></div>
-    <div class="githubLink">
-      <a href="https://github.com/hyn2">
-        <img src="/image/githublogo.png" alt="github">
-      </a>
-    </div>
-  </div>
   </div>
 </div>
 </body>
