@@ -1,4 +1,4 @@
-// input 요소 클릭 이벤트 
+// input 요소 클릭 이벤트
 const input = document.querySelectorAll('.form-control');
 
 input.forEach(function(element) {
