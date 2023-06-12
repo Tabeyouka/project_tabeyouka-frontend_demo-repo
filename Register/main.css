@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "LINESeedKR-Bd";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2")
+    format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+body {
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  font-family: "LINESeedKR-Bd";
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.forms {
+  min-width: 450px;
+  min-height: 650px;
+  padding: 30px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #fff;
+}
+.title {
+  text-align: center;
+}
+
+.input_group input {
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom: 2px solid black;
+  height: 30px;
+  font-size: 20px;
+  width: 100%;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.input_label {
+  color: #4b4b4b;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.submitBtn {
+  width: 400px;
+  /* display: block; */
+  margin: 0 auto;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 10px;
+  border: none;
+  color: #4b4b4b;
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 19px 38px,
+    rgba(0, 0, 0, 0.15) 0px 15px 22px;
+}
+
+.submitBtn:active {
+  transform: translateY(2px);
+}
+
+.errorMsg {
+  color: red;
+  margin-top: 2px;
+}
