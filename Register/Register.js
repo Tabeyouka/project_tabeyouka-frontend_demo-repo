@@ -6,10 +6,6 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // 이메
 const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/; // 비밀번호 체크 정규식 (영문 숫자 포함 8자리 이상)
 const nicknameRegex = /^[a-zA-Z0-9가-힣]{3,15}$/; // 닉네임 체크 정규식 (영,한,숫자 포함 3~15자)
 
-const emailForm = document.querySelector("#email").value;
-const passwordForm = document.querySelector("#password").value;
-const nickNameForm = document.querySelector("#nickName").value;
-
 // 에러 메세지 set 함수
 const setError = (element, message) => {
   const inputControl = element.parentElement;
@@ -64,68 +60,37 @@ nickName.addEventListener("input", () => {
     setError(nickName, "");
   }
 });
-
-const subBtn = (e) => {
-  const emailForm = email.value;
-  const passwordForm = password.value;
-  const nickNameForm = nickName.value;
-
+// 유저 정보를 서버로 전송
+const sendDataToServer = () => {
   const userData = {
-    email: emailForm,
-    password: passwordForm,
-    nickname: nickNameForm,
+    email: email.value,
+    password: password.value,
+    nickname: nickName.value,
   };
 
-  console.log(userData);
-  e.preventDefault();
+  // 서버로 POST 요청 보내기
+  fetch("http://localhost:8080/api/register ", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  })
+    .then((response) => {
+      // 처리 완료 후에 수행할 작업
+      // 예: 응답 확인, 페이지 리디렉션 등
+      console.log("응답 받음:", response);
+      // 원하는 작업을 여기에 추가하세요.
+    })
+    .catch((error) => {
+      // 오류 처리
+      console.error("오류 발생:", error);
+    });
 };
 
-// const password = document.quertSelector("password");
-// const passwordCheck = document.quertSelector("passwordCheck");
-// const nickName = document.quertSelector("nickName");
-// const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-// const emailError = document.quertSelector("errorMsg");
-
-// const email2 = {
-//     '0': 'test',
-// }
-// const emailCheck = () => {
-//     const emailForm = document.getElementById('email').value
-//     if (emailForm == email[0]) {
-//         alert('중복된 이메일 주소가 있습니다');
-//         document.getElementById('email').value = '';
-//     } else if (emailForm == '') {
-//         alert('이메일을 입력해주세요');
-//     } else {
-//         alert('사용가능한 이메일 입니다');
-//     }
-// }
-
-// const formCheck = () => {
-//   const emailForm = document.getElementById("email").value;
-//   // const pwdForm = document.getElementById('pwd').value
-//   // const pwdCheckForm = document.getElementById('pwdCheck').value
-//   // const nickNameForm = document.getElementById('nickName').value
-
-//   if (emailForm == "") {
-//     alert("이메일을 입력해주세요.");
-//     return false;
-//   }
-//   return true;
-// };
-
-// const subBtn = () => {
-//   if (formCheck()) {
-//     alert("회원가입 완료");
-//     // 백에 데이터 전송 -form
-//   } else {
-//     alert("회원가입 실패");
-//   }
-// };
-
-// const data = {
-//     'email': emailForm,
-//     'pwd': pwdForm,
-//     'pwd2': pwdCheckForm,
-//     'nickName': nickNameForm,
-// }
+// 유저 정보 전송 버튼 클릭 이벤트 리스너
+const submitButton = document.querySelector(".submitBtn");
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault(); // 폼 제출 기본 동작 막기
+  sendDataToServer();
+});
