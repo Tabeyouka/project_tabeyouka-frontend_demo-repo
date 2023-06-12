@@ -1,4 +1,4 @@
-const postForm = document.querySelector("#communityForm");
+const postForm = document.querySelector("#communityForm"); 
 const listRedirect = document.querySelector(".list-btn");
 
 fetch("http://localhost:8080/api/community", {
