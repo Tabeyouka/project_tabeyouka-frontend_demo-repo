@@ -103,14 +103,15 @@ function getRandomArray(num) {
 
 
 // api로 가게정보 받아오기
-async function request(storeNumber) {
-  const response = await fetch(`http://localhost:8080/api/restaurants`,
+async function request(id) {
+  const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
   {
     method: 'GET',
   });
+  
   const data = await response.json();
   
-  return data[storeNumber];
+  return data;
 }
 
 
@@ -131,13 +132,20 @@ const imageChange = () => {
   for (let i = 0; i < storeTitle.length; i++ ) {
     // 랜덤함수 이용해서 랜덤한가게 의 객체를 가져와 정보들을 저장
     request(randomStore[i]).then(function(result) {
+      
+      const title = (result.restaurant.title);
+      const address = (result.restaurant.address);
+      const menu_type = (result.restaurant.menu_type);
+      const total_points = (result.restaurant.total_points);
+      const total_votes = (result.restaurant.total_votes);
+      const image = (result.restaurant.image);
 
-      const title = (result.title);
-      const address = (result.address);
-      const menu_type = (result.menu_type);
-      const total_points = (result.total_points);
-      const total_votes = (result.total_votes);
-      const image = (result.image);
+      const idNumber = (result.restaurant.id);
+      const id = document.createElement('p');
+      id.textContent = idNumber;
+      id.classList.add("id");
+      overlays[i].appendChild(id);
+      
 
       storeTitle[i].innerText = title;
       storeSubtitle[i].innerText = title;
@@ -148,7 +156,9 @@ const imageChange = () => {
       votes[i].innerText = `${total_votes}명`;
       sliderImage[i].src = image;
       sliderImage[i].alt = title;
+      
 
+      
     }).catch(function(error) {
       console.log('에러',error);
     })
@@ -528,7 +538,7 @@ teammate.addEventListener('click', () => {
 })
 
 // async function login_state() {
-//   const response = await fetch(`http://localhost:8080/api/get-login-status`,
+//   const response = await fetch(`http://localhost:8080/api/status`,
 //   {
 //     method: 'GET',
 //   });
@@ -537,4 +547,56 @@ teammate.addEventListener('click', () => {
 //   return data;
 // }
 // login_state();
+
+const overlays = document.querySelectorAll('.overlay');
+
+overlays.forEach(overlay => {
+  overlay.addEventListener('click', () => {
+    const idElement = overlay.querySelector('.id');
+    let id = idElement.textContent;
+    
+    document.hash = id;
+    // 가게이동
+    fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+      .then((response) => response.text())
+      .then((html) => {
+        while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+        let storeNumber = id;
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
+
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
+
+        
+        const mainStyle = document.createElement("link");
+        mainStyle.type = "text/css"
+        mainStyle.rel = "stylesheet";
+        mainStyle.href = "/reviewpage/reviewc.css";
+        document.head.appendChild(mainStyle);
+
+        // main.html과 관련된 JavaScript 파일 추가
+        const mainScript = document.createElement("script");
+        mainScript.src = "/reviewpage/reviewj.js";
+        document.body.appendChild(mainScript);
+        
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+
+  
+});
+
+});
+
+
+
+
 })();
