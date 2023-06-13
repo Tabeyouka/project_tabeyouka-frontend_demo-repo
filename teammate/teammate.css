@@ -133,6 +133,41 @@
 
 /* 조원 */
 
+.teammate-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.teammateRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1%;
+}
+
+.teammate-scroll-box {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  align-items: center;
+  width: 1110px;
+  transition: transform 0.3s ease;
+}
+
+.teammate-scroll-box::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+.scrollBtn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  margin: 4%;
+}
+
 .team {
   padding: 30px;
   text-align: center;
@@ -142,33 +177,13 @@
   margin: 10px 0;
 }
 
-.teammateRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-x: auto;
-  overflow-x: scroll;
-  margin: 0;
-}
-
-/* #toggleButton {
-  border: none;
-  border-top: whitesmoke 3px solid;
-  background-color: white;
-  width: 100px;
-  height: 80px;
-} */
-
-/* #toggleButton:hover {
-  font-size: 101%;
-  color:#b2afaf;
-} */
 
 .addButton {
   background-color: white;
   border: none;
   border-bottom: grey 1px solid;
-  margin: 10px 42.4%;
+  margin: 10px 0;
+  width: 170px;
 }
 
 .addButton:hover {
@@ -180,11 +195,12 @@
   border-radius: 3%;
   padding: 15px 15px;
   background-color: rgba(245, 224, 246, 0.27);
-  margin: 50px 30px;
+  margin: 50px 70px;
   width: 230px;
   height: 450px;
   box-shadow: 0 2px 5px #ccc;
   text-align: center;
+  justify-content: space-between;
 }
 
 .teammate:hover {
@@ -195,12 +211,16 @@
   text-align: right;
 }
 
+.editBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
 .deleteBtn {
   background-color: rgba(0,0,0,0);
   border: none;
   height: 20px;
   width: 20px;
-  color: #b2afaf;
 }
 
 .profileImage {
@@ -283,7 +303,7 @@
   align-items: center;
 }
 
-#addPreview {
+#addPreview, #editPreview {
   border: rgba(0, 0, 0, 0.662) 4px solid; /* 있는게 나을지 없는게 나을지 */
   border-radius: 50%;
   width: 200px;
@@ -294,9 +314,12 @@
   margin-top: 13px;
 }
 
-#addProfileImage {
+#addProfileImage,
+#editProfileImage {
   display: none;
 }
+
+
 
 .modal-form input
 {
@@ -333,4 +356,3 @@
   opacity: 98%;
   transition: opacity 0.8s;
 }
-
