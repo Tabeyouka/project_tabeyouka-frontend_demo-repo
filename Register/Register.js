@@ -10,7 +10,6 @@
   let isPwdValid = false;
   let isPwd2Vaild = false;
   let isNicknameValid = false;
-
   // 에러 메세지 set 함수
   const setError = (element, message) => {
     const inputControl = element.parentElement;
@@ -26,6 +25,9 @@
       isEmailValid = false;
     } else if (!emailRegex.test(email.value)) {
       setError(email, "올바른 이메일을 입력해주세요.");
+      isEmailValid = false;
+    } else if (allUser.includes(email.value)) {
+      setError(email, "중복된 이메일입니다.");
       isEmailValid = false;
     } else {
       setError(email, "");
@@ -77,6 +79,42 @@
       isNicknameValid = true;
     }
   });
+
+  // Email 중복확인용 user 정보 불러오기
+
+  let allUser = [];
+  const loadUser = () => {
+    fetch("http://localhost:8080/api/allusers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("데이터를 가져오는데 실패했습니다.");
+        }
+      })
+      .then((data) => {
+        // Get한 데이터중 email을 allUser안에 넣어줌
+        console.log("응답 받음:", data);
+        console.log("길이는 :", data.users.length);
+        for (i = 0; i < data.users.length; i++) {
+          allUser.push(data.users[i].email);
+        }
+
+        console.log("패치", allUser);
+      })
+
+      .catch((error) => {
+        console.error("오류 발생:", error);
+      });
+  };
+
+  loadUser();
+
   // 유저 정보를 서버로 전송
   const sendDataToServer = () => {
     const userData = {
@@ -94,12 +132,7 @@
       body: JSON.stringify(userData),
     })
       .then((response) => {
-        // 처리 완료 후에 수행할 작업
-        // 예: 응답 확인, 페이지 리디렉션 등
         console.log("응답 받음:", response);
-        // 원하는 작업을 여기에 추가하세요.
-        // 로그인 연결
-
         // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
         fetch("/signin/login.html", { credentials: "include" })
           .then((response) => response.text())
