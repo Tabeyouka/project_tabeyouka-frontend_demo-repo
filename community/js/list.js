@@ -112,7 +112,7 @@
 
                 // 메인.html과 관련된 JavaScript 파일 추가
                 const mainScript = document.createElement("script");
-                mainScript.src = "/detail.js";
+                mainScript.src = "../community/js/detail.js";
                 document.body.appendChild(mainScript);
               })
               .catch((error) => {
