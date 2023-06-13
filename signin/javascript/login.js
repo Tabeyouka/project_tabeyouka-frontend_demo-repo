@@ -116,15 +116,14 @@
       password: password,
     };
 
-    function getCsrfToken() {
-      return document.querySelector('meta[name="csrf-token"]').content;
-    }
+    const getCsrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
 
     fetch("http://127.0.0.1:8080/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": getCsrfToken(),
+        "X-CSRF-TOKEN": getCsrfToken,
       },
       credentials: "include",
       body: JSON.stringify(data),
@@ -175,6 +174,43 @@
             if (statusResult.message === "User is logged in") {
               // 사용자가 로그인되어 있는 상태
               console.log("사용자가 로그인되어 있습니다.");
+              fetch("/main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                .then((response) => response.text())
+                .then((html) => {
+                  // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+                  while (document.documentElement.firstChild) {
+                    document.documentElement.removeChild(
+                      document.documentElement.firstChild
+                    );
+                  }
+
+                  const search_html = document.querySelector("html");
+                  const head = document.createElement("head");
+                  const body = document.createElement("body");
+                  search_html.appendChild(head);
+                  search_html.appendChild(body);
+
+                  const range = document.createRange();
+                  const parsedHTML = range.createContextualFragment(html);
+                  document.body.appendChild(parsedHTML);
+
+                  const appContainer = document.querySelector(".app-container");
+
+                  // 메인.html과 관련된 CSS 파일 추가
+                  const mainStyle = document.createElement("link");
+                  mainStyle.rel = "stylesheet";
+                  mainStyle.type = "text/css";
+                  mainStyle.href = "/main/main.css";
+                  document.head.appendChild(mainStyle);
+
+                  // 메인.html과 관련된 JavaScript 파일 추가
+                  const mainScript = document.createElement("script");
+                  mainScript.src = "/main/main.js";
+                  document.body.appendChild(mainScript);
+                })
+                .catch((error) => {
+                  console.error("에러:", error);
+                });
             } else if (statusResult.message === "User is logged out ") {
               // 사용자가 로그인되어 있지 않은 상태
               console.log("사용자가 로그인되어 있지 않습니다.");
