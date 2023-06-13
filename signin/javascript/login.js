@@ -194,8 +194,6 @@
                   const parsedHTML = range.createContextualFragment(html);
                   document.body.appendChild(parsedHTML);
 
-                  const appContainer = document.querySelector(".app-container");
-
                   // 메인.html과 관련된 CSS 파일 추가
                   const mainStyle = document.createElement("link");
                   mainStyle.rel = "stylesheet";
