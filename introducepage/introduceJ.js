@@ -32,6 +32,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     commentLoad();
     noticeLoad();
+
     noticeModifiy();
   });
 
