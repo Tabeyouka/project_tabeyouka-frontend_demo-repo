@@ -1,7 +1,3 @@
-* {
-  font-family: pretendard;
-}
-
 /* 헤더 */
 .navbar {
   display: flex;
@@ -33,22 +29,16 @@
 }
 
 /* Login Form */
-.loginForm {
+.loginContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 350px;
 }
 
-.loginForm a {
-  text-decoration: none;
-  color: black;
-  font-size: 20px;
-}
-
-.loginForm a:hover {
-  color: gray;
-  transition: 0.2s;
+.loginContainer span {
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .titleImg {
@@ -78,7 +68,7 @@
     height: auto;
   }
 
-  .loginForm {
+  .loginContainer {
     margin-bottom: 10px;
   }
 
@@ -128,12 +118,12 @@
     justify-content: center;
     left: 0px;
   }
-
+  
   .menuContent {
     font-size: 18px;
     margin: 0 40px;
   }
-
+  
   .menu {
     width: 100%;
   }
@@ -159,6 +149,8 @@
 }
 
 .imageSection {
+  width: 50%;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,7 +165,9 @@
 
 .mainImg {
   margin-top: 10px;
-  width: 40%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }
