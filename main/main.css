@@ -249,10 +249,23 @@ div.gallery img {
   right: 1%;
 }
 
+.fa-square-caret-left.v2 {
+  top: 147%;
+  left: 1%;
+}
+
+.fa-square-caret-right.v2 {
+  top: 147%;
+  right: 1%;
+}
 div.desc {
+  max-width: 410px;
   font-size: 20px;
   padding: 5px;
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 
@@ -286,7 +299,7 @@ div.gallery {
 
 .title {
   top: 7%;
-  max-width: 420px;
+  max-width: 390px;
   font-size: 22px;
   overflow: hidden;
   white-space: nowrap;
