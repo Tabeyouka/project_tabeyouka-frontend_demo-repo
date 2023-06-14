@@ -27,7 +27,7 @@
 
     // 조원 생성하는 클래스
     const setEditPlaceholder = (arr) => {
-        console.log(arr);
+        console.log('setTriggered');
         const editModal = document.querySelector('.editModal');
         const inputs = editModal.querySelectorAll('input[type="text"]');
         const addPreview = editModal.querySelector('img');
@@ -85,7 +85,7 @@
             }
 
             // teammate 생성
-            const teammate = createDivAndSet('div', 'teammate');
+            const mate = createDivAndSet('div', 'mate');
             // profileImage img tag
             const profileImg = createDivAndSet('img', 'imgLink');
             // profileImage 요소 생성 
@@ -115,22 +115,22 @@
             editButton.innerText = 'edit_note';
             buttonDiv.appendChild(editButton);
             buttonDiv.appendChild(deleteButton);
-            teammate.appendChild(buttonDiv);
+            mate.appendChild(buttonDiv);
             profileImg.setAttribute('src', this.image);
             profileImage.appendChild(profileImg);
-            teammate.appendChild(profileImage);
+            mate.appendChild(profileImage);
             studentName.innerText = this.name;
-            teammate.appendChild(studentName);
+            mate.appendChild(studentName);
             part.innerText = this.part;
-            teammate.appendChild(part);
+            mate.appendChild(part);
             description.innerText = this.des;
-            teammate.appendChild(description);
+            mate.appendChild(description);
             githubImg.setAttribute('src', '/image/githublogo.png');
             githubA.appendChild(githubImg);
             githubA.setAttribute('href', this.git);
             githubLink.appendChild(githubA);
-            teammate.appendChild(githubLink);
-            teammateScrollBox.appendChild(teammate);
+            mate.appendChild(githubLink);
+            teammateScrollBox.appendChild(mate);
         }
 
         setEventListener(index) {
@@ -157,6 +157,7 @@
                 const targetId = event.target.id;
                 getMateById(targetId)
                     .then(result => {
+                         console.log('triggered');
                         const data = Object.values(result);
                         data.shift();
                         setEditPlaceholder(data);
@@ -268,7 +269,6 @@
         const file = document.querySelector('#editProfileImage');
         const image = file.files[0];
         const formData = new FormData();
-        console.log('if문 전');
         formData.append('_method', 'PUT');
         formData.append('student_id', input[0].value);
         console.log(input[0].value);
@@ -281,7 +281,6 @@
         formData.append('github_link', input[4].value);
         console.log(input[4].value);
         if (image) {
-            console.log('if문 실행');
             formData.append('profile_image', image);
             console.log(image);
         }
@@ -326,8 +325,6 @@
         return data;
     }
 
-
-
     const showImage = (event, imageTarget) => {
         let selectedFile = event.target.files[0];
         console.log(selectedFile);
@@ -352,7 +349,6 @@
         showImage(event, '#editPreview');
     });
 
-
     // 스크롤 버튼
     const leftScrl = document.querySelector('#leftScrl');
     const rightScrl = document.querySelector('#rightScrl');
@@ -364,10 +360,6 @@
         setTimeout(() => {
             leftScrl.disabled = false;
         }, 500)
-        // const lastChild = scrollBox.lastElementChild;
-        // const firstChild = scrollBox.firstElementChild;
-        // scrollBox.insertBefore(lastChild, firstChild);
-        //scrollBox.style.transform = `translateX(50px)`;
     });
     rightScrl.addEventListener('click', (event) => {
         rightScrl.disabled = true;
@@ -375,13 +367,7 @@
         setTimeout(() => {
             rightScrl.disabled = false;
         }, 500)
-        // const firstChild = scrollBox.firstElementChild;
-        // console.log(firstChild);
-        // scrollBox.appendChild(firstChild);
-        //scrollBox.style.transform = `translateX(-50px)`;
     });
-
-    // 클릭할 때 마다 특정 위치로 요소가 이동하면 앞에있던 요소를 뒤로 보내면 될듯
 
 
 
