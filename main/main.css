@@ -35,9 +35,8 @@
 /* Login Form */
 .loginContainer {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 250px;
 }
 
 .loginContainer span {
@@ -74,6 +73,8 @@
 
   .loginContainer {
     margin-bottom: 10px;
+    justify-content: center;
+    width: 250px;
   }
 
   .form-select {
@@ -138,13 +139,11 @@ div.scroll-container {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;
-  -ms-overflow-style: none;
- scrollbar-width: none;
   background-color: white;
   box-shadow: 0 0 5px rgb(148, 148, 148);
   border-radius: 15px;
   padding: 10px;
-  margin: 30px 70;
+  margin: 30px 70px;
   height: 500px;
 }
 
@@ -275,7 +274,8 @@ div.gallery {
   height: 0;
   transition: .5s ease;
   border-radius: 15%;
-  word-break: keep-all;
+  display: flex;
+  flex-direction: column;
 }
 
 .overlaytext {
@@ -285,8 +285,12 @@ div.gallery {
 }
 
 .title {
+  top: 7%;
+  max-width: 420px;
   font-size: 22px;
-  top: 7%;;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .location {
@@ -391,7 +395,7 @@ div.desc {
   left: 4%;
 }
 
-.title {
+.title-container {
   font-size: 18px;
   top: 7%;
 }
