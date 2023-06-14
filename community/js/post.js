@@ -25,12 +25,11 @@
     const imageFiles = imageInput.files;
     if (imageFiles.length > 0) {
       for (let i = 0; i < imageFiles.length; i++) {
-        formData.append("images", imageFiles[i]);
+        formData.append("image", imageFiles[i]);
       }
     } else {
-      formData.append("images", null); // 사진을 선택하지 않은 경우 빈 배열 추가
+      formData.append("image", null); // 사진을 선택하지 않은 경우 빈값
     }
-  
   
   
     // 서버로 데이터 전송
@@ -41,7 +40,54 @@
       .then((response) => response.json())
       .then((data) => {
         console.log("게시글 작성 성공:", data);
-        // !!!!!!!!!!!!!!자신이 작성한 글 페이지로 이동하게 fetch 처리 필요!!!!!!!!!!!!
+        
+        // 글 작성이 완료되면 자기가 작성한 글 보는 페이지로 넘어감
+        fetch(`http://127.0.0.1:8080/api/community/${data.post_id}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((post) => {
+            // 게시물 디테일 페이지를 가져오고 화면을 변경
+            fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+              .then((response) => response.text())
+              .then((html) => {
+                // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+                while (document.documentElement.firstChild) {
+                  document.documentElement.removeChild(
+                    document.documentElement.firstChild
+                  );
+                }
+
+                const search_html = document.querySelector("html");
+                const head = document.createElement("head");
+                const body = document.createElement("body");
+                search_html.appendChild(head);
+                search_html.appendChild(body);
+
+                const range = document.createRange();
+                const parsedHTML = range.createContextualFragment(html);
+                document.body.appendChild(parsedHTML);
+
+                // 메인.html과 관련된 CSS 파일 추가
+                const mainStyle = document.createElement("link");
+                mainStyle.rel = "stylesheet";
+                mainStyle.type = "text/css";
+                mainStyle.href = "../community/css/detail.css";
+                document.head.appendChild(mainStyle);
+
+                // 메인.html과 관련된 JavaScript 파일 추가
+                const mainScript = document.createElement("script");
+                mainScript.src = "../community/js/detail.js";
+                document.body.appendChild(mainScript);
+              })
+              .catch((error) => {
+                console.error("에러:", error);
+              });
+          })
+
       })
       .catch((error) => {
         console.error("게시글 작성 실패:", error);
