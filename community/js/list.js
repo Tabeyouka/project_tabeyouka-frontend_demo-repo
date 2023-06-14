@@ -14,6 +14,7 @@
   const itemsPerPage = 10; // 페이지당 표시할 글의 개수
   let currentPage = 1; // 현재 페이지 번호
   let searchKeyword = ""; // 검색 키워드
+  const postRedirect = document.querySelector(".post-redirect"); // 버튼 요소
 
   // 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수
   function updateBoardData(page) {
@@ -187,9 +188,41 @@
     );
   }
 
-  // post.js 통신
+  // 로그인이 되어 있는 상태에 따라 작성 버튼 보이기/숨기기 여부 판별
 
-  const postRedirect = document.querySelector(".post-redirect");
+  window.addEventListener("DOMContentLoaded", () => {
+    console.log('ㄱ')
+    fetch("http://127.0.0.1:8080/api/status", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((statusResponse) => {
+        if (!statusResponse.ok) {
+          throw new Error("서버 응답이 실패했습니다.");
+        }
+
+        return statusResponse.json();
+      })
+      .then((statusResult) => {
+        console.log(statusResult.message);
+        // /api/status의 응답을 확인
+        if (statusResult.message === "User is logged in") {
+          console.log('로그인')
+          postRedirect.style.display = "block";
+        } else if (statusResult.message === "User is logged out ") {
+          console.log('로그아웃')
+          postRedirect.style.display = "none";
+        }
+      })
+      .catch((error) => {
+        console.log("api/status 통신 실패", error);
+      });
+  });
+
+  // post.js 통신
 
   postRedirect.addEventListener("click", () => {
     fetch("../community/post.html", { credentials: "include" })

@@ -436,40 +436,51 @@ function filterArrayByWord(originalArray, word) {
 // 자유게시판 연결
 const board = document.querySelector('.board');
 board.addEventListener('click', () => {
-  fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-    .then((response) => response.text())
-    .then((html) => {
-      while (document.documentElement.firstChild) {
-        document.documentElement.removeChild(document.documentElement.firstChild);
-      }
-  
-      const search_html = document.querySelector('html');
-      const head = document.createElement('head');
-      const body = document.createElement('body');
-      search_html.appendChild(head);
-      search_html.appendChild(body);
 
-      const range = document.createRange();
-      const parsedHTML = range.createContextualFragment(html);
-      document.body.appendChild(parsedHTML);
-  
-      
-      const mainStyle = document.createElement("link");
-      mainStyle.type = "text/css"
-      mainStyle.rel = "stylesheet";
-      mainStyle.href = "/community/css/list.css";
-      document.head.appendChild(mainStyle);
-  
-      // main.html과 관련된 JavaScript 파일 추가
-      const mainScript = document.createElement("script");
-      mainScript.src = "/community/js/list.js";
-      document.body.appendChild(mainScript);
+  // 상태 확인 후 게시판으로 넘어갈 때 로그인이 되어 있으면 게시글 작성 버튼이 보이게, 아니면 안 보이게
+  // 하기 위해 /api/status로 먼저 통신한 후 list.html에 접근
+  fetch("http://127.0.0.1:8080/api/status", { credentials: "include" }) // 로그인 여부 확인 요청에도 쿠키를 포함
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
+      const isLoggedIn = data.message === 'User is logged in';
+
+      // list.html로 이동
+      fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+        .then((response) => response.text())
+        .then((html) => {
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
+
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
+
+          const mainStyle = document.createElement("link");
+          mainStyle.type = "text/css"
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "/community/css/list.css";
+          document.head.appendChild(mainStyle);
+
+          // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
+          const writeButton = document.querySelector('.post-redirect');
+          writeButton.style.display = isLoggedIn ? 'block' : 'none';
+        })
+        .catch((error) => {
+          console.error("에러:", error);
+        });
     })
     .catch((error) => {
       console.error("에러:", error);
     });
-
-})
+});
 
 
 // 로그인 연결
