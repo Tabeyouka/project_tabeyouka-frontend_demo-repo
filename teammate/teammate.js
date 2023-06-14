@@ -151,7 +151,38 @@
                     deleteTeammate(targetId)
                         .then(result => {
                             alert('삭제되었습니다!');
-                            location.href='/teammate/teammate.html';
+                            fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                            .then((response) => response.text())
+                            .then((html) => {
+                                while (document.documentElement.firstChild) {
+                                document.documentElement.removeChild(document.documentElement.firstChild);
+                                }
+                            
+                                const search_html = document.querySelector('html');
+                                const head = document.createElement('head');
+                                const body = document.createElement('body');
+                                search_html.appendChild(head);
+                                search_html.appendChild(body);
+                        
+                                const range = document.createRange();
+                                const parsedHTML = range.createContextualFragment(html);
+                                document.body.appendChild(parsedHTML);
+                            
+                                
+                                const mainStyle = document.createElement("link");
+                                mainStyle.type = "text/css"
+                                mainStyle.rel = "stylesheet";
+                                mainStyle.href = "/teammate/teammate.css";
+                                document.head.appendChild(mainStyle);
+                            
+                                // main.html과 관련된 JavaScript 파일 추가
+                                const mainScript = document.createElement("script");
+                                mainScript.src = "/teammate/teammate.js";
+                                document.body.appendChild(mainScript);
+                            })
+                            .catch((error) => {
+                                console.error("에러:", error);
+                            });
                         })
                         .catch(error => {
                             console.error(error);
@@ -255,7 +286,38 @@
             addTeammate()
                 .then(result => {
                     alert('추가되었습니다!');
-                    location.href='/teammate/teammate.html';
+                    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                    .then((response) => response.text())
+                    .then((html) => {
+                        while (document.documentElement.firstChild) {
+                        document.documentElement.removeChild(document.documentElement.firstChild);
+                        }
+                    
+                        const search_html = document.querySelector('html');
+                        const head = document.createElement('head');
+                        const body = document.createElement('body');
+                        search_html.appendChild(head);
+                        search_html.appendChild(body);
+                
+                        const range = document.createRange();
+                        const parsedHTML = range.createContextualFragment(html);
+                        document.body.appendChild(parsedHTML);
+                    
+                        
+                        const mainStyle = document.createElement("link");
+                        mainStyle.type = "text/css"
+                        mainStyle.rel = "stylesheet";
+                        mainStyle.href = "/teammate/teammate.css";
+                        document.head.appendChild(mainStyle);
+                    
+                        // main.html과 관련된 JavaScript 파일 추가
+                        const mainScript = document.createElement("script");
+                        mainScript.src = "/teammate/teammate.js";
+                        document.body.appendChild(mainScript);
+                    })
+                    .catch((error) => {
+                        console.error("에러:", error);
+                    });
                 })
                 .catch(error => {
                     console.error(error);
@@ -297,7 +359,38 @@
             editPut(id).
                 then(result => {
                     alert('수정되었습니다!');
-                    location.href='/teammate/teammate.html';
+                    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                    .then((response) => response.text())
+                    .then((html) => {
+                        while (document.documentElement.firstChild) {
+                        document.documentElement.removeChild(document.documentElement.firstChild);
+                        }
+                    
+                        const search_html = document.querySelector('html');
+                        const head = document.createElement('head');
+                        const body = document.createElement('body');
+                        search_html.appendChild(head);
+                        search_html.appendChild(body);
+                
+                        const range = document.createRange();
+                        const parsedHTML = range.createContextualFragment(html);
+                        document.body.appendChild(parsedHTML);
+                    
+                        
+                        const mainStyle = document.createElement("link");
+                        mainStyle.type = "text/css"
+                        mainStyle.rel = "stylesheet";
+                        mainStyle.href = "/teammate/teammate.css";
+                        document.head.appendChild(mainStyle);
+                    
+                        // main.html과 관련된 JavaScript 파일 추가
+                        const mainScript = document.createElement("script");
+                        mainScript.src = "/teammate/teammate.js";
+                        document.body.appendChild(mainScript);
+                    })
+                    .catch((error) => {
+                        console.error("에러:", error);
+                    });
                 })
                 .catch(error => {
                     console.error(error);
