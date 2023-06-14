@@ -21,22 +21,31 @@
             method: 'GET',
         });
         const data = await response.json();
-        console.log(data);
         return data;
     }
 
     // 조원 생성하는 클래스
-    const setEditPlaceholder = (arr) => {
-        console.log('setTriggered');
+    const setInputValue = (arr) => {
         const editModal = document.querySelector('.editModal');
         const inputs = editModal.querySelectorAll('input[type="text"]');
         const addPreview = editModal.querySelector('img');
-        console.log(inputs);
         for (let i = 0; i <= inputs.length; i++) {
             if (i == 0) {
                 addPreview.src = arr[i];
             } else {
-                inputs[i - 1].setAttribute('value', arr[i]);
+                inputs[i - 1].value = arr[i];
+            }
+        }
+    };
+    const resetInputValue = () => {
+        const editModal = document.querySelector('.editModal');
+        const inputs = editModal.querySelectorAll('input[type="text"]');
+        const addPreview = editModal.querySelector('img');
+        for (let i = 0; i <= inputs.length; i++) {
+            if (i == 0) {
+                addPreview.src = '';
+            } else {
+                inputs[i - 1].value = '';
             }
         }
     };
@@ -139,12 +148,10 @@
             deleteButton[index].addEventListener('click', (event) => {
                 if (confirm('없애고 싶은 조원이 있나요?')) {
                     const targetId = event.target.id;
-                    console.log(targetId);
                     deleteTeammate(targetId)
                         .then(result => {
-                            console.log(result);
                             alert('삭제되었습니다!');
-                            location.reload();
+                            location.href='/teammate/teammate.html';
                         })
                         .catch(error => {
                             console.error(error);
@@ -157,10 +164,9 @@
                 const targetId = event.target.id;
                 getMateById(targetId)
                     .then(result => {
-                         console.log('triggered');
                         const data = Object.values(result);
                         data.shift();
-                        setEditPlaceholder(data);
+                        setInputValue(data);
                         const editSubmit = document.querySelector('#editSubmit');
                         editSubmit.value = targetId;
                     })
@@ -206,7 +212,6 @@
             method: 'DELETE',
         });
         const data = await response.json();
-        console.log(data);
         return data;
     }
 
@@ -223,6 +228,7 @@
     addTeammateButton('새로운 팀원이 생겼나요?');
 
     async function addTeammate() {
+        // 숫자만 입력받도록 예외처리할것
         const addModal = document.querySelector('.modal');
         const input = addModal.querySelectorAll('input[type="text"]');
         const file = document.querySelector('#addProfileImage');
@@ -248,16 +254,15 @@
         if (confirm('추가하시겠습니까?')) {
             addTeammate()
                 .then(result => {
-                    console.log(result);
                     alert('추가되었습니다!');
-                    location.reload();
+                    location.href='/teammate/teammate.html';
                 })
                 .catch(error => {
                     console.error(error);
-                })
+            })
         }
-
     });
+
     // 추가 모달 닫기
     const modalclosebutton = document.querySelector('#closeAddModal');
     modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
@@ -271,18 +276,12 @@
         const formData = new FormData();
         formData.append('_method', 'PUT');
         formData.append('student_id', input[0].value);
-        console.log(input[0].value);
         formData.append('name', input[1].value);
-        console.log(input[1].value);
         formData.append('part', input[2].value);
-        console.log(input[2].value);
         formData.append('description', input[3].value);
-        console.log(input[3].value);
         formData.append('github_link', input[4].value);
-        console.log(input[4].value);
         if (image) {
             formData.append('profile_image', image);
-            console.log(image);
         }
         const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
             method: 'POST',
@@ -295,13 +294,10 @@
     editModalSubmitButton.addEventListener('click', () => {
         if (confirm('정말 수정하시겠습니까?')) {
             const id = editModalSubmitButton.value;
-            console.log(id);
-            console.log('함수 실행 전');
             editPut(id).
                 then(result => {
-                    console.log(result);
                     alert('수정되었습니다!');
-                    //location.reload();
+                    location.href='/teammate/teammate.html';
                 })
                 .catch(error => {
                     console.error(error);
@@ -312,6 +308,7 @@
     // 수정 모달 닫기
     const editModalCloseButton = document.querySelector('#closeEditModal');
     editModalCloseButton.addEventListener('click', () => {
+        resetInputValue();
         const editModal = document.querySelector('.editModal');
         closeModal(editModal, 'editOpacityQue');
     });
@@ -327,7 +324,6 @@
 
     const showImage = (event, imageTarget) => {
         let selectedFile = event.target.files[0];
-        console.log(selectedFile);
         if (selectedFile) {
             let reader = new FileReader();
             reader.onload = function (event) {
@@ -341,11 +337,9 @@
     const addImageUploader = document.querySelector('#addProfileImage');
     const editImageUploader = document.querySelector('#editProfileImage');
     addImageUploader.addEventListener('change', (event) => {
-        console.log('add');
         showImage(event, '#addPreview');
     });
     editImageUploader.addEventListener('change', (event) => {
-        console.log('edit');
         showImage(event, '#editPreview');
     });
 
@@ -356,14 +350,15 @@
 
     leftScrl.addEventListener('click', (event) => {
         leftScrl.disabled = true;
-        scrollBox.scrollBy(-375, 0);
+        scrollBox.scrollBy(-370, 0);
         setTimeout(() => {
             leftScrl.disabled = false;
         }, 500)
     });
+
     rightScrl.addEventListener('click', (event) => {
         rightScrl.disabled = true;
-        scrollBox.scrollBy(375, 0);
+        scrollBox.scrollBy(370, 0);
         setTimeout(() => {
             rightScrl.disabled = false;
         }, 500)
