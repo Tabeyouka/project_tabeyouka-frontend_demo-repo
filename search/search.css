@@ -188,6 +188,7 @@
   height: 250px;
   box-shadow: 0 0 5px rgb(148, 148, 148);
   background-color: #eee;
+  border-radius: 14px;
 }
 
 .info-header img {
