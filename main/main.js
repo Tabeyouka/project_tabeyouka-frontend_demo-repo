@@ -61,55 +61,6 @@ prev.addEventListener('click', () => {
 });
 
 
-// 이미지 슬라이더 v2
-const scrollContainer2 = document.querySelector('.scroll-container.v2');
-const prev2 = document.querySelector('.fa-square-caret-left.v2');
-const next2 = document.querySelector('.fa-square-caret-right.v2');
-const responsive2 = document.querySelectorAll('.responsive.v2');
-
-let responsiveWidth2; // 변수 선언
-
-const updateResponsiveWidth2 = () => {
-  responsiveWidth2 = responsive2[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
-};
-
-updateResponsiveWidth2(); // 초기화
-
-window.addEventListener('resize', updateResponsiveWidth2); // 윈도우 크기 변경 시 요소 width 업데이트
-
-next2.addEventListener('click', () => {
-  const currentPosition2 = scrollContainer2.scrollLeft;
-  let nextPosition2 = currentPosition2 + responsiveWidth2; // 슬라이더 현재 위치 + 요소 width
-  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
-  if (nextPosition2 + scrollContainer2.clientWidth > scrollContainer2.scrollWidth) {
-    // 다음 위치 = 전체너비 - 가시영역 너비
-    nextPosition2 = scrollContainer2.scrollWidth - scrollContainer2.clientWidth;
-  }
-
-  scrollContainer2.scrollTo({
-    left: nextPosition2,
-    behavior: 'smooth'
-  });
-});
-
-prev2.addEventListener('click', () => {
-  // 슬라이더 현재위치
-  const currentPosition2 = scrollContainer2.scrollLeft;
-  // 다음 위치 = 현재위치 - 요소너비
-  let prevPosition2 = currentPosition2 - responsiveWidth2;
-  // 0보다 내려갈수없음
-  if (prevPosition2 < 0) {
-    prevPosition2 = 0;
-  }
-
-  scrollContainer2.scrollTo({
-    left: prevPosition2,
-    behavior: 'smooth'
-  });
-});
-
-
-
 
 
 // 평점계산 로직
@@ -469,61 +420,30 @@ board.addEventListener('click', () => {
           mainStyle.href = "/community/css/list.css";
           document.head.appendChild(mainStyle);
 
-          // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
-          const writeButton = document.querySelector('.post-redirect');
-          writeButton.style.display = isLoggedIn ? 'block' : 'none';
-        })
-        .catch((error) => {
-          console.error("에러:", error);
-        });
-    })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-});
-
-
-// 로그인 연결
-const clickLogin = document.querySelector('.loginText');
-clickLogin.addEventListener('click', () => {
-  // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
-  fetch("/signin/login.html", { credentials: "include" })
-  .then((response) => response.text())
-  .then((html) => {
-    while (document.documentElement.firstChild) {
-      document.documentElement.removeChild(document.documentElement.firstChild);
-    }
-
-    const search_html = document.querySelector('html');
-    const head = document.createElement('head');
-    const body = document.createElement('body');
-    search_html.appendChild(head);
-    search_html.appendChild(body);
-
-    const range = document.createRange();
-    const parsedHTML = range.createContextualFragment(html);
-    document.body.appendChild(parsedHTML);
-
-    
-    const mainStyle = document.createElement("link");
-    mainStyle.type = "text/css"
-    mainStyle.rel = "stylesheet";
-    mainStyle.href = "/signin/css/login.css";
-    document.head.appendChild(mainStyle);
-
-    // main.html과 관련된 JavaScript 파일 추가
-    const mainScript = document.createElement("script");
-    mainScript.src = "/signin/javascript/login.js";
-    document.body.appendChild(mainScript);
-    
-    
-  })
-});
-
-// 현지학기제 연결
-const introduce = document.querySelector('.introduce');
-introduce.addEventListener('click', () => {
-  fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+            // main.html과 관련된 JavaScript 파일 추가
+            const mainScript = document.createElement("script");
+            mainScript.src = "/community/js/list.js";
+            document.body.appendChild(mainScript);
+  
+            // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
+            const writeButton = document.querySelector('.post-redirect');
+            writeButton.style.display = isLoggedIn ? 'block' : 'none';
+          })
+          .catch((error) => {
+            console.error("에러:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  });
+  
+  
+  // 로그인 연결
+  const clickLogin = document.querySelector('.loginText');
+  clickLogin.addEventListener('click', () => {
+    // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
+    fetch("/signin/login.html", { credentials: "include" })
     .then((response) => response.text())
     .then((html) => {
       while (document.documentElement.firstChild) {
@@ -535,7 +455,7 @@ introduce.addEventListener('click', () => {
       const body = document.createElement('body');
       search_html.appendChild(head);
       search_html.appendChild(body);
-
+  
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
       document.body.appendChild(parsedHTML);
@@ -544,119 +464,154 @@ introduce.addEventListener('click', () => {
       const mainStyle = document.createElement("link");
       mainStyle.type = "text/css"
       mainStyle.rel = "stylesheet";
-      mainStyle.href = "/introducepage/introduceC.css";
+      mainStyle.href = "/signin/css/login.css";
       document.head.appendChild(mainStyle);
   
       // main.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
-      mainScript.src = "/introducepage/introduceJ.js";
+      mainScript.src = "/signin/javascript/login.js";
       document.body.appendChild(mainScript);
-    })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-
-})
-
-
-// 조원소개 연결
-const teammate = document.querySelector('.teammate');
-teammate.addEventListener('click', () => {
-  fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-    .then((response) => response.text())
-    .then((html) => {
-      while (document.documentElement.firstChild) {
-        document.documentElement.removeChild(document.documentElement.firstChild);
-      }
-  
-      const search_html = document.querySelector('html');
-      const head = document.createElement('head');
-      const body = document.createElement('body');
-      search_html.appendChild(head);
-      search_html.appendChild(body);
-
-      const range = document.createRange();
-      const parsedHTML = range.createContextualFragment(html);
-      document.body.appendChild(parsedHTML);
-  
       
-      const mainStyle = document.createElement("link");
-      mainStyle.type = "text/css"
-      mainStyle.rel = "stylesheet";
-      mainStyle.href = "/teammate/teammate.css";
-      document.head.appendChild(mainStyle);
-  
-      // main.html과 관련된 JavaScript 파일 추가
-      const mainScript = document.createElement("script");
-      mainScript.src = "/teammate/teammate.js";
-      document.body.appendChild(mainScript);
+      
     })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-
-})
-
-// async function login_state() {
-//   const response = await fetch(`http://localhost:8080/api/status`,
-//   {
-//     method: 'GET',
-//   });
-//   const data = await response.json();
-//   console.log(data);
-//   return data;
-// }
-// login_state();
-
-const overlays = document.querySelectorAll('.overlay');
-
-overlays.forEach(overlay => {
-  overlay.addEventListener('click', () => {
-    const idElement = overlay.querySelector('.id');
-    let id = idElement.textContent;
-    
-    document.hash = id;
-    // 가게이동
-    fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+  });
+  
+  // 현지학기제 연결
+  const introduce = document.querySelector('.introduce');
+  introduce.addEventListener('click', () => {
+    fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
       .then((response) => response.text())
       .then((html) => {
         while (document.documentElement.firstChild) {
           document.documentElement.removeChild(document.documentElement.firstChild);
         }
-        let storeNumber = id;
+    
         const search_html = document.querySelector('html');
         const head = document.createElement('head');
         const body = document.createElement('body');
         search_html.appendChild(head);
         search_html.appendChild(body);
-
+  
         const range = document.createRange();
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
-
+    
         
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
-        mainStyle.href = "/reviewpage/reviewc.css";
+        mainStyle.href = "/introducepage/introduceC.css";
         document.head.appendChild(mainStyle);
-
+    
         // main.html과 관련된 JavaScript 파일 추가
         const mainScript = document.createElement("script");
-        mainScript.src = "/reviewpage/reviewj.js";
+        mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
-        
       })
       .catch((error) => {
         console.error("에러:", error);
       });
-
   
-});
+  })
+  
+  
+  // 조원소개 연결
+  const teammate = document.querySelector('.teammate');
+  teammate.addEventListener('click', () => {
+    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+      .then((response) => response.text())
+      .then((html) => {
+        while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+    
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
+  
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
+    
+        
+        const mainStyle = document.createElement("link");
+        mainStyle.type = "text/css"
+        mainStyle.rel = "stylesheet";
+        mainStyle.href = "/teammate/teammate.css";
+        document.head.appendChild(mainStyle);
+    
+        // main.html과 관련된 JavaScript 파일 추가
+        const mainScript = document.createElement("script");
+        mainScript.src = "/teammate/teammate.js";
+        document.body.appendChild(mainScript);
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  
+  })
+  
+  // async function login_state() {
+  //   const response = await fetch(`http://localhost:8080/api/status`,
+  //   {
+  //     method: 'GET',
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  //   return data;
+  // }
+  // login_state();
+  
+  const overlays = document.querySelectorAll('.overlay');
+  
+  overlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const idElement = overlay.querySelector('.id');
+      let id = idElement.textContent;
+      
+      document.hash = id;
+      // 가게이동
+      fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+        .then((response) => response.text())
+        .then((html) => {
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+          let storeNumber = id;
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
+  
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
+  
+          
+          const mainStyle = document.createElement("link");
+          mainStyle.type = "text/css"
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "/reviewpage/reviewc.css";
+          document.head.appendChild(mainStyle);
+  
+          // main.html과 관련된 JavaScript 파일 추가
+          const mainScript = document.createElement("script");
+          mainScript.src = "/reviewpage/reviewj.js";
+          document.body.appendChild(mainScript);
+          
+        })
+        .catch((error) => {
+          console.error("에러:", error);
+        });
 
-});
-
-
-
-
-})();
+  });
+  
+  });
+  
+  
+  
+  
+  })();
