@@ -61,6 +61,53 @@ prev.addEventListener('click', () => {
 });
 
 
+// 이미지 슬라이더 v2
+const scrollContainer2 = document.querySelector('.scroll-container.v2');
+const prev2 = document.querySelector('.fa-square-caret-left.v2');
+const next2 = document.querySelector('.fa-square-caret-right.v2');
+const responsive2 = document.querySelectorAll('.responsive.v2');
+
+let responsiveWidth2; // 변수 선언
+
+const updateResponsiveWidth2 = () => {
+  responsiveWidth2 = responsive2[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
+};
+
+updateResponsiveWidth2(); // 초기화
+
+window.addEventListener('resize', updateResponsiveWidth2); // 윈도우 크기 변경 시 요소 width 업데이트
+
+next2.addEventListener('click', () => {
+  const currentPosition2 = scrollContainer2.scrollLeft;
+  let nextPosition2 = currentPosition2 + responsiveWidth2; // 슬라이더 현재 위치 + 요소 width
+  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
+  if (nextPosition2 + scrollContainer2.clientWidth > scrollContainer2.scrollWidth) {
+    // 다음 위치 = 전체너비 - 가시영역 너비
+    nextPosition2 = scrollContainer2.scrollWidth - scrollContainer2.clientWidth;
+  }
+
+  scrollContainer2.scrollTo({
+    left: nextPosition2,
+    behavior: 'smooth'
+  });
+});
+
+prev2.addEventListener('click', () => {
+  // 슬라이더 현재위치
+  const currentPosition2 = scrollContainer2.scrollLeft;
+  // 다음 위치 = 현재위치 - 요소너비
+  let prevPosition2 = currentPosition2 - responsiveWidth2;
+  // 0보다 내려갈수없음
+  if (prevPosition2 < 0) {
+    prevPosition2 = 0;
+  }
+
+  scrollContainer2.scrollTo({
+    left: prevPosition2,
+    behavior: 'smooth'
+  });
+});
+
 
 
 // 평점계산 로직
