@@ -73,7 +73,7 @@
       <div class="col">${post.author ? post.author.name : "Unknown"}</div>
       <div class="col date">${formatDate(post.created_at)}</div>
     `;
-
+      
       postRow.addEventListener("click", () => {
         fetch(`http://127.0.0.1:8080/api/community/${post.id}`, {
           headers: {
@@ -83,6 +83,10 @@
         })
           .then((response) => response.json())
           .then((post) => {
+
+            // post.id를 로컬 스토리지에 저장 -> detail에서 로컬 스토리지 값을 읽어와 post.id값을 이용해 API 통신
+            const post_id = post.post.id
+            localStorage.setItem("postId", post_id);
             // 게시물 디테일 페이지를 가져오고 화면을 변경
             fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
               .then((response) => response.text())
