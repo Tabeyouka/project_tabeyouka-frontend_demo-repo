@@ -82,7 +82,8 @@
 
 
   
-  let storeNumber = Number(document.hash); // 수정 X
+  // let storeNumber = Number(document.hash); // 수정 X
+  let id = localStorage.getItem("id");
   // 수정 X
   // 가게 정보 불러오기
   const restaurantDataLoad = (id) => {
@@ -116,7 +117,7 @@
         console.error("오류 발생:", error);
       });
   };
-  restaurantDataLoad(storeNumber);
+  restaurantDataLoad(id);
 
     // input 요소 클릭 이벤트 
   let input = document.querySelector('.form-control');
@@ -405,6 +406,12 @@ submit.addEventListener('submit', async (e) => {
       const location = document.createElement('p');
       location.classList.add('location');
       location.textContent = information.address;
+
+      const idNumber = information.id;
+      const id = document.createElement('p');
+      id.textContent = idNumber;
+      id.classList.add("id");
+      infoHead.appendChild(id);
       
   
       ol.appendChild(li);
