@@ -70,7 +70,7 @@
       postRow.innerHTML = `
       <div class="col id">${post.id}</div>
       <div class="col title">${post.title}</div>
-      <div class="col">${post.author ? post.author.name : "Unknown"}</div>
+      <div class="col nickname">${post.nickname ? post.nickname : "Unknown"}</div>
       <div class="col date">${formatDate(post.created_at)}</div>
     `;
       
