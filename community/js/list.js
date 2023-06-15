@@ -260,6 +260,17 @@
         const mainScript = document.createElement("script");
         mainScript.src = "/community/js/post.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
@@ -300,6 +311,17 @@
         const mainScript = document.createElement("script");
         mainScript.src = "/signin/javascript/login.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       });
   });
 
@@ -352,6 +374,17 @@
         const mainScript = document.createElement("script");
         mainScript.src = "/search/search.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
 
         if (searchResults === false) {
           const ol = document.querySelector(".searchInfo-space");
@@ -519,6 +552,17 @@
         const mainScript = document.createElement("script");
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
@@ -557,9 +601,32 @@
         const mainScript = document.createElement("script");
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
       });
   });
+
+  const logoutContainer = document.querySelector(".logoutContainer");
+  logoutContainer.addEventListener("click", () => {
+  // 로그인 상태 변경
+  localStorage.setItem('loginState', 'logout');
+  // 로그인택스트 변경
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그인";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".logoutContainer");
+  loginContainer.classList = "loginContainer";
+});
 })();

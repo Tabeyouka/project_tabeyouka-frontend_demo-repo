@@ -212,7 +212,7 @@ const imageChange = () => {
   }
 }
 
-imageChange();
+// imageChange();
 
 
 let images = document.querySelectorAll(".img-container img");
@@ -309,6 +309,16 @@ submit.addEventListener('submit', async (e) => {
         ol.appendChild(home_button);
     }
 
+    let login_state = localStorage.getItem('loginState');
+    // login_state가 "login"일때 로그아웃 생성
+    if (login_state === "login") {
+      // 로그인택스트 변경 
+      const loginText = document.querySelector(".loginText");
+      loginText.innerHTML = "로그아웃";
+      // 로그아웃 컨테이너 클래스명 변경
+      const loginContainer = document.querySelector(".loginContainer");
+      loginContainer.classList = "logoutContainer";
+    }
     // 검색결과의 length만큼 요소 생성
     for (let i = 0; i <= searchResults.length; i++ ) {
       information = searchResults[i];
@@ -467,14 +477,25 @@ board.addEventListener('click', () => {
           mainStyle.href = "/community/css/list.css";
           document.head.appendChild(mainStyle);
 
-            // main.html과 관련된 JavaScript 파일 추가
-            const mainScript = document.createElement("script");
-            mainScript.src = "/community/js/list.js";
-            document.body.appendChild(mainScript);
-  
-            // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
-            const writeButton = document.querySelector('.post-redirect');
-            writeButton.style.display = isLoggedIn ? 'block' : 'none';
+          // main.html과 관련된 JavaScript 파일 추가
+          const mainScript = document.createElement("script");
+          mainScript.src = "/community/js/list.js";
+          document.body.appendChild(mainScript);
+
+          let login_state = localStorage.getItem('loginState');
+          // login_state가 "login"일때 로그아웃 생성
+          if (login_state === "login") {
+            // 로그인택스트 변경 
+            const loginText = document.querySelector(".loginText");
+            loginText.innerHTML = "로그아웃";
+            // 로그아웃 컨테이너 클래스명 변경
+            const loginContainer = document.querySelector(".loginContainer");
+            loginContainer.classList = "logoutContainer";
+          }
+
+          // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
+          const writeButton = document.querySelector('.post-redirect');
+          writeButton.style.display = isLoggedIn ? 'block' : 'none';
           })
           .catch((error) => {
             console.error("에러:", error);
@@ -554,6 +575,17 @@ board.addEventListener('click', () => {
         const mainScript = document.createElement("script");
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
@@ -593,6 +625,17 @@ board.addEventListener('click', () => {
         const mainScript = document.createElement("script");
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
+        
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
@@ -626,7 +669,7 @@ board.addEventListener('click', () => {
           while (document.documentElement.firstChild) {
             document.documentElement.removeChild(document.documentElement.firstChild);
           }
-          let storeNumber = id;
+          
           const search_html = document.querySelector('html');
           const head = document.createElement('head');
           const body = document.createElement('body');
@@ -648,6 +691,17 @@ board.addEventListener('click', () => {
           const mainScript = document.createElement("script");
           mainScript.src = "/reviewpage/reviewj.js";
           document.body.appendChild(mainScript);
+
+          let login_state = localStorage.getItem('loginState');
+          // login_state가 "login"일때 로그아웃 생성
+          if (login_state === "login") {
+            // 로그인택스트 변경 
+            const loginText = document.querySelector(".loginText");
+            loginText.innerHTML = "로그아웃";
+            // 로그아웃 컨테이너 클래스명 변경
+            const loginContainer = document.querySelector(".loginContainer");
+            loginContainer.classList = "logoutContainer";
+          }
           
         })
         .catch((error) => {
@@ -660,5 +714,40 @@ board.addEventListener('click', () => {
   
   
   
+let login_state = localStorage.getItem('loginState');
+// login_state가 "login"일때 로그아웃 생성
+if (login_state === "login") {
+  // 로그인택스트 변경 
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그아웃";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".loginContainer");
+  loginContainer.classList = "logoutContainer";
+
+  const logoutContainer = document.querySelector(".logoutContainer");
+  logoutContainer.addEventListener("click", () => {
+    // 로그인 상태 변경
+    localStorage.setItem('loginState', 'logout');
+    // 로그인택스트 변경
+    const loginText = document.querySelector(".loginText");
+    loginText.innerHTML = "로그인";
+    // 로그아웃 컨테이너 클래스명 변경
+    const loginContainer = document.querySelector(".logoutContainer");
+    loginContainer.classList = "loginContainer";
+  });
+}
+
+const logoutContainer = document.querySelector(".logoutContainer");
+logoutContainer.addEventListener("click", () => {
+  // 로그인 상태 변경
+  localStorage.setItem('loginState', 'logout');
+  // 로그인택스트 변경
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그인";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".logoutContainer");
+  loginContainer.classList = "loginContainer";
+});
+
   
-  })();
+})();
