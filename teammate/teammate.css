@@ -207,6 +207,7 @@
 
 
 .addButton {
+  display: none;
   background-color: white;
   border: none;
   border-bottom: grey 1px solid;
@@ -237,6 +238,7 @@
 
 .btnDiv {
   text-align: right;
+  display: none;
 }
 
 .editBtn {

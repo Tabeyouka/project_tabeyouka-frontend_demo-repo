@@ -142,9 +142,6 @@
             // eventLister for editBtn
             const editButton = document.querySelectorAll('.editBtn');
             editButton[index].addEventListener('click', (event) => {
-                if((!validateInput('.editModal'))) {
-                    return;
-                }
                 const targetId = event.target.id;
                 getMateById(targetId)
                     .then(result => {
@@ -173,8 +170,26 @@
         console.error(error);
     });
 
-    getUser();
-
+    getUser()
+    .then(result => {
+        console.log(result.user.master);
+        if(result.user.master == 1) {
+            console.log('triggered');
+            const addButton = document.querySelector('.addButton');
+            addButton.style.display = 'inline-block';
+            const teammateScrollBox = document.querySelector('.teammate-scroll-box');
+            console.log(teammateScrollBox);
+            const button = teammateScrollBox.querySelectorAll('.btnDiv');
+            console.log(button);
+            button.forEach((button) => {
+                console.log(button);
+                button.style.display = 'block';
+            });
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
 
     /* 함수 */
 
@@ -197,19 +212,21 @@
 
     // 유효성 검사
     const validateInput = (modal) => {
-        const modalContainer = document.querySelector(modal);
-        const modalInput = modalContainer.querySelectorAll('input');
+        const selectedModal = document.querySelector(modal);
+        const modalInput = selectedModal.querySelectorAll('input');
         console.log(modalInput);
         let isFirstValue = true;
         for(let index of modalInput) {
-            const trimValue = index.value.trim();
-            if(isFirstValue && isNaN(trimValue)) {
-                alert('학번은 숫자를 입력해주세요.');
-                return false;
-            }
-            if(!trimValue) {
-                alert('올바른 값을 입력해주세요.');
-                return false;
+            if(!(index.type == 'file') && !(modal == '.editModal')) {
+                const trimValue = index.value.trim();
+                if(isFirstValue && isNaN(trimValue)) {
+                    alert('학번은 숫자를 입력해주세요.');
+                    return false;
+                }
+                if(!trimValue) {
+                    alert('올바른 값을 입력해주세요.');
+                    return false;
+                }
             }
             isFirstValue = false;
         }
@@ -233,7 +250,7 @@
     // 수정 중 모달을 닫을 때 입력했던 값을 지움
     const resetInputValue = () => {
         const editModal = document.querySelector('.editModal');
-        const inputs = editModal.querySelectorAll('input[type="text"]');
+        const inputs = editModal.querySelectorAll('input');
         const addPreview = editModal.querySelector('img');
         for (let i = 0; i <= inputs.length; i++) {
             if (i == 0) {
@@ -266,7 +283,8 @@
         const button = document.createElement('button');
         button.innerHTML = text;
         button.classList.add('addButton');
-        button.addEventListener('click', () => { openModal(modal, 'opacityQue') });
+        const modal = document.querySelector('.modal');
+        button.addEventListener('click', () => { openModal( modal, 'opacityQue') });
         const team = document.querySelector('.team');
         team.appendChild(button);
     };
@@ -286,14 +304,13 @@
     };
 
     /* 요청 */
-    // 현재 유저의 정보를 요청
+    //현재 유저의 정보를 요청
     async function getUser() {
-        const response = await fetch('http://localhost:8080/api/status', {
+        const response = await fetch('http://127.0.0.1:8080/api/status', {
             method: 'GET',
             credentials: 'include',
         });
         const data = await response.json();
-        console.log(data);
         return data;
     }
     // 조원 추가
@@ -414,13 +431,17 @@
     });
 
     // 추가 모달 닫기 이벤트 리스너
+    const modal = document.querySelector('.modal');
     const modalclosebutton = document.querySelector('#closeAddModal');
     modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
 
-    // 조원 수정 버튼 이벤트 리스너
+    // 조원 수정 전송 버튼 이벤트 리스너
     const editModalSubmitButton = document.querySelector('#editSubmit');
     editModalSubmitButton.addEventListener('click', () => {
         if (confirm('정말 수정하시겠습니까?')) {
+            if((!validateInput('.editModal'))) {
+                return;
+            }
             const id = editModalSubmitButton.value;
             editPut(id).
                 then(result => {
@@ -656,7 +677,6 @@
     })
 
     // 검색시 화면전환
-
     const submit = document.querySelector('#inputForm');
     submit.addEventListener('submit', async (e) => {
         e.preventDefault();
