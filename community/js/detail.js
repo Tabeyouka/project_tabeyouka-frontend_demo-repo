@@ -98,7 +98,7 @@ listBtn.addEventListener("click", () => {
 });
 
 /* 게시글 수정 버튼: 누르면 게시글 수정 페이지로 넘어감 */
-const modifyBtn = document.querySelector('.modify');
+const modifyBtn = document.querySelector('.postmodify');
 modifyBtn.addEventListener("click", () => {
   fetch("../community/postModify.html", { credentials: "include" })
     .then((response) => response.text())
@@ -137,7 +137,7 @@ modifyBtn.addEventListener("click", () => {
 
 
 /* 게시글 삭제 버튼: 누르면 게시글 삭제 알림창을 띄운 뒤 확인/취소 여부에 따라 게시글을 삭제함 */
-const deleteBtn = document.querySelector('.delete');
+const deleteBtn = document.querySelector('.postdelete');
 console.log(deleteBtn);
 
 deleteBtn.addEventListener('click', () => {
