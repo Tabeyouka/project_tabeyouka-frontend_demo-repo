@@ -36,9 +36,6 @@ submit.addEventListener('submit', async (e) => {
   fetch("/search/search.html")
   .then((response) => response.text())
   .then((html) => {
-    
-
-    // document.documentElement.innerHTML = "";
     while (document.documentElement.firstChild) {
       document.documentElement.removeChild(document.documentElement.firstChild);
     }
@@ -55,12 +52,13 @@ submit.addEventListener('submit', async (e) => {
     document.body.appendChild(parsedHTML);
 
     
+    // search.html과 관련된 CSS 파일 추가
     const mainStyle = document.createElement("link");
     mainStyle.rel = "stylesheet";
     mainStyle.href = "/search/search.css";
     document.head.appendChild(mainStyle);
 
-    // main.html과 관련된 JavaScript 파일 추가
+    // search.html과 관련된 JavaScript 파일 추가
     const mainScript = document.createElement("script");
     mainScript.src = "/search/search.js";
     document.body.appendChild(mainScript);
@@ -80,7 +78,6 @@ submit.addEventListener('submit', async (e) => {
     if (searchResults === false) {
         const ol = document.querySelector('.searchInfo-space');
         ol.style.cssText = 'height: 500px; justify-content: center; flex-direction: column; align-items: center;';
-        // justify-content: center;
         const text = document.createElement('h1');
         text.textContent = `${search_word}를(을) 찾을 수 없습니다.`
         ol.appendChild(text);
@@ -289,7 +286,6 @@ clickLogin.addEventListener('click', () => {
   fetch("/signin/login.html", { credentials: "include" })
   .then((response) => response.text())
   .then((html) => {
-    // login.html 내용 제거 및 main.html 내용 추가
     while (document.documentElement.firstChild) {
       document.documentElement.removeChild(document.documentElement.firstChild);
     }
@@ -305,13 +301,14 @@ clickLogin.addEventListener('click', () => {
     document.body.appendChild(parsedHTML);
 
     
+    // login.html과 관련된 CSS 파일 추가
     const mainStyle = document.createElement("link");
     mainStyle.href = "/signin/css/login.css";
     mainStyle.rel = "stylesheet";
     mainStyle.type = "text/css";
     document.head.appendChild(mainStyle);
 
-    // main.html과 관련된 JavaScript 파일 추가
+    // login.html과 관련된 JavaScript 파일 추가
     const mainScript = document.createElement("script");
     mainScript.src = "/signin/javascript/login.js";
     document.body.appendChild(mainScript);
@@ -352,13 +349,14 @@ function addEventTo_introduce(elementSelector) {
       document.body.appendChild(parsedHTML);
   
       
+      // introduce.html과 관련된 CSS 파일 추가
       const mainStyle = document.createElement("link");
       mainStyle.type = "text/css"
       mainStyle.rel = "stylesheet";
       mainStyle.href = "/introducepage/introduceC.css";
       document.head.appendChild(mainStyle);
   
-      // main.html과 관련된 JavaScript 파일 추가
+      // introduce.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
       mainScript.src = "/introducepage/introduceJ.js";
       document.body.appendChild(mainScript);
@@ -405,13 +403,14 @@ function addEventTo_teammate(elementSelector) {
       document.body.appendChild(parsedHTML);
   
       
+      // teammate.html과 관련된 CSS 파일 추가
       const mainStyle = document.createElement("link");
       mainStyle.type = "text/css"
       mainStyle.rel = "stylesheet";
       mainStyle.href = "/teammate/teammate.css";
       document.head.appendChild(mainStyle);
   
-      // main.html과 관련된 JavaScript 파일 추가
+      // teammate.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
       mainScript.src = "/teammate/teammate.js";
       document.body.appendChild(mainScript);
@@ -464,13 +463,14 @@ const info_headers = document.querySelectorAll('.info-header');
           document.body.appendChild(parsedHTML);
   
           
+          // review.html과 관련된 CSS 파일 추가
           const mainStyle = document.createElement("link");
           mainStyle.type = "text/css"
           mainStyle.rel = "stylesheet";
           mainStyle.href = "/reviewpage/reviewc.css";
           document.head.appendChild(mainStyle);
   
-          // main.html과 관련된 JavaScript 파일 추가
+          // review.html과 관련된 JavaScript 파일 추가
           const mainScript = document.createElement("script");
           mainScript.src = "/reviewpage/reviewj.js";
           document.body.appendChild(mainScript);

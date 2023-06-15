@@ -12,7 +12,7 @@
   background-color: #eee;
 }
 
-/* input form */
+
 #inputForm {
   padding: 0;
   margin: 20px 0;
@@ -34,25 +34,25 @@
 
 /* Login Form */
 .loginContainer {
-  display: flex;
-  align-items: center;
-  width: 250px;
+  text-align: center;
+  width: 170px;
 }
 
 .loginContainer span {
   font-size: 24px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .logoutContainer {
-  display: flex;
-  align-items: center;
-  width: 250px;
+  text-align: center;
+  width: 170px;
 }
 
 .logoutContainer span {
   font-size: 24px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .titleImg {
@@ -103,6 +103,12 @@
   .btn-warning {
     margin-left: 4px;
     width: 90px;
+  }
+}
+
+@media (max-width: 1660px) {
+  #inputForm {
+    width: 900px;
   }
 }
 
@@ -226,7 +232,7 @@ div.scroll-container {
   }
 }
 
-/* 이미지 크기, display, 정렬방식 등 */
+
 
 div.gallery img {
   overflow: auto;
@@ -242,7 +248,7 @@ div.gallery img {
 
 .responsive {
   padding: 0 6px;
-  flex: 0 0 25%; /* Flex Item으로 지정 */
+  flex: 0 0 25%; 
 }
 
 
