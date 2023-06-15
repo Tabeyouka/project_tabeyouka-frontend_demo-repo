@@ -35,7 +35,7 @@ const date = document.querySelector('.date');
 /* 게시글 내용 */
 const content = document.querySelector('.content');
 
-const postId = localStorage.getItem("postId");
+var postId = localStorage.getItem("postId");
 
 fetch(`http://127.0.0.1:8080/api/community/${postId}`, {
   headers: {
