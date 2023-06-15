@@ -1,11 +1,5 @@
 * {
-  font-family: pretendard; 
-}
-
-
-body {
-  margin: 0;
-  padding: 0;
+  font-family: pretendard;
 }
 
 /* 헤더 */
@@ -24,10 +18,9 @@ body {
   margin: 20px 0;
   outline: 0;
   display: flex;
-  width: 800px;
+  width: 1000px;
   height: 50px;
 }
-
 
 .form-select {
   max-width: 120px;
@@ -42,12 +35,22 @@ body {
 /* Login Form */
 .loginContainer {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 250px;
+}
+
+.logoutContainer {
+  display: flex;
+  align-items: center;
+  width: 250px;
 }
 
 .loginContainer span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.logoutContainer span {
   font-size: 24px;
   cursor: pointer;
 }
@@ -57,7 +60,6 @@ body {
   height: 90px;
   margin-left: 50px;
 }
-
 
 /* 스마트폰 반응형 */
 @media (max-width: 600px) {
@@ -82,6 +84,8 @@ body {
 
   .loginContainer {
     margin-bottom: 10px;
+    justify-content: center;
+    width: 250px;
   }
 
   .form-select {
@@ -101,7 +105,6 @@ body {
   border: 0.1px rgba(165, 165, 165, 0.733) solid;
   background-color: rgb(225, 225, 225);
   height: 50px;
-  width: auto;
 }
 
 .menuList {
@@ -141,45 +144,6 @@ body {
     width: 100%;
   }
 }
-
-
-
-/* @media (max-width: 800px) {
-  .navbar {
-    flex-direction: column;
-    height: auto;
-    padding: 10px;
-  }
-
-  #inputForm {
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .titleImg{
-    margin: 0 100px;
-    width: 200px;
-    height: auto;
-  }
-
-  .loginContainer {
-    margin-bottom: 10px;
-  }
-
-  .form-select {
-    margin-left: 5px;
-    margin-right: 5px;
-    flex-grow: 1;
-  }
-
-  .btn-warning {
-    margin-left: 4px;
-    width: 90px;
-  }
-  
-} */
 
 
   .container{
