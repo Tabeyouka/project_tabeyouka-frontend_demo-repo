@@ -22,22 +22,20 @@ const responsive = document.querySelectorAll('.responsive');
 let responsiveWidth; // 변수 선언
 
 const updateResponsiveWidth = () => {
-  responsiveWidth = responsive[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
+	// 첫 번째 responsive 요소의 너비 사용
+  responsiveWidth = responsive[0].clientWidth; 
 };
-
-updateResponsiveWidth(); // 초기화
-
-window.addEventListener('resize', updateResponsiveWidth); // 윈도우 크기 변경 시 요소 width 업데이트
+// 초기화
+updateResponsiveWidth(); 
+// 윈도우 크기 변경 시 요소 width 업데이트
+window.addEventListener('resize', updateResponsiveWidth);
 
 next.addEventListener('click', () => {
+	// 슬라이더 현재위치
   const currentPosition = scrollContainer.scrollLeft;
-  let nextPosition = currentPosition + responsiveWidth; // 슬라이더 현재 위치 + 요소 width
-  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
-  if (nextPosition + scrollContainer.clientWidth > scrollContainer.scrollWidth) {
-    // 다음 위치 = 전체너비 - 가시영역 너비
-    nextPosition = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-  }
-
+  // 다음 위치 = 현재위치 + 요소너비
+  let nextPosition = currentPosition + responsiveWidth; 
+	// 다음위치까지 'smooth'하게 이동
   scrollContainer.scrollTo({
     left: nextPosition,
     behavior: 'smooth'
@@ -49,11 +47,7 @@ prev.addEventListener('click', () => {
   const currentPosition = scrollContainer.scrollLeft;
   // 다음 위치 = 현재위치 - 요소너비
   let prevPosition = currentPosition - responsiveWidth;
-  // 0보다 내려갈수없음
-  if (prevPosition < 0) {
-    prevPosition = 0;
-  }
-
+	// 다음위치까지 'smooth'하게 이동
   scrollContainer.scrollTo({
     left: prevPosition,
     behavior: 'smooth'
@@ -67,25 +61,19 @@ const prev2 = document.querySelector('.fa-square-caret-left.v2');
 const next2 = document.querySelector('.fa-square-caret-right.v2');
 const responsive2 = document.querySelectorAll('.responsive.v2');
 
-let responsiveWidth2; // 변수 선언
+let responsiveWidth2;
 
 const updateResponsiveWidth2 = () => {
-  responsiveWidth2 = responsive2[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
+  responsiveWidth2 = responsive2[0].clientWidth;
 };
 
-updateResponsiveWidth2(); // 초기화
+updateResponsiveWidth2();
 
-window.addEventListener('resize', updateResponsiveWidth2); // 윈도우 크기 변경 시 요소 width 업데이트
+window.addEventListener('resize', updateResponsiveWidth2);
 
 next2.addEventListener('click', () => {
   const currentPosition2 = scrollContainer2.scrollLeft;
-  let nextPosition2 = currentPosition2 + responsiveWidth2; // 슬라이더 현재 위치 + 요소 width
-  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
-  if (nextPosition2 + scrollContainer2.clientWidth > scrollContainer2.scrollWidth) {
-    // 다음 위치 = 전체너비 - 가시영역 너비
-    nextPosition2 = scrollContainer2.scrollWidth - scrollContainer2.clientWidth;
-  }
-
+  let nextPosition2 = currentPosition2 + responsiveWidth2;
   scrollContainer2.scrollTo({
     left: nextPosition2,
     behavior: 'smooth'
@@ -97,11 +85,6 @@ prev2.addEventListener('click', () => {
   const currentPosition2 = scrollContainer2.scrollLeft;
   // 다음 위치 = 현재위치 - 요소너비
   let prevPosition2 = currentPosition2 - responsiveWidth2;
-  // 0보다 내려갈수없음
-  if (prevPosition2 < 0) {
-    prevPosition2 = 0;
-  }
-
   scrollContainer2.scrollTo({
     left: prevPosition2,
     behavior: 'smooth'
@@ -212,7 +195,7 @@ const imageChange = () => {
   }
 }
 
-// imageChange();
+imageChange();
 
 
 let images = document.querySelectorAll(".img-container img");
@@ -307,6 +290,10 @@ submit.addEventListener('submit', async (e) => {
         home_button.textContent = '홈으로';
         home_button.classList.add('btn', 'btn-warning');
         ol.appendChild(home_button);
+        home_button.addEventListener('click', () => {
+          window.location.href = "";
+        }
+        );
     }
     
     let login_state = localStorage.getItem('loginState');
@@ -476,14 +463,15 @@ board.addEventListener('click', () => {
           const range = document.createRange();
           const parsedHTML = range.createContextualFragment(html);
           document.body.appendChild(parsedHTML);
-
+          
+          // list.html"과 관련된 CSS 파일 추가
           const mainStyle = document.createElement("link");
           mainStyle.type = "text/css"
           mainStyle.rel = "stylesheet";
           mainStyle.href = "/community/css/list.css";
           document.head.appendChild(mainStyle);
 
-          // main.html과 관련된 JavaScript 파일 추가
+          // list.html"과 관련된 JavaScript 파일 추가
           const mainScript = document.createElement("script");
           mainScript.src = "/community/js/list.js";
           document.body.appendChild(mainScript);
@@ -516,7 +504,6 @@ board.addEventListener('click', () => {
   // 로그인 연결
   const clickLogin = document.querySelector('.loginText');
   clickLogin.addEventListener('click', () => {
-    // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
     fetch("/signin/login.html", { credentials: "include" })
     .then((response) => response.text())
     .then((html) => {
@@ -571,13 +558,14 @@ board.addEventListener('click', () => {
         document.body.appendChild(parsedHTML);
     
         
+        // introduce.html과 관련된 CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/introducepage/introduceC.css";
         document.head.appendChild(mainStyle);
     
-        // main.html과 관련된 JavaScript 파일 추가
+        // introduce.html과 관련된 JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
@@ -621,13 +609,14 @@ board.addEventListener('click', () => {
         document.body.appendChild(parsedHTML);
     
         
+        // teammate.html과 관련된 CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/teammate/teammate.css";
         document.head.appendChild(mainStyle);
     
-        // main.html과 관련된 JavaScript 파일 추가
+        // teammate.html과 관련된 JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
@@ -648,17 +637,6 @@ board.addEventListener('click', () => {
       });
   
   })
-  
-  // async function login_state() {
-  //   const response = await fetch(`http://localhost:8080/api/status`,
-  //   {
-  //     method: 'GET',
-  //   });
-  //   const data = await response.json();
-  //   console.log(data);
-  //   return data;
-  // }
-  // login_state();
   
   const overlays = document.querySelectorAll('.overlay');
   
@@ -693,7 +671,7 @@ board.addEventListener('click', () => {
           mainStyle.href = "/reviewpage/reviewc.css";
           document.head.appendChild(mainStyle);
   
-          // main.html과 관련된 JavaScript 파일 추가
+          // review.html과 관련된 CSS 파일 추가
           const mainScript = document.createElement("script");
           mainScript.src = "/reviewpage/reviewj.js";
           document.body.appendChild(mainScript);
