@@ -315,9 +315,29 @@
   height: 38.13px;
 }
 
-/* #post-redirect {
-  display: none;
-} */
+/* 반응형 */
+
+@media (max-width: 697px) {
+
+  .line-sort {
+    height: 85px;
+  }
+  .community-title {
+    text-align: center;
+  }
+  .community-text {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .search-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+}
 
 /* footer */
 ul {
@@ -426,3 +446,5 @@ ul {
 	font-size: 14px;
 	color: #878787;
 }
+
+
