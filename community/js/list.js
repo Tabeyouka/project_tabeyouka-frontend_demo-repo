@@ -192,40 +192,6 @@
     );
   }
 
-  // 로그인이 되어 있는 상태에 따라 작성 버튼 보이기/숨기기 여부 판별
-
-  window.addEventListener("DOMContentLoaded", () => {
-    console.log('ㄱ')
-    fetch("http://127.0.0.1:8080/api/status", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    })
-      .then((statusResponse) => {
-        if (!statusResponse.ok) {
-          throw new Error("서버 응답이 실패했습니다.");
-        }
-
-        return statusResponse.json();
-      })
-      .then((statusResult) => {
-        console.log(statusResult.message);
-        // /api/status의 응답을 확인
-        if (statusResult.message === "User is logged in") {
-          console.log('로그인')
-          postRedirect.style.display = "block";
-        } else if (statusResult.message === "User is logged out ") {
-          console.log('로그아웃')
-          postRedirect.style.display = "none";
-        }
-      })
-      .catch((error) => {
-        console.log("api/status 통신 실패", error);
-      });
-  });
-
   // post.js 통신
 
   postRedirect.addEventListener("click", () => {
