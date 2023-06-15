@@ -16,21 +16,6 @@
   let searchKeyword = ""; // 검색 키워드
   const postRedirect = document.querySelector(".post-redirect"); // 버튼 요소
 
-  // 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수
-  function updateBoardData(page) {
-    currentPage = page;
-    fetchBoardData(page)
-      .then((posts) => {
-        const filteredPosts = searchKeyword
-          ? filterPostsByKeyword(posts)
-          : posts;
-        addPostsToBoard(filteredPosts);
-      })
-      .catch((error) => {
-        console.error("API 요청 중 오류가 발생했습니다:", error);
-      });
-  }
-
 // 게시글 데이터를 페이지별로 가져오는 함수
 function fetchBoardData(page) {
   const start = (page - 1) * itemsPerPage;
