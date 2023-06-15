@@ -16,44 +16,46 @@
   let searchKeyword = ""; // 검색 키워드
   const postRedirect = document.querySelector(".post-redirect"); // 버튼 요소
 
-// 게시글 데이터를 페이지별로 가져오는 함수
-function fetchBoardData(page) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return fetch("http://127.0.0.1:8080/api/community", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-  })
-    .then((response) => {
-      console.log("서버 통신 완료");
-      return response.json();
+  // 게시글 데이터를 페이지별로 가져오는 함수
+  function fetchBoardData(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return fetch("http://127.0.0.1:8080/api/community", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
     })
-    .then((data) => {
-      console.log(data);
-      return data.posts; // 정렬되지 않은 게시글 데이터 반환
-    })
-    .catch((error) => console.log(error));
-}
+      .then((response) => {
+        console.log("서버 통신 완료");
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return data.posts; // 정렬되지 않은 게시글 데이터 반환
+      })
+      .catch((error) => console.log(error));
+  }
 
-// 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수(1페이지 당 10개)
-function updateBoardData(page) {
-  currentPage = page;
-  fetchBoardData(page)
-    .then((posts) => {
-      const filteredPosts = searchKeyword
-        ? filterPostsByKeyword(posts)
-        : posts;
-      const sortedPosts = filteredPosts.sort((a, b) => b.id - a.id);
-      const pagedPosts = sortedPosts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-      addPostsToBoard(pagedPosts);
-    })
-    .catch((error) => {
-      console.error("API 요청 중 오류가 발생했습니다:", error);
-    });
-}
-
+  // 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수(1페이지 당 10개)
+  function updateBoardData(page) {
+    currentPage = page;
+    fetchBoardData(page)
+      .then((posts) => {
+        const filteredPosts = searchKeyword
+          ? filterPostsByKeyword(posts)
+          : posts;
+        const sortedPosts = filteredPosts.sort((a, b) => b.id - a.id);
+        const pagedPosts = sortedPosts.slice(
+          (page - 1) * itemsPerPage,
+          page * itemsPerPage
+        );
+        addPostsToBoard(pagedPosts);
+      })
+      .catch((error) => {
+        console.error("API 요청 중 오류가 발생했습니다:", error);
+      });
+  }
 
   // 게시판 데이터를 HTML에 추가하는 함수
   function addPostsToBoard(posts) {
@@ -68,10 +70,12 @@ function updateBoardData(page) {
       postRow.innerHTML = `
       <div class="col id">${post.id}</div>
       <div class="col title">${post.title}</div>
-      <div class="col nickname">${post.nickname ? post.nickname : "Unknown"}</div>
+      <div class="col nickname">${
+        post.nickname ? post.nickname : "Unknown"
+      }</div>
       <div class="col date">${formatDate(post.created_at)}</div>
     `;
-      
+
       postRow.addEventListener("click", () => {
         fetch(`http://127.0.0.1:8080/api/community/${post.id}`, {
           headers: {
@@ -81,47 +85,76 @@ function updateBoardData(page) {
         })
           .then((response) => response.json())
           .then((post) => {
-
             // post.id를 로컬 스토리지에 저장 -> detail에서 로컬 스토리지 값을 읽어와 post.id값을 이용해 API 통신
-            const post_id = post.post.id
+            const post_id = post.post.id;
+            const post_nickname = post.post.nickname;
             localStorage.setItem("postId", post_id);
             // 게시물 디테일 페이지를 가져오고 화면을 변경
-            fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-              .then((response) => response.text())
-              .then((html) => {
-                // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
-                while (document.documentElement.firstChild) {
-                  document.documentElement.removeChild(
-                    document.documentElement.firstChild
-                  );
+
+            fetch("http://127.0.0.1:8080/api/status", {
+              credentials: "include",
+            }) // 로그인 여부 확인 요청에도 쿠키를 포함
+              .then((response) => response.json())
+              .then((data) => {
+                const status_nickname = data.user.nickname
+                var nicknameCheck;
+ 
+                if (status_nickname === post_nickname) {
+                  nicknameCheck = true;
+                } else {
+                  nicknameCheck = false;
                 }
+        
+                // list.html로 이동
+                fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                  .then((response) => response.text())
+                  .then((html) => {
+                    // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+                    while (document.documentElement.firstChild) {
+                      document.documentElement.removeChild(
+                        document.documentElement.firstChild
+                      );
+                    }
 
-                const search_html = document.querySelector("html");
-                const head = document.createElement("head");
-                const body = document.createElement("body");
-                search_html.appendChild(head);
-                search_html.appendChild(body);
+                    const search_html = document.querySelector("html");
+                    const head = document.createElement("head");
+                    const body = document.createElement("body");
+                    search_html.appendChild(head);
+                    search_html.appendChild(body);
 
-                const range = document.createRange();
-                const parsedHTML = range.createContextualFragment(html);
-                document.body.appendChild(parsedHTML);
+                    const range = document.createRange();
+                    const parsedHTML = range.createContextualFragment(html);
+                    document.body.appendChild(parsedHTML);
 
-                // 메인.html과 관련된 CSS 파일 추가
-                const mainStyle = document.createElement("link");
-                mainStyle.rel = "stylesheet";
-                mainStyle.type = "text/css";
-                mainStyle.href = "../community/css/detail.css";
-                document.head.appendChild(mainStyle);
+                    // 메인.html과 관련된 CSS 파일 추가
+                    const mainStyle = document.createElement("link");
+                    mainStyle.rel = "stylesheet";
+                    mainStyle.type = "text/css";
+                    mainStyle.href = "../community/css/detail.css";
+                    document.head.appendChild(mainStyle);
 
-                // 메인.html과 관련된 JavaScript 파일 추가
-                const mainScript = document.createElement("script");
-                mainScript.src = "../community/js/detail.js";
-                document.body.appendChild(mainScript);
+                    // 메인.html과 관련된 JavaScript 파일 추가
+                    const mainScript = document.createElement("script");
+                    mainScript.src = "../community/js/detail.js";
+                    document.body.appendChild(mainScript);
+
+                    // 수정, 삭제 버튼
+                    const modifyButton = document.querySelector(".postmodify");
+                    const deleteButton = document.querySelector(".postdelete");
+
+                    modifyButton.style.display = nicknameCheck ? 'block' : 'none';
+                    deleteButton.style.display = nicknameCheck ? 'block' : 'none'
+                    
+                  })
+                  .catch((error) => {
+                    console.error("에러:", error);
+                  });
               })
               .catch((error) => {
                 console.error("에러:", error);
               });
           })
+
           .catch((error) => {
             console.error("API 요청 중 오류가 발생했습니다:", error);
           });
@@ -225,10 +258,10 @@ function updateBoardData(page) {
         mainScript.src = "/community/js/post.js";
         document.body.appendChild(mainScript);
 
-        let login_state = localStorage.getItem('loginState');
+        let login_state = localStorage.getItem("loginState");
         // login_state가 "login"일때 로그아웃 생성
         if (login_state === "login") {
-          // 로그인택스트 변경 
+          // 로그인택스트 변경
           const loginText = document.querySelector(".loginText");
           loginText.innerHTML = "로그아웃";
           // 로그아웃 컨테이너 클래스명 변경
@@ -276,10 +309,10 @@ function updateBoardData(page) {
         mainScript.src = "/signin/javascript/login.js";
         document.body.appendChild(mainScript);
 
-        let login_state = localStorage.getItem('loginState');
+        let login_state = localStorage.getItem("loginState");
         // login_state가 "login"일때 로그아웃 생성
         if (login_state === "login") {
-          // 로그인택스트 변경 
+          // 로그인택스트 변경
           const loginText = document.querySelector(".loginText");
           loginText.innerHTML = "로그아웃";
           // 로그아웃 컨테이너 클래스명 변경
@@ -339,10 +372,10 @@ function updateBoardData(page) {
         mainScript.src = "/search/search.js";
         document.body.appendChild(mainScript);
 
-        let login_state = localStorage.getItem('loginState');
+        let login_state = localStorage.getItem("loginState");
         // login_state가 "login"일때 로그아웃 생성
         if (login_state === "login") {
-          // 로그인택스트 변경 
+          // 로그인택스트 변경
           const loginText = document.querySelector(".loginText");
           loginText.innerHTML = "로그아웃";
           // 로그아웃 컨테이너 클래스명 변경
@@ -439,7 +472,7 @@ function updateBoardData(page) {
           location.textContent = information.address;
 
           const idNumber = information.id;
-          const id = document.createElement('p');
+          const id = document.createElement("p");
           id.textContent = idNumber;
           id.classList.add("id");
           infoHead.appendChild(id);
@@ -523,10 +556,10 @@ function updateBoardData(page) {
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
 
-        let login_state = localStorage.getItem('loginState');
+        let login_state = localStorage.getItem("loginState");
         // login_state가 "login"일때 로그아웃 생성
         if (login_state === "login") {
-          // 로그인택스트 변경 
+          // 로그인택스트 변경
           const loginText = document.querySelector(".loginText");
           loginText.innerHTML = "로그아웃";
           // 로그아웃 컨테이너 클래스명 변경
@@ -572,10 +605,10 @@ function updateBoardData(page) {
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
 
-        let login_state = localStorage.getItem('loginState');
+        let login_state = localStorage.getItem("loginState");
         // login_state가 "login"일때 로그아웃 생성
         if (login_state === "login") {
-          // 로그인택스트 변경 
+          // 로그인택스트 변경
           const loginText = document.querySelector(".loginText");
           loginText.innerHTML = "로그아웃";
           // 로그아웃 컨테이너 클래스명 변경
@@ -590,13 +623,13 @@ function updateBoardData(page) {
 
   const logoutContainer = document.querySelector(".logoutContainer");
   logoutContainer.addEventListener("click", () => {
-  // 로그인 상태 변경
-  localStorage.setItem('loginState', 'logout');
-  // 로그인택스트 변경
-  const loginText = document.querySelector(".loginText");
-  loginText.innerHTML = "로그인";
-  // 로그아웃 컨테이너 클래스명 변경
-  const loginContainer = document.querySelector(".logoutContainer");
-  loginContainer.classList = "loginContainer";
-});
+    // 로그인 상태 변경
+    localStorage.setItem("loginState", "logout");
+    // 로그인택스트 변경
+    const loginText = document.querySelector(".loginText");
+    loginText.innerHTML = "로그인";
+    // 로그아웃 컨테이너 클래스명 변경
+    const loginContainer = document.querySelector(".logoutContainer");
+    loginContainer.classList = "loginContainer";
+  });
 })();
