@@ -1,3 +1,4 @@
+(() => {
 // input 요소 클릭 이벤트
 const input = document.querySelectorAll('.form-control');
 
@@ -48,7 +49,7 @@ fetch(`http://127.0.0.1:8080/api/community/${postId}`, {
     console.log(data);
 
     title.innerHTML = data.post.title
-    writer.innerHTML = data.post.author_id ? data.post.author_id : "Unknown";
+    writer.innerHTML = data.post.nickname ? data.post.nickname : "Unknown";
     date.textContent = formatDate(data.post.created_at);
     content.textContent = data.post.text;
     image.src = data.post.image;
@@ -64,25 +65,31 @@ listBtn.addEventListener("click", () => {
   fetch("../community/list.html", { credentials: "include" })
     .then((response) => response.text())
     .then((html) => {
-      // 해당 html 내용 제거 후 변경할 html로 내용 변경
-      document.documentElement.innerHTML = "";
-
+   
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+  
+  
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
       document.body.appendChild(parsedHTML);
-
-      const appContainer = document.querySelector(".app-container");
-
-      // CSS 파일 추가
+  
+      
       const mainStyle = document.createElement("link");
       mainStyle.rel = "stylesheet";
       mainStyle.href = "../community/css/list.css";
       document.head.appendChild(mainStyle);
-
-      // JavaScript 파일 추가
+  
+      // main.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
       mainScript.src = "../community/js/list.js";
-      mainScript.type = "text/javascript"; // MIME 유형 설정
       document.body.appendChild(mainScript);
     })
     .catch((error) => {
@@ -96,25 +103,31 @@ modifyBtn.addEventListener("click", () => {
   fetch("../community/postModify.html", { credentials: "include" })
     .then((response) => response.text())
     .then((html) => {
-      // 해당 html 내용 제거 후 변경할 html로 내용 변경
-      document.documentElement.innerHTML = "";
 
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+  
+  
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
       document.body.appendChild(parsedHTML);
-
-      const appContainer = document.querySelector(".app-container");
-
-      // CSS 파일 추가
+  
+      
       const mainStyle = document.createElement("link");
       mainStyle.rel = "stylesheet";
       mainStyle.href = "../community/css/post.css";
       document.head.appendChild(mainStyle);
-
-      // JavaScript 파일 추가
+  
+      // main.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
       mainScript.src = "../community/js/postModify.js";
-      mainScript.type = "text/javascript"; // MIME 유형 설정
       document.body.appendChild(mainScript);
     })
     .catch((error) => {
@@ -137,7 +150,42 @@ deleteBtn.addEventListener('click', () => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
-      alert('게시글이 삭제되었습니다.');
+      alert('게시글이 삭제되었습니다. 게시판 리스트로 이동합니다.');
+
+      // 삭제 후 게시판 이동
+      fetch("../community/list.html", { credentials: "include" })
+      .then((response) => response.text())
+      .then((html) => {
+
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+  
+  
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "../community/css/list.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "../community/js/list.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
     })
     .catch(err => {
       console.log("오류 발생: ", err);
@@ -291,3 +339,4 @@ confirm('정말로 게시글을 삭제하시겠습니까?');
     .catch(err => alert('삭제에 실패하였습니다.'));
   }
 })
+})();
