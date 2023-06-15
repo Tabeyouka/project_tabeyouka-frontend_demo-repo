@@ -65,6 +65,17 @@ submit.addEventListener('submit', async (e) => {
     mainScript.src = "/search/search.js";
     document.body.appendChild(mainScript);
 
+    let login_state = localStorage.getItem('loginState');
+    // login_state가 "login"일때 로그아웃 생성
+    if (login_state === "login") {
+      // 로그인택스트 변경 
+      const loginText = document.querySelector(".loginText");
+      loginText.innerHTML = "로그아웃";
+      // 로그아웃 컨테이너 클래스명 변경
+      const loginContainer = document.querySelector(".loginContainer");
+      loginContainer.classList = "logoutContainer";
+    }
+
     
     if (searchResults === false) {
         const ol = document.querySelector('.searchInfo-space');
@@ -176,6 +187,7 @@ submit.addEventListener('submit', async (e) => {
       locationContainer.appendChild(location);
       
     }
+
     
 
   })
@@ -239,6 +251,17 @@ function addEventToElement(elementSelector) {
         const mainScript = document.createElement("script");
         mainScript.src = "/community/js/list.js";
         document.body.appendChild(mainScript);
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
@@ -286,6 +309,17 @@ clickLogin.addEventListener('click', () => {
     const mainScript = document.createElement("script");
     mainScript.src = "/signin/javascript/login.js";
     document.body.appendChild(mainScript);
+
+    let login_state = localStorage.getItem('loginState');
+    // login_state가 "login"일때 로그아웃 생성
+    if (login_state === "login") {
+      // 로그인택스트 변경 
+      const loginText = document.querySelector(".loginText");
+      loginText.innerHTML = "로그아웃";
+      // 로그아웃 컨테이너 클래스명 변경
+      const loginContainer = document.querySelector(".loginContainer");
+      loginContainer.classList = "logoutContainer";
+    }
   })
 }); 
 
@@ -322,6 +356,17 @@ function addEventTo_introduce(elementSelector) {
       const mainScript = document.createElement("script");
       mainScript.src = "/introducepage/introduceJ.js";
       document.body.appendChild(mainScript);
+
+      let login_state = localStorage.getItem('loginState');
+      // login_state가 "login"일때 로그아웃 생성
+      if (login_state === "login") {
+        // 로그인택스트 변경 
+        const loginText = document.querySelector(".loginText");
+        loginText.innerHTML = "로그아웃";
+        // 로그아웃 컨테이너 클래스명 변경
+        const loginContainer = document.querySelector(".loginContainer");
+        loginContainer.classList = "logoutContainer";
+      }
     })
     .catch((error) => {
       console.error("에러:", error);
@@ -364,6 +409,17 @@ function addEventTo_teammate(elementSelector) {
       const mainScript = document.createElement("script");
       mainScript.src = "/teammate/teammate.js";
       document.body.appendChild(mainScript);
+
+      let login_state = localStorage.getItem('loginState');
+      // login_state가 "login"일때 로그아웃 생성
+      if (login_state === "login") {
+        // 로그인택스트 변경 
+        const loginText = document.querySelector(".loginText");
+        loginText.innerHTML = "로그아웃";
+        // 로그아웃 컨테이너 클래스명 변경
+        const loginContainer = document.querySelector(".loginContainer");
+        loginContainer.classList = "logoutContainer";
+      }
     })
     .catch((error) => {
       console.error("에러:", error);
@@ -372,4 +428,63 @@ function addEventTo_teammate(elementSelector) {
 };
 addEventTo_teammate('.teammate');
 addEventTo_teammate('.teammate_sideBar');
+
+
+// const info_headers = document.querySelectorAll('.info-header');
+// info_headers.forEach(info_header => {
+//   info_header.addEventListener('click', () => {
+//     const idElement = document.querySelector('.info_header');
+//     let id = idElement.textContent;
+    
+//     document.hash = id;
+//     // 가게이동
+//     fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+//       .then((response) => response.text())
+//       .then((html) => {
+//         while (document.documentElement.firstChild) {
+//           document.documentElement.removeChild(document.documentElement.firstChild);
+//         }
+//         let storeNumber = id;
+//         const search_html = document.querySelector('html');
+//         const head = document.createElement('head');
+//         const body = document.createElement('body');
+//         search_html.appendChild(head);
+//         search_html.appendChild(body);
+
+//         const range = document.createRange();
+//         const parsedHTML = range.createContextualFragment(html);
+//         document.body.appendChild(parsedHTML);
+
+        
+//         const mainStyle = document.createElement("link");
+//         mainStyle.type = "text/css"
+//         mainStyle.rel = "stylesheet";
+//         mainStyle.href = "/reviewpage/reviewc.css";
+//         document.head.appendChild(mainStyle);
+
+//         // main.html과 관련된 JavaScript 파일 추가
+//         const mainScript = document.createElement("script");
+//         mainScript.src = "/reviewpage/reviewj.js";
+//         document.body.appendChild(mainScript);
+        
+//       })
+//       .catch((error) => {
+//         console.error("에러:", error);
+//       });
+
+//   });
+
+// });
+
+const logoutContainer = document.querySelector(".logoutContainer");
+logoutContainer.addEventListener("click", () => {
+  // 로그인 상태 변경
+  localStorage.setItem('loginState', 'logout');
+  // 로그인택스트 변경
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그인";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".logoutContainer");
+  loginContainer.classList = "loginContainer";
+});
 })();

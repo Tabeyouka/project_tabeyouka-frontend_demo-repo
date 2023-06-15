@@ -205,6 +205,15 @@
                   const mainScript = document.createElement("script");
                   mainScript.src = "/main/main.js";
                   document.body.appendChild(mainScript);
+                  // 로그인 상태 저장
+                  localStorage.setItem('loginState', 'login');
+                  
+                  // 로그인택스트 변경 
+                  const loginText = document.querySelector(".loginText");
+                  loginText.innerHTML = "로그아웃";
+                  // 로그아웃 컨테이너 클래스명 변경
+                  const loginContainer = document.querySelector(".loginContainer");
+                  loginContainer.classList = "logoutContainer";
                 })
                 .catch((error) => {
                   console.error("에러:", error);

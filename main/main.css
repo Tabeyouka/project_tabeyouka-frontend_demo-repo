@@ -39,7 +39,18 @@
   width: 250px;
 }
 
+.logoutContainer {
+  display: flex;
+  align-items: center;
+  width: 250px;
+}
+
 .loginContainer span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.logoutContainer span {
   font-size: 24px;
   cursor: pointer;
 }
