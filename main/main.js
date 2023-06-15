@@ -308,7 +308,7 @@ submit.addEventListener('submit', async (e) => {
         home_button.classList.add('btn', 'btn-warning');
         ol.appendChild(home_button);
     }
-
+    
     let login_state = localStorage.getItem('loginState');
     // login_state가 "login"일때 로그아웃 생성
     if (login_state === "login") {
@@ -329,7 +329,7 @@ submit.addEventListener('submit', async (e) => {
       li.classList.add('searchInfo-infoContainer');
       
       const a = document.createElement('a');
-      a.href = '#';
+      
       
       const infoHead = document.createElement('div');
       infoHead.classList.add('info-header');
@@ -392,6 +392,12 @@ submit.addEventListener('submit', async (e) => {
       const location = document.createElement('p');
       location.classList.add('location');
       location.textContent = information.address;
+
+      const idNumber = information.id;
+      const id = document.createElement('p');
+      id.textContent = idNumber;
+      id.classList.add("id");
+      infoHead.appendChild(id);
       
   
       ol.appendChild(li);
@@ -661,7 +667,7 @@ board.addEventListener('click', () => {
       const idElement = overlay.querySelector('.id');
       let id = idElement.textContent;
       
-      document.hash = id;
+      localStorage.setItem('id', id);
       // 가게이동
       fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
         .then((response) => response.text())
