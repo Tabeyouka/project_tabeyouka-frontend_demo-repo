@@ -16,46 +16,44 @@
   let searchKeyword = ""; // 검색 키워드
   const postRedirect = document.querySelector(".post-redirect"); // 버튼 요소
 
-  // 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수
-  function updateBoardData(page) {
-    currentPage = page;
-    fetchBoardData(page)
-      .then((posts) => {
-        const filteredPosts = searchKeyword
-          ? filterPostsByKeyword(posts)
-          : posts;
-        addPostsToBoard(filteredPosts);
-      })
-      .catch((error) => {
-        console.error("API 요청 중 오류가 발생했습니다:", error);
-      });
-  }
-
-  // 게시글 데이터를 페이지별로 가져오는 함수
-  function fetchBoardData(page) {
-    const start = (page - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return fetch("http://127.0.0.1:8080/api/community", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
+// 게시글 데이터를 페이지별로 가져오는 함수
+function fetchBoardData(page) {
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return fetch("http://127.0.0.1:8080/api/community", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  })
+    .then((response) => {
+      console.log("서버 통신 완료");
+      return response.json();
     })
-      .then((response) => {
-        console.log("서버 통신 완료");
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        // 게시글을 내림차순으로 정렬
-        const sortedPosts = data.posts.sort((a, b) => b.id - a.id);
+    .then((data) => {
+      console.log(data);
+      return data.posts; // 정렬되지 않은 게시글 데이터 반환
+    })
+    .catch((error) => console.log(error));
+}
 
-        // 페이지 범위에 맞는 게시글 추출
-        const posts = sortedPosts.slice(start, end);
-        return posts;
-      })
-      .catch((error) => console.log(error));
-  }
+// 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수(1페이지 당 10개)
+function updateBoardData(page) {
+  currentPage = page;
+  fetchBoardData(page)
+    .then((posts) => {
+      const filteredPosts = searchKeyword
+        ? filterPostsByKeyword(posts)
+        : posts;
+      const sortedPosts = filteredPosts.sort((a, b) => b.id - a.id);
+      const pagedPosts = sortedPosts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+      addPostsToBoard(pagedPosts);
+    })
+    .catch((error) => {
+      console.error("API 요청 중 오류가 발생했습니다:", error);
+    });
+}
+
 
   // 게시판 데이터를 HTML에 추가하는 함수
   function addPostsToBoard(posts) {
