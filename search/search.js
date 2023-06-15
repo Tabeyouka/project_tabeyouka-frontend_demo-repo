@@ -372,4 +372,51 @@ function addEventTo_teammate(elementSelector) {
 };
 addEventTo_teammate('.teammate');
 addEventTo_teammate('.teammate_sideBar');
+
+
+// const info_headers = document.querySelectorAll('.info-header');
+// info_headers.forEach(info_header => {
+//   info_header.addEventListener('click', () => {
+//     const idElement = document.querySelector('.info_header');
+//     let id = idElement.textContent;
+    
+//     document.hash = id;
+//     // 가게이동
+//     fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+//       .then((response) => response.text())
+//       .then((html) => {
+//         while (document.documentElement.firstChild) {
+//           document.documentElement.removeChild(document.documentElement.firstChild);
+//         }
+//         let storeNumber = id;
+//         const search_html = document.querySelector('html');
+//         const head = document.createElement('head');
+//         const body = document.createElement('body');
+//         search_html.appendChild(head);
+//         search_html.appendChild(body);
+
+//         const range = document.createRange();
+//         const parsedHTML = range.createContextualFragment(html);
+//         document.body.appendChild(parsedHTML);
+
+        
+//         const mainStyle = document.createElement("link");
+//         mainStyle.type = "text/css"
+//         mainStyle.rel = "stylesheet";
+//         mainStyle.href = "/reviewpage/reviewc.css";
+//         document.head.appendChild(mainStyle);
+
+//         // main.html과 관련된 JavaScript 파일 추가
+//         const mainScript = document.createElement("script");
+//         mainScript.src = "/reviewpage/reviewj.js";
+//         document.body.appendChild(mainScript);
+        
+//       })
+//       .catch((error) => {
+//         console.error("에러:", error);
+//       });
+
+//   });
+
+// });
 })();
