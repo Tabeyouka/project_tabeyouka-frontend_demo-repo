@@ -150,7 +150,42 @@ deleteBtn.addEventListener('click', () => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
-      alert('게시글이 삭제되었습니다.');
+      alert('게시글이 삭제되었습니다. 게시판 리스트로 이동합니다.');
+
+      // 삭제 후 게시판 이동
+      fetch("../community/list.html", { credentials: "include" })
+      .then((response) => response.text())
+      .then((html) => {
+
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+  
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+  
+  
+      const range = document.createRange();
+      const parsedHTML = range.createContextualFragment(html);
+      document.body.appendChild(parsedHTML);
+  
+      
+      const mainStyle = document.createElement("link");
+      mainStyle.rel = "stylesheet";
+      mainStyle.href = "../community/css/list.css";
+      document.head.appendChild(mainStyle);
+  
+      // main.html과 관련된 JavaScript 파일 추가
+      const mainScript = document.createElement("script");
+      mainScript.src = "../community/js/list.js";
+      document.body.appendChild(mainScript);
+    })
+    .catch((error) => {
+      console.error("에러:", error);
+    });
     })
     .catch(err => {
       console.log("오류 발생: ", err);
