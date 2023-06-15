@@ -70,14 +70,13 @@
   }
 
   // 비밀번호 토글
-  const passwdInput = document.querySelector("#passwd-input");
 
   passwdToggle.addEventListener("click", function () {
-    if (passwdInput.type === "password") {
-      passwdInput.type = "text";
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
       passwdToggle.textContent = "숨기기";
     } else {
-      passwdInput.type = "password";
+      passwordInput.type = "password";
       passwdToggle.textContent = "보이기";
     }
   });
@@ -138,21 +137,7 @@
       .then((result) => {
         // 쿠키 설정
         console.log(result);
-        // 세션 아이디와 세션 데이터 가져오기
-
-        // const sessionId = result.session_id;
-        // const sessionData = result.session_data; // 수정: user_id가 아닌 session_data 전체
-
-        // // 쿠키 만료 날짜 설정 (1일)
-        // const expirationDate = new Date();
-        // expirationDate.setDate(expirationDate.getDate() + 1);
-
-        // // 세션 아이디를 쿠키에 설정
-        // document.cookie = `session_id=${JSON.stringify(sessionId)}; expires=${expirationDate.toUTCString()}; path=/`;
-
-        // // 세션 데이터를 쿠키에 설정
-        // document.cookie = `session_data=${JSON.stringify(sessionData)}; expires=${expirationDate.toUTCString()}; path=/`;
-
+       
         // 로그인이 성공한 후에 /api/status에 GET 요청
         fetch("http://127.0.0.1:8080/api/status", {
           method: "GET",
