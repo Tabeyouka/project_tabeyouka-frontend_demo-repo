@@ -4,7 +4,7 @@ const title = document.querySelector('#title');
 const text = document.querySelector('#text');
 
 /* 게시글 아이디 : url에 추가할 예정 */
-let postId;
+const postId = localStorage.getItem("postId");
 
 /* 게시글 목록 페이지의 번호와 게시글의 아이디가 같은지 비교*/
 fetch("./../list.html")
@@ -96,7 +96,7 @@ postForm.addEventListener("submit", (event) => {
 
   if(checkModify){
     // 서버로 데이터 전송
-    fetch("http://localhost:8080/api/community/{community}", {
+    fetch(`http://localhost:8080/api/community/${postId}`, {
       method: "PUT",
       body: formData,
     })
