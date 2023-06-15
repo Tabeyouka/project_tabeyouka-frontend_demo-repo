@@ -463,6 +463,12 @@ submit.addEventListener('submit', async (e) => {
       const location = document.createElement('p');
       location.classList.add('location');
       location.textContent = information.address;
+
+      const idNumber = information.id;
+      const id = document.createElement('p');
+      id.textContent = idNumber;
+      id.classList.add("id");
+      infoHead.appendChild(id);
       
   
       ol.appendChild(li);
