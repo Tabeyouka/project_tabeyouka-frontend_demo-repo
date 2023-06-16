@@ -248,17 +248,12 @@
     margin-right: auto;
   }
 
-  .newpost{
-    flex-grow: 0;
-    margin-left: auto;
-  }
-
-  .modify{
+  .post-modify{
     flex-grow: 0;
     margin-left: 10px;
   }
 
-  .delete {
+  .post-delete {
     flex-grow: 0;
     margin-left: 10px;
   }
