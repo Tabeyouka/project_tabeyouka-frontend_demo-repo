@@ -51,22 +51,21 @@
 
         <div class="board-container">
             <div id="board">
-                <h1>커뮤니티</h1>
-                <div class="line-sort">
-                    <div class="community-text">커뮤니티는 모두의 참여와 존중으로 이루어집니다.</div>
-                    <div class="search-form">
-                        <input type="text" class="form-control" id="search-input" placeholder="검색">
-                        <button type="submit" class="btn btn-warning search-btn">조회</button>
-                    </div>
-                </div>
-
-                <div class="board_row">
-                    <div class="col id">번호</div>
-                    <div class="col title">제목</div>
-                    <div class="col nickname">작성자</div>
-                    <div class="col date">작성일</div>
-                </div>
-
+              <h1>커뮤니티</h1>
+              <div class="line-sort">
+                <div class="community-text">커뮤니티는 모두의 참여와 존중으로 이루어집니다.</div>
+                <form class="search-form">
+                  <input type="text" class="form-control" id="search-input" placeholder="검색">
+                  <button type="submit" class="btn btn-warning search-btn">조회</button>
+                </form> 
+              </div> 
+          
+              <div class="board_row">
+                <div class="col id">번호</div>
+                <div class="col title">제목</div>
+                <div class="col nickname">작성자</div>
+                <div class="col date">작성일</div>
+              </div>
                 <!-- 게시글 목록 -->
                 <div id="post-list"></div>
                 <!-- 작성 버튼과 페이지 네비게이션 -->

@@ -7,13 +7,15 @@
   const passwordInput = document.querySelector("#passwd-input");
   passwordInput.addEventListener("blur", handlePasswordBlur);
 
-  // 이메일 유효성 검사
+ // 이메일 정규 표현식
+ var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  /**  이메일 유효성 검사 */
   function handleEmailBlur(event) {
     var emailMsg = event.target.parentNode.querySelector(".error-msg");
-
+    
     var value = event.target.value;
-    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+   
     if (!value) {
       if (!emailMsg) {
         emailMsg = createErrorMessage();
@@ -33,10 +35,9 @@
     }
   }
 
-  // 비밀번호 유효성 검사
+  /** 비밀번호 유효성 검사 */ 
   function handlePasswordBlur(event) {
     var passwordMsg = event.target.parentNode.querySelector(".error-msg");
-
     var value = event.target.value;
 
     if (!value) {
@@ -55,13 +56,13 @@
   // 토글 선택자(오류 메시지 노출 시 위치 조정, 비밀번호 토글 사용)
   const passwdToggle = document.querySelector(".passwd-toggle");
 
-  // 오류 메시지를 보여주는 함수
+  /**  오류 메시지를 보여주는 함수 */
   function showErrorMessage(element, message) {
     element.innerText = message;
     element.style.display = "block";
   }
 
-  // 오류 메시지를 생성하는 함수
+  /**  오류 메시지를 생성하는 함수 */
   function createErrorMessage() {
     var errorMessage = document.createElement("div");
     errorMessage.className = "error-msg";
@@ -70,8 +71,7 @@
   }
 
   // 비밀번호 토글
-
-  passwdToggle.addEventListener("click", function () {
+  passwdToggle.addEventListener("click", () => {
     if (passwordInput.type === "password") {
       passwordInput.type = "text";
       passwdToggle.textContent = "숨기기";
@@ -89,16 +89,11 @@
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    /* 참고
-  const emailInput = document.querySelector("#email-input");
-  emailInput.addEventListener("blur", handleEmailBlur);
-  */
     const email = emailInput.value;
     const password = passwordInput.value;
 
     // 이메일 확인 정규식
-    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+    // test: 주어진 문자열을 정규 표현식과 비교하여 일치하는지 확인
     if (!email || !emailRegex.test(email) || !password) {
       if (errorMsg) {
         errorMsg.remove(); // 기존 오류 메시지 삭제
@@ -135,8 +130,6 @@
         return response.json();
       })
       .then((result) => {
-        // 쿠키 설정
-        console.log(result);
        
         // 로그인이 성공한 후에 /api/status에 GET 요청
         fetch("http://127.0.0.1:8080/api/status", {
