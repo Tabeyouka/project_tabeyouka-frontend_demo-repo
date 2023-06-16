@@ -12,7 +12,7 @@
     this.style.borderBottom = 'none';
     }); 
 
-    // 조원 생성하는 클래스
+    // 조원 생성하는 클래스 (개선 필요)
     class Mate {
         constructor(id, stdId, name, image, part, des, git) {
             this.id = id;
@@ -23,7 +23,7 @@
             this.des = des;
             this.git = git;
         }
-
+        // html에 요소를 추가하고 속성을 정의하는 함수, saveAndCreate() 에서 반복됨
         create() {
             const teammateScrollBox = document.querySelector('.teammate-scroll-box');
             const createDivAndSet = (tag, att) => {
@@ -68,24 +68,24 @@
 
             // member 요소 생성
             deleteButton.classList.add('material-symbols-outlined');
-            deleteButton.innerText = 'close';
             editButton.classList.add('material-symbols-outlined');
+            profileImg.setAttribute('src', this.image);
+            githubImg.setAttribute('src', '/image/githublogo.png');
+            githubA.setAttribute('href', this.git);
+            studentName.innerText = this.name;
+            description.innerText = this.des;
+            part.innerText = this.part;
+            deleteButton.innerText = 'close';
             editButton.innerText = 'edit_note';
             buttonDiv.appendChild(editButton);
             buttonDiv.appendChild(deleteButton);
             mate.appendChild(buttonDiv);
-            profileImg.setAttribute('src', this.image);
             profileImage.appendChild(profileImg);
             mate.appendChild(profileImage);
-            studentName.innerText = this.name;
             mate.appendChild(studentName);
-            part.innerText = this.part;
             mate.appendChild(part);
-            description.innerText = this.des;
             mate.appendChild(description);
-            githubImg.setAttribute('src', '/image/githublogo.png');
             githubA.appendChild(githubImg);
-            githubA.setAttribute('href', this.git);
             githubLink.appendChild(githubA);
             mate.appendChild(githubLink);
             teammateScrollBox.appendChild(mate);
@@ -161,10 +161,10 @@
     }
 
     /* 실행 */
-    get()
+    getTeammate()
     .then(result => {
         const mateList = [...result];
-        save(mateList);
+        saveAndCreate(mateList);
     })
     .catch(error => {
         console.error(error);
@@ -172,18 +172,16 @@
 
     getUser()
     .then(result => {
-        console.log(result.user.master);
         if(result.user.master == 1) {
-            console.log('triggered');
-            const addButton = document.querySelector('.addButton');
-            addButton.style.display = 'inline-block';
+            console.log('loggedInAdmin');
+            addTeammateButton('새로운 팀원이 생겼나요?');
             const teammateScrollBox = document.querySelector('.teammate-scroll-box');
             console.log(teammateScrollBox);
             const button = teammateScrollBox.querySelectorAll('.btnDiv');
             console.log(button);
             button.forEach((button) => {
                 console.log(button);
-                button.style.display = 'block';
+                button.classList.add('admin');
             });
         }
     })
@@ -194,7 +192,7 @@
     /* 함수 */
 
     // 값을 배열 mateList에 저장하고 mate 클래스의 create,setEventListener 함수를 트리거
-    const save = (mateList) => {
+    const saveAndCreate = (mateList) => {
         for (let i = 0; i < mateList.length; i++) {
             const mate = new Mate(mateList[i].id,
                 mateList[i].student_id,
@@ -207,7 +205,6 @@
             mate.create();
             mate.setEventListener(i);
         }
-        addTeammateButton('새로운 팀원이 생겼나요?');
     };
 
     // 유효성 검사
@@ -277,9 +274,8 @@
         }, 100);
     };
 
-    // 조원 추가 버튼
+    // 조원 추가 텍스트 버튼
     const addTeammateButton = (text) => {
-        // 유효성 검사 구현해야 함
         const button = document.createElement('button');
         button.innerHTML = text;
         button.classList.add('addButton');
@@ -289,7 +285,7 @@
         team.appendChild(button);
     };
 
-    // 모달에 이미지를 업로드하면 프리뷰 해줌
+    // 모달에 이미지를 업로드하면 프리뷰 해줌 ?
     const showImage = (event, imageTarget) => {
         let selectedFile = event.target.files[0];
         if (selectedFile) {
@@ -303,10 +299,27 @@
         }
     };
 
+    // 추가, 수정 시 폼을 보내는 함수
+    const appendFormData = (modalClass, fileId, method) => {
+        const modal = document.querySelector(modalClass);
+        const input = modal.querySelectorAll('input[type="text"]');
+        const file = document.querySelector(fileId);
+        const image = file.files[0];
+        const formData = new FormData();
+        formData.append('_method', method);
+        formData.append('student_id', input[0].value);
+        formData.append('name', input[1].value);
+        formData.append('part', input[2].value);
+        formData.append('description', input[3].value);
+        formData.append('github_link', input[4].value);
+        formData.append('profile_image', image);
+        return formData;
+    }
+
     /* 요청 */
     //현재 유저의 정보를 요청
     async function getUser() {
-        const response = await fetch('http://127.0.0.1:8080/api/status', {
+        fetch('http://127.0.0.1:8080/api/status', {
             method: 'GET',
             credentials: 'include',
         });
@@ -314,35 +327,20 @@
         return data;
     }
     // 조원 추가
-    async function addTeammate() {
-        const addModal = document.querySelector('.modal');
-        const input = addModal.querySelectorAll('input[type="text"]');
-        const file = document.querySelector('#addProfileImage');
-        const image = file.files[0];
-        if (image) {
-            const formData = new FormData();
-            formData.append('student_id', input[0].value);
-            formData.append('name', input[1].value);
-            formData.append('profile_image', image);
-            formData.append('part', input[2].value);
-            formData.append('description', input[3].value);
-            formData.append('github_link', input[4].value);
-            const response = await fetch('http://localhost:8080/api/teammates', {
-                method: 'POST',
-                body: formData
-            });
-        }
+    async function postTeammate() {
+        fetch('http://localhost:8080/api/teammates', {
+            method: 'POST',
+            body: appendFormData('.modal', '#addProfileImage', 'POST'),
+        });
     }
     // 특정 조원 삭제
     async function deleteTeammate(id) {
-        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
+        fetch(`http://localhost:8080/api/teammates/${id}`, {
             method: 'DELETE',
         });
-        const data = await response.json();
-        return data;
     }
     // 조원 정보를 서버에서 받아오는 함수
-    async function get() {
+    async function getTeammate() {
         const response = await fetch("http://localhost:8080/api/teammates", {
             method: 'GET',
         });
@@ -350,24 +348,10 @@
         return data;
     }
     // 수정 요청 보내기
-    async function editPut(id) {
-        const editModal = document.querySelector('.editModal');
-        const input = editModal.querySelectorAll('input[type="text"]');
-        const file = document.querySelector('#editProfileImage');
-        const image = file.files[0];
-        const formData = new FormData();
-        formData.append('_method', 'PUT');
-        formData.append('student_id', input[0].value);
-        formData.append('name', input[1].value);
-        formData.append('part', input[2].value);
-        formData.append('description', input[3].value);
-        formData.append('github_link', input[4].value);
-        if (image) {
-            formData.append('profile_image', image);
-        }
-        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
+    async function putTeammate(id) {
+        fetch(`http://localhost:8080/api/teammates/${id}`, {
             method: 'POST',
-            body: formData,
+            body: appendFormData('.editModal', '#editProfileImage', 'PUT'),
         });
     }
     // 아이디로 조원 정보 검색 GET
@@ -380,17 +364,17 @@
     }
 
     /* 이벤트 리스너 */
-    // 조원 추가 버튼 이벤트 리스너
+    // 조원 추가 전송 버튼 이벤트 리스너
     const addSubmit = document.querySelector('#addSubmit');
     addSubmit.addEventListener('click', () => {
         if (confirm('추가하시겠습니까?')) {
-            const modal = document.querySelector('.modal');
             if((!validateInput('.modal'))) {
                 return;
             }
-            addTeammate()
+            postTeammate()
                 .then(result => {
                     alert('추가되었습니다!');
+                    // 페이지 새로 요청
                     fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
                     .then((response) => response.text())
                     .then((html) => {
@@ -430,11 +414,6 @@
         }
     });
 
-    // 추가 모달 닫기 이벤트 리스너
-    const modal = document.querySelector('.modal');
-    const modalclosebutton = document.querySelector('#closeAddModal');
-    modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
-
     // 조원 수정 전송 버튼 이벤트 리스너
     const editModalSubmitButton = document.querySelector('#editSubmit');
     editModalSubmitButton.addEventListener('click', () => {
@@ -443,9 +422,10 @@
                 return;
             }
             const id = editModalSubmitButton.value;
-            editPut(id).
+            putTeammate(id).
                 then(result => {
                     alert('수정되었습니다!');
+                    // 페이지 새로 요청
                     fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
                     .then((response) => response.text())
                     .then((html) => {
@@ -485,30 +465,35 @@
         }
     });
 
+    // 추가 모달 닫기 이벤트 리스너
+    const modal = document.querySelector('.modal');
+    const modalclosebutton = document.querySelector('#closeAddModal');
+    modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
+
     //  수정 모달 닫기 이벤트 리스너
     const editModalCloseButton = document.querySelector('#closeEditModal');
+    const editModal = document.querySelector('.editModal');
     editModalCloseButton.addEventListener('click', () => {
         resetInputValue();
-        const editModal = document.querySelector('.editModal');
         closeModal(editModal, 'editOpacityQue');
     });
-
+    
     // 이미지 프리뷰 이벤트 리스너
     const addImageUploader = document.querySelector('#addProfileImage');
+    const editImageUploader = document.querySelector('#editProfileImage');
     addImageUploader.addEventListener('change', (event) => {
         showImage(event, '#addPreview');
     });
 
-    const editImageUploader = document.querySelector('#editProfileImage');
     editImageUploader.addEventListener('change', (event) => {
         showImage(event, '#editPreview');
     });
 
     // 스크롤 버튼 이벤트 리스너
     const leftScrl = document.querySelector('#leftScrl');
-    const rightScrl = document.querySelector('#rightScrl');
     const scrollBox = document.querySelector('.teammate-scroll-box');
-
+    const rightScrl = document.querySelector('#rightScrl');
+    
     leftScrl.addEventListener('click', (event) => {
         leftScrl.disabled = true;
         scrollBox.scrollBy(-370, 0);
@@ -526,8 +511,7 @@
     });
 
 
-
-
+    /* 타 페이지 연결 관련 코드 */
 
     // 자유게시판 연결
     const board = document.querySelector('.board');
