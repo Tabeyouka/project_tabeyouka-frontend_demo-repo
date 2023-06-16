@@ -195,7 +195,7 @@ const imageChange = () => {
   }
 }
 
-imageChange();
+// imageChange();
 
 
 let images = document.querySelectorAll(".img-container img");
