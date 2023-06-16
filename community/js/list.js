@@ -16,7 +16,7 @@
   let searchKeyword = ""; // 검색 키워드
   const postRedirect = document.querySelector(".post-redirect"); // 작성 버튼 선택자
 
-  // 게시글 데이터를 페이지별로 가져오는 함수
+  /** api 통신을 통해 게시글 데이터를 가져오는 함수*/
   function fetchBoardData() {
     return fetch("http://127.0.0.1:8080/api/community", {
       headers: {
@@ -35,15 +35,18 @@
       .catch((error) => console.log(error));
   }
 
-  // 페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수(1페이지 당 10개)
+  /**  페이지 번호를 업데이트하고 게시글 데이터를 가져오는 함수(1페이지 당 10개) */
   function updateBoardData(page) {
     currentPage = page;
     fetchBoardData(page)
       .then((posts) => {
+        // 필터링한 게시물을 가져오는지, 전체 게시물을 가져오는지
         const filteredPosts = searchKeyword
           ? filterPostsByKeyword(posts)
           : posts;
+        // id 내림차순
         const sortedPosts = filteredPosts.sort((a, b) => b.id - a.id);
+        // 게시글 10개로 분배
         const pagedPosts = sortedPosts.slice(
           (page - 1) * itemsPerPage,
           page * itemsPerPage
@@ -55,7 +58,7 @@
       });
   }
 
-  // 게시판 데이터를 HTML에 추가하는 함수
+  /**  게시판 데이터를 HTML에 추가하는 함수 */
   function addPostsToBoard(posts) {
     const postListContainer = document.getElementById("post-list");
     postListContainer.innerHTML = ""; // 이전 게시글 목록을 초기화
@@ -74,6 +77,7 @@
       <div class="col date">${formatDate(post.created_at)}</div>
     `;
 
+    // 닉네임 확인 위함(게시글 작성자랑 status 유저정보 비교 후 동일하면 작성, 삭제 버튼 노출 여부 결정 위함)
       postRow.addEventListener("click", () => {
         fetch(`http://127.0.0.1:8080/api/community/${post.id}`, {
           headers: {
@@ -94,7 +98,10 @@
             }) // 로그인 여부 확인 요청에도 쿠키를 포함
               .then((response) => response.json())
               .then((data) => {
-                const status_nickname = data.user.nickname;
+                if(data.message === 'User is logged in'){
+                  var status_nickname = data.user.nickname;
+                }
+                
                 var nicknameCheck;
 
                 if (status_nickname === post_nickname) {
@@ -107,7 +114,7 @@
                 fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
                   .then((response) => response.text())
                   .then((html) => {
-                    // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+                    // html 요소 추가
                     while (document.documentElement.firstChild) {
                       document.documentElement.removeChild(
                         document.documentElement.firstChild
@@ -124,14 +131,14 @@
                     const parsedHTML = range.createContextualFragment(html);
                     document.body.appendChild(parsedHTML);
 
-                    // 메인.html과 관련된 CSS 파일 추가
+                    // CSS 파일 추가
                     const mainStyle = document.createElement("link");
                     mainStyle.rel = "stylesheet";
                     mainStyle.type = "text/css";
                     mainStyle.href = "../community/css/detail.css";
                     document.head.appendChild(mainStyle);
 
-                    // 메인.html과 관련된 JavaScript 파일 추가
+                    // JavaScript 파일 추가
                     const mainScript = document.createElement("script");
                     mainScript.src = "../community/js/detail.js";
                     document.body.appendChild(mainScript);
@@ -149,8 +156,8 @@
                     }
 
                     // 수정, 삭제 버튼
-                    const modifyButton = document.querySelector(".postmodify");
-                    const deleteButton = document.querySelector(".postdelete");
+                    const modifyButton = document.querySelector(".post-modify");
+                    const deleteButton = document.querySelector(".post-delete");
 
                     modifyButton.style.display = nicknameCheck
                       ? "block"
@@ -212,7 +219,7 @@
     updateBoardData(currentPage + 1);
   });
 
-  // 초기화 함수
+  /** 초기화 함수 */
   function init() {
     updateBoardData(currentPage);
   }
@@ -220,7 +227,7 @@
   // 초기화 함수 호출
   init();
 
-  // 날짜 형식을 변환하는 함수
+  /**  날짜 형식을 변환하는 함수 */
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -235,11 +242,11 @@
 
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    searchKeyword = searchInput.value.trim();
+    searchKeyword = searchInput.value.trim(); // 검색 키워드 양쪽 공백 없앰
     updateBoardData(1);
   });
 
-  // 제목에 키워드가 포함된 게시글 필터링 함수
+  /** 제목에 키워드가 포함된 게시글 필터링 함수 */
   function filterPostsByKeyword(posts) {
     return posts.filter((post) =>
       post.title.toLowerCase().includes(searchKeyword.toLowerCase())
@@ -321,13 +328,14 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
 
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css";
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/signin/css/login.css";
         document.head.appendChild(mainStyle);
 
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/signin/javascript/login.js";
         document.body.appendChild(mainScript);
@@ -385,12 +393,13 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
 
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/search/search.css";
         document.head.appendChild(mainStyle);
 
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/search/search.js";
         document.body.appendChild(mainScript);
@@ -549,7 +558,7 @@
   // 현지학기제 연결
   const introduce = document.querySelector(".introduce");
   introduce.addEventListener("click", () => {
-    fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    fetch("/introducepage/introduce.html", { credentials: "include" }) // 쿠키를 포함
       .then((response) => response.text())
       .then((html) => {
         while (document.documentElement.firstChild) {
@@ -568,13 +577,14 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
 
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css";
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/introducepage/introduceC.css";
         document.head.appendChild(mainStyle);
 
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
@@ -598,7 +608,7 @@
   // 조원소개 연결
   const teammate = document.querySelector(".teammate");
   teammate.addEventListener("click", () => {
-    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+    fetch("/teammate/teammate.html", { credentials: "include" }) // 쿠키를 포함
       .then((response) => response.text())
       .then((html) => {
         while (document.documentElement.firstChild) {
@@ -617,13 +627,14 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
 
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css";
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/teammate/teammate.css";
         document.head.appendChild(mainStyle);
 
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
