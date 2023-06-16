@@ -12,7 +12,7 @@ input.addEventListener('blur', function() {
 }); 
 
 
-const postForm = document.querySelector("#communityForm");
+const postForm = document.querySelector(".communityForm");
 const listRedirect = document.querySelector(".list-btn");
 const title = document.querySelector("#title");
 const text = document.querySelector("#text");
