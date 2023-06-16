@@ -14,12 +14,10 @@
   const itemsPerPage = 10; // 페이지당 표시할 글의 개수
   let currentPage = 1; // 현재 페이지 번호
   let searchKeyword = ""; // 검색 키워드
-  const postRedirect = document.querySelector(".post-redirect"); // 버튼 요소
+  const postRedirect = document.querySelector(".post-redirect"); // 작성 버튼 선택자
 
   // 게시글 데이터를 페이지별로 가져오는 함수
-  function fetchBoardData(page) {
-    const start = (page - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
+  function fetchBoardData() {
     return fetch("http://127.0.0.1:8080/api/community", {
       headers: {
         "Content-Type": "application/json",
@@ -96,15 +94,15 @@
             }) // 로그인 여부 확인 요청에도 쿠키를 포함
               .then((response) => response.json())
               .then((data) => {
-                const status_nickname = data.user.nickname
+                const status_nickname = data.user.nickname;
                 var nicknameCheck;
- 
+
                 if (status_nickname === post_nickname) {
                   nicknameCheck = true;
                 } else {
                   nicknameCheck = false;
                 }
-        
+
                 // list.html로 이동
                 fetch("../community/detail.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
                   .then((response) => response.text())
@@ -138,14 +136,15 @@
                     mainScript.src = "../community/js/detail.js";
                     document.body.appendChild(mainScript);
 
-                    let login_state = localStorage.getItem('loginState');
+                    let login_state = localStorage.getItem("loginState");
                     // login_state가 "login"일때 로그아웃 생성
                     if (login_state === "login") {
-                      // 로그인택스트 변경 
+                      // 로그인택스트 변경
                       const loginText = document.querySelector(".loginText");
                       loginText.innerHTML = "로그아웃";
                       // 로그아웃 컨테이너 클래스명 변경
-                      const loginContainer = document.querySelector(".loginContainer");
+                      const loginContainer =
+                        document.querySelector(".loginContainer");
                       loginContainer.classList = "logoutContainer";
                     }
 
@@ -153,9 +152,12 @@
                     const modifyButton = document.querySelector(".postmodify");
                     const deleteButton = document.querySelector(".postdelete");
 
-                    modifyButton.style.display = nicknameCheck ? 'block' : 'none';
-                    deleteButton.style.display = nicknameCheck ? 'block' : 'none'
-                    
+                    modifyButton.style.display = nicknameCheck
+                      ? "block"
+                      : "none";
+                    deleteButton.style.display = nicknameCheck
+                      ? "block"
+                      : "none";
                   })
                   .catch((error) => {
                     console.error("에러:", error);
@@ -175,15 +177,24 @@
     });
 
     // 페이지 넘버 업데이트
+    const prevButton = document.querySelector(".pagination.page-prev");
+    const nextButton = document.querySelector(".pagination.page-next");
     const pageNumber = document.querySelector(".page-number");
+
     pageNumber.textContent = currentPage;
 
-    // 이전 페이지 버튼 업데이트
-    const prevButton = document.querySelector(".pagination.page-prev");
-    if (currentPage > 1) {
-      prevButton.style.display = "inline";
-    } else {
+    // 현재 페이지가 1이면 "prev" 버튼을 숨김
+    if (currentPage === 1) {
       prevButton.style.display = "none";
+    } else {
+      prevButton.style.display = "inline";
+    }
+
+    // 현재 페이지에 포함된 게시물 개수가 itemsPerPage보다 작으면 "next" 버튼을 숨김
+    if (posts.length < itemsPerPage) {
+      nextButton.style.display = "none";
+    } else {
+      nextButton.style.display = "inline";
     }
   }
 
@@ -219,10 +230,11 @@
   }
 
   // 검색 버튼 클릭 이벤트 핸들러 설정
-  const searchButton = document.querySelector(".search-btn");
+  const searchForm = document.querySelector(".search-form");
   const searchInput = document.querySelector("#search-input");
 
-  searchButton.addEventListener("click", () => {
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     searchKeyword = searchInput.value.trim();
     updateBoardData(1);
   });
@@ -631,6 +643,74 @@
         console.error("에러:", error);
       });
   });
+
+  // 자유게시판 연결 (자유게시판에서도 자유게시판 누를 수 있도록)
+  // 자유게시판 연결
+const board = document.querySelector('.board');
+board.addEventListener('click', () => {
+
+  // 상태 확인 후 게시판으로 넘어갈 때 로그인이 되어 있으면 게시글 작성 버튼이 보이게, 아니면 안 보이게
+  // 하기 위해 /api/status로 먼저 통신한 후 list.html에 접근
+  fetch("http://127.0.0.1:8080/api/status", { credentials: "include" }) // 로그인 여부 확인 요청에도 쿠키를 포함
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
+      const isLoggedIn = data.message === 'User is logged in';
+
+      // list.html로 이동
+      fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+        .then((response) => response.text())
+        .then((html) => {
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
+
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
+          
+          // list.html"과 관련된 CSS 파일 추가
+          const mainStyle = document.createElement("link");
+          mainStyle.type = "text/css"
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "/community/css/list.css";
+          document.head.appendChild(mainStyle);
+
+          // list.html"과 관련된 JavaScript 파일 추가
+          const mainScript = document.createElement("script");
+          mainScript.src = "/community/js/list.js";
+          document.body.appendChild(mainScript);
+
+          let login_state = localStorage.getItem('loginState');
+          // login_state가 "login"일때 로그아웃 생성
+          if (login_state === "login") {
+            // 로그인택스트 변경 
+            const loginText = document.querySelector(".loginText");
+            loginText.innerHTML = "로그아웃";
+            // 로그아웃 컨테이너 클래스명 변경
+            const loginContainer = document.querySelector(".loginContainer");
+            loginContainer.classList = "logoutContainer";
+          }
+
+          // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
+          const writeButton = document.querySelector('.post-redirect');
+          writeButton.style.display = isLoggedIn ? 'block' : 'none';
+          })
+          .catch((error) => {
+            console.error("에러:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  });
+  
 
   const logoutContainer = document.querySelector(".logoutContainer");
   logoutContainer.addEventListener("click", () => {
