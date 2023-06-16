@@ -11,14 +11,14 @@
      this.style.borderBottom = 'none';
    }); 
    
+   // formdata에 넣을 요소
+   const postForm = document.querySelector("#communityForm");   
    
-   const postForm = document.querySelector("#communityForm");
-   const listRedirect = document.querySelector(".list-btn");
-   
-   
+   // 포스트 작성
    postForm.addEventListener("submit", (event) => {
      event.preventDefault(); // 기본 제출 동작 방지
    
+   // author_id, nickname을 얻을 수 있도록 status api를 한 번 거친 후 POST 진행
      fetch("http://127.0.0.1:8080/api/status", {
        method: "GET",
        headers: {
@@ -35,17 +35,16 @@
        })
        .then((statusResult) => {
          
-         const nickname = statusResult.user.nickname;
-         const author_id = statusResult.user.id;
+         const nickname = statusResult.user.nickname; // 닉네임
+         const author_id = statusResult.user.id; // author_id
  
          // /api/status의 응답을 확인
          if (statusResult.message === "User is logged in") {
            // 사용자가 로그인되어 있는 상태
            console.log("사용자가 로그인되어 있습니다.");
    
-           // FormData 객체 생성
+           // FormData 객체 생성(html에 있는 form 요소는 자동으로 추가)
            const formData = new FormData(postForm);
- 
  
            // 이미지 빈값처리(null로 하니까 오류 발생)
            const imageInput = document.getElementById("image");
@@ -56,7 +55,8 @@
            } else {
              formData.append("image", ""); // 사진을 선택하지 않은 경우 빈값
            }
- 
+           
+           // 닉네임, author_id 추가
            formData.append("nickname", nickname);
            formData.append("author_id", author_id);
  
@@ -87,10 +87,10 @@
                    // 게시물 디테일 페이지를 가져오고 화면을 변경
                    fetch("../community/detail.html", {
                      credentials: "include",
-                   }) // 메인 페이지 요청에도 쿠키를 포함
+                   }) // 쿠키를 포함
                      .then((response) => response.text())
                      .then((html) => {
-                       // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
+                       
                        while (document.documentElement.firstChild) {
                          document.documentElement.removeChild(
                            document.documentElement.firstChild
@@ -107,14 +107,14 @@
                        const parsedHTML = range.createContextualFragment(html);
                        document.body.appendChild(parsedHTML);
    
-                       // 메인.html과 관련된 CSS 파일 추가
+                       // CSS 파일 추가
                        const mainStyle = document.createElement("link");
                        mainStyle.rel = "stylesheet";
                        mainStyle.type = "text/css";
                        mainStyle.href = "../community/css/detail.css";
                        document.head.appendChild(mainStyle);
    
-                       // 메인.html과 관련된 JavaScript 파일 추가
+                       // JavaScript 파일 추가
                        const mainScript = document.createElement("script");
                        mainScript.src = "../community/js/detail.js";
                        document.body.appendChild(mainScript);
@@ -148,18 +148,28 @@
        });
    });
    
+
    // 목록 버튼 누르면 게시글 리스트 페이지로 이동
-   
+   const listRedirect = document.querySelector(".list-btn");
    listRedirect.addEventListener("click", () => {
      fetch("../community/list.html", { credentials: "include" })
        .then((response) => response.text())
        .then((html) => {
          // 해당 html 내용 제거 후 변경할 html로 내용 변경
-         document.documentElement.innerHTML = "";
-   
-         const range = document.createRange();
-         const parsedHTML = range.createContextualFragment(html);
-         document.body.appendChild(parsedHTML);
+         while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+
+         // 해당 html 내용 제거 후 변경할 html로 내용 변경
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
+  
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
      
          // CSS 파일 추가
          const mainStyle = document.createElement("link");
@@ -195,21 +205,30 @@
     fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
       .then((response) => response.text())
       .then((html) => {
-        // 로그인.html의 내용을 제거하고 메인.html의 내용 추가
-        document.documentElement.innerHTML = "";
+         // 해당 html 내용 제거 후 변경할 html로 내용 변경
+         while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+
+         // 해당 html 내용 제거 후 변경할 html로 내용 변경
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
   
         const range = document.createRange();
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
     
-        
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/community/css/list.css";
         document.head.appendChild(mainStyle);
     
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/community/js/list.js";
         document.body.appendChild(mainScript);
@@ -240,8 +259,17 @@
     .then((response) => response.text())
     .then((html) => {
       // login.html 내용 제거 및 main.html 내용 추가
-      document.documentElement.innerHTML = "";
-  
+      while (document.documentElement.firstChild) {
+        document.documentElement.removeChild(document.documentElement.firstChild);
+      }
+
+       // 해당 html 내용 제거 후 변경할 html로 내용 변경
+      const search_html = document.querySelector('html');
+      const head = document.createElement('head');
+      const body = document.createElement('body');
+      search_html.appendChild(head);
+      search_html.appendChild(body);
+
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
       document.body.appendChild(parsedHTML);
@@ -282,7 +310,8 @@
         while (document.documentElement.firstChild) {
           document.documentElement.removeChild(document.documentElement.firstChild);
         }
-    
+
+         // 해당 html 내용 제거 후 변경할 html로 내용 변경
         const search_html = document.querySelector('html');
         const head = document.createElement('head');
         const body = document.createElement('body');
@@ -293,14 +322,14 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
     
-        
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/introducepage/introduceC.css";
         document.head.appendChild(mainStyle);
     
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
@@ -342,14 +371,14 @@
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
     
-        
+        // CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
         mainStyle.href = "/teammate/teammate.css";
         document.head.appendChild(mainStyle);
     
-        // main.html과 관련된 JavaScript 파일 추가
+        // JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/teammate/teammate.js";
         document.body.appendChild(mainScript);
@@ -416,7 +445,7 @@
         mainStyle.href = "/search/search.css";
         document.head.appendChild(mainStyle);
 
-        // main.html과 관련된 JavaScript 파일 추가
+        //  JavaScript 파일 추가
         const mainScript = document.createElement("script");
         mainScript.src = "/search/search.js";
         document.body.appendChild(mainScript);
