@@ -22,22 +22,20 @@ const responsive = document.querySelectorAll('.responsive');
 let responsiveWidth; // 변수 선언
 
 const updateResponsiveWidth = () => {
-  responsiveWidth = responsive[0].clientWidth; // 첫 번째 responsive 요소의 너비 사용
+	// 첫 번째 responsive 요소의 너비 사용
+  responsiveWidth = responsive[0].clientWidth; 
 };
-
-updateResponsiveWidth(); // 초기화
-
-window.addEventListener('resize', updateResponsiveWidth); // 윈도우 크기 변경 시 요소 width 업데이트
+// 초기화
+updateResponsiveWidth(); 
+// 윈도우 크기 변경 시 요소 width 업데이트
+window.addEventListener('resize', updateResponsiveWidth);
 
 next.addEventListener('click', () => {
+	// 슬라이더 현재위치
   const currentPosition = scrollContainer.scrollLeft;
-  let nextPosition = currentPosition + responsiveWidth; // 슬라이더 현재 위치 + 요소 width
-  // if 다음 가야할 위치 + 스크롤 컨테이너 가시영역 너비 > 스크롤 컨테이너 전체너비
-  if (nextPosition + scrollContainer.clientWidth > scrollContainer.scrollWidth) {
-    // 다음 위치 = 전체너비 - 가시영역 너비
-    nextPosition = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-  }
-
+  // 다음 위치 = 현재위치 + 요소너비
+  let nextPosition = currentPosition + responsiveWidth; 
+	// 다음위치까지 'smooth'하게 이동
   scrollContainer.scrollTo({
     left: nextPosition,
     behavior: 'smooth'
@@ -49,17 +47,49 @@ prev.addEventListener('click', () => {
   const currentPosition = scrollContainer.scrollLeft;
   // 다음 위치 = 현재위치 - 요소너비
   let prevPosition = currentPosition - responsiveWidth;
-  // 0보다 내려갈수없음
-  if (prevPosition < 0) {
-    prevPosition = 0;
-  }
-
+	// 다음위치까지 'smooth'하게 이동
   scrollContainer.scrollTo({
     left: prevPosition,
     behavior: 'smooth'
   });
 });
 
+
+// 이미지 슬라이더 v2
+const scrollContainer2 = document.querySelector('.scroll-container.v2');
+const prev2 = document.querySelector('.fa-square-caret-left.v2');
+const next2 = document.querySelector('.fa-square-caret-right.v2');
+const responsive2 = document.querySelectorAll('.responsive.v2');
+
+let responsiveWidth2;
+
+const updateResponsiveWidth2 = () => {
+  responsiveWidth2 = responsive2[0].clientWidth;
+};
+
+updateResponsiveWidth2();
+
+window.addEventListener('resize', updateResponsiveWidth2);
+
+next2.addEventListener('click', () => {
+  const currentPosition2 = scrollContainer2.scrollLeft;
+  let nextPosition2 = currentPosition2 + responsiveWidth2;
+  scrollContainer2.scrollTo({
+    left: nextPosition2,
+    behavior: 'smooth'
+  });
+});
+
+prev2.addEventListener('click', () => {
+  // 슬라이더 현재위치
+  const currentPosition2 = scrollContainer2.scrollLeft;
+  // 다음 위치 = 현재위치 - 요소너비
+  let prevPosition2 = currentPosition2 - responsiveWidth2;
+  scrollContainer2.scrollTo({
+    left: prevPosition2,
+    behavior: 'smooth'
+  });
+});
 
 
 
@@ -165,7 +195,7 @@ const imageChange = () => {
   }
 }
 
-imageChange();
+// imageChange();
 
 
 let images = document.querySelectorAll(".img-container img");
@@ -260,8 +290,22 @@ submit.addEventListener('submit', async (e) => {
         home_button.textContent = '홈으로';
         home_button.classList.add('btn', 'btn-warning');
         ol.appendChild(home_button);
+        home_button.addEventListener('click', () => {
+          window.location.href = "";
+        }
+        );
     }
-
+    
+    let login_state = localStorage.getItem('loginState');
+    // login_state가 "login"일때 로그아웃 생성
+    if (login_state === "login") {
+      // 로그인택스트 변경 
+      const loginText = document.querySelector(".loginText");
+      loginText.innerHTML = "로그아웃";
+      // 로그아웃 컨테이너 클래스명 변경
+      const loginContainer = document.querySelector(".loginContainer");
+      loginContainer.classList = "logoutContainer";
+    }
     // 검색결과의 length만큼 요소 생성
     for (let i = 0; i <= searchResults.length; i++ ) {
       information = searchResults[i];
@@ -272,7 +316,7 @@ submit.addEventListener('submit', async (e) => {
       li.classList.add('searchInfo-infoContainer');
       
       const a = document.createElement('a');
-      a.href = '#';
+      
       
       const infoHead = document.createElement('div');
       infoHead.classList.add('info-header');
@@ -335,6 +379,12 @@ submit.addEventListener('submit', async (e) => {
       const location = document.createElement('p');
       location.classList.add('location');
       location.textContent = information.address;
+
+      const idNumber = information.id;
+      const id = document.createElement('p');
+      id.textContent = idNumber;
+      id.classList.add("id");
+      infoHead.appendChild(id);
       
   
       ol.appendChild(li);
@@ -387,7 +437,74 @@ function filterArrayByWord(originalArray, word) {
 // 자유게시판 연결
 const board = document.querySelector('.board');
 board.addEventListener('click', () => {
-  fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+
+  // 상태 확인 후 게시판으로 넘어갈 때 로그인이 되어 있으면 게시글 작성 버튼이 보이게, 아니면 안 보이게
+  // 하기 위해 /api/status로 먼저 통신한 후 list.html에 접근
+  fetch("http://127.0.0.1:8080/api/status", { credentials: "include" }) // 로그인 여부 확인 요청에도 쿠키를 포함
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
+      const isLoggedIn = data.message === 'User is logged in';
+
+      // list.html로 이동
+      fetch("/community/list.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+        .then((response) => response.text())
+        .then((html) => {
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
+
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
+          
+          // list.html"과 관련된 CSS 파일 추가
+          const mainStyle = document.createElement("link");
+          mainStyle.type = "text/css"
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "/community/css/list.css";
+          document.head.appendChild(mainStyle);
+
+          // list.html"과 관련된 JavaScript 파일 추가
+          const mainScript = document.createElement("script");
+          mainScript.src = "/community/js/list.js";
+          document.body.appendChild(mainScript);
+
+          let login_state = localStorage.getItem('loginState');
+          // login_state가 "login"일때 로그아웃 생성
+          if (login_state === "login") {
+            // 로그인택스트 변경 
+            const loginText = document.querySelector(".loginText");
+            loginText.innerHTML = "로그아웃";
+            // 로그아웃 컨테이너 클래스명 변경
+            const loginContainer = document.querySelector(".loginContainer");
+            loginContainer.classList = "logoutContainer";
+          }
+
+          // list.html에 있는 작성 버튼 선택 및 표시 여부 설정
+          const writeButton = document.querySelector('.post-redirect');
+          writeButton.style.display = isLoggedIn ? 'block' : 'none';
+          })
+          .catch((error) => {
+            console.error("에러:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  });
+  
+  
+  // 로그인 연결
+  const clickLogin = document.querySelector('.loginText');
+  clickLogin.addEventListener('click', () => {
+    fetch("/signin/login.html", { credentials: "include" })
     .then((response) => response.text())
     .then((html) => {
       while (document.documentElement.firstChild) {
@@ -399,7 +516,7 @@ board.addEventListener('click', () => {
       const body = document.createElement('body');
       search_html.appendChild(head);
       search_html.appendChild(body);
-
+  
       const range = document.createRange();
       const parsedHTML = range.createContextualFragment(html);
       document.body.appendChild(parsedHTML);
@@ -408,195 +525,213 @@ board.addEventListener('click', () => {
       const mainStyle = document.createElement("link");
       mainStyle.type = "text/css"
       mainStyle.rel = "stylesheet";
-      mainStyle.href = "/community/css/list.css";
+      mainStyle.href = "/signin/css/login.css";
       document.head.appendChild(mainStyle);
   
       // main.html과 관련된 JavaScript 파일 추가
       const mainScript = document.createElement("script");
-      mainScript.src = "/community/js/list.js";
+      mainScript.src = "/signin/javascript/login.js";
       document.body.appendChild(mainScript);
-    })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-
-})
-
-
-// 로그인 연결
-const clickLogin = document.querySelector('.loginText');
-clickLogin.addEventListener('click', () => {
-  // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
-  fetch("/signin/login.html", { credentials: "include" })
-  .then((response) => response.text())
-  .then((html) => {
-    while (document.documentElement.firstChild) {
-      document.documentElement.removeChild(document.documentElement.firstChild);
-    }
-
-    const search_html = document.querySelector('html');
-    const head = document.createElement('head');
-    const body = document.createElement('body');
-    search_html.appendChild(head);
-    search_html.appendChild(body);
-
-    const range = document.createRange();
-    const parsedHTML = range.createContextualFragment(html);
-    document.body.appendChild(parsedHTML);
-
-    
-    const mainStyle = document.createElement("link");
-    mainStyle.type = "text/css"
-    mainStyle.rel = "stylesheet";
-    mainStyle.href = "/signin/css/login.css";
-    document.head.appendChild(mainStyle);
-
-    // main.html과 관련된 JavaScript 파일 추가
-    const mainScript = document.createElement("script");
-    mainScript.src = "/signin/javascript/login.js";
-    document.body.appendChild(mainScript);
-    
-    
-  })
-});
-
-// 현지학기제 연결
-const introduce = document.querySelector('.introduce');
-introduce.addEventListener('click', () => {
-  fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-    .then((response) => response.text())
-    .then((html) => {
-      while (document.documentElement.firstChild) {
-        document.documentElement.removeChild(document.documentElement.firstChild);
-      }
-  
-      const search_html = document.querySelector('html');
-      const head = document.createElement('head');
-      const body = document.createElement('body');
-      search_html.appendChild(head);
-      search_html.appendChild(body);
-
-      const range = document.createRange();
-      const parsedHTML = range.createContextualFragment(html);
-      document.body.appendChild(parsedHTML);
-  
       
-      const mainStyle = document.createElement("link");
-      mainStyle.type = "text/css"
-      mainStyle.rel = "stylesheet";
-      mainStyle.href = "/introducepage/introduceC.css";
-      document.head.appendChild(mainStyle);
-  
-      // main.html과 관련된 JavaScript 파일 추가
-      const mainScript = document.createElement("script");
-      mainScript.src = "/introducepage/introduceJ.js";
-      document.body.appendChild(mainScript);
-    })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-
-})
-
-
-// 조원소개 연결
-const teammate = document.querySelector('.teammate');
-teammate.addEventListener('click', () => {
-  fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
-    .then((response) => response.text())
-    .then((html) => {
-      while (document.documentElement.firstChild) {
-        document.documentElement.removeChild(document.documentElement.firstChild);
-      }
-  
-      const search_html = document.querySelector('html');
-      const head = document.createElement('head');
-      const body = document.createElement('body');
-      search_html.appendChild(head);
-      search_html.appendChild(body);
-
-      const range = document.createRange();
-      const parsedHTML = range.createContextualFragment(html);
-      document.body.appendChild(parsedHTML);
-  
       
-      const mainStyle = document.createElement("link");
-      mainStyle.type = "text/css"
-      mainStyle.rel = "stylesheet";
-      mainStyle.href = "/teammate/teammate.css";
-      document.head.appendChild(mainStyle);
-  
-      // main.html과 관련된 JavaScript 파일 추가
-      const mainScript = document.createElement("script");
-      mainScript.src = "/teammate/teammate.js";
-      document.body.appendChild(mainScript);
     })
-    .catch((error) => {
-      console.error("에러:", error);
-    });
-
-})
-
-// async function login_state() {
-//   const response = await fetch(`http://localhost:8080/api/status`,
-//   {
-//     method: 'GET',
-//   });
-//   const data = await response.json();
-//   console.log(data);
-//   return data;
-// }
-// login_state();
-
-const overlays = document.querySelectorAll('.overlay');
-
-overlays.forEach(overlay => {
-  overlay.addEventListener('click', () => {
-    const idElement = overlay.querySelector('.id');
-    let id = idElement.textContent;
-    
-    document.hash = id;
-    // 가게이동
-    fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+  });
+  
+  // 현지학기제 연결
+  const introduce = document.querySelector('.introduce');
+  introduce.addEventListener('click', () => {
+    fetch("/introducepage/introduce.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
       .then((response) => response.text())
       .then((html) => {
         while (document.documentElement.firstChild) {
           document.documentElement.removeChild(document.documentElement.firstChild);
         }
-        let storeNumber = id;
+    
         const search_html = document.querySelector('html');
         const head = document.createElement('head');
         const body = document.createElement('body');
         search_html.appendChild(head);
         search_html.appendChild(body);
-
+  
         const range = document.createRange();
         const parsedHTML = range.createContextualFragment(html);
         document.body.appendChild(parsedHTML);
-
+    
         
+        // introduce.html과 관련된 CSS 파일 추가
         const mainStyle = document.createElement("link");
         mainStyle.type = "text/css"
         mainStyle.rel = "stylesheet";
-        mainStyle.href = "/reviewpage/reviewc.css";
+        mainStyle.href = "/introducepage/introduceC.css";
         document.head.appendChild(mainStyle);
-
-        // main.html과 관련된 JavaScript 파일 추가
+    
+        // introduce.html과 관련된 JavaScript 파일 추가
         const mainScript = document.createElement("script");
-        mainScript.src = "/reviewpage/reviewj.js";
+        mainScript.src = "/introducepage/introduceJ.js";
         document.body.appendChild(mainScript);
-        
+
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
       })
       .catch((error) => {
         console.error("에러:", error);
       });
+  
+  })
+  
+  
+  // 조원소개 연결
+  const teammate = document.querySelector('.teammate');
+  teammate.addEventListener('click', () => {
+    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+      .then((response) => response.text())
+      .then((html) => {
+        while (document.documentElement.firstChild) {
+          document.documentElement.removeChild(document.documentElement.firstChild);
+        }
+    
+        const search_html = document.querySelector('html');
+        const head = document.createElement('head');
+        const body = document.createElement('body');
+        search_html.appendChild(head);
+        search_html.appendChild(body);
+  
+        const range = document.createRange();
+        const parsedHTML = range.createContextualFragment(html);
+        document.body.appendChild(parsedHTML);
+    
+        
+        // teammate.html과 관련된 CSS 파일 추가
+        const mainStyle = document.createElement("link");
+        mainStyle.type = "text/css"
+        mainStyle.rel = "stylesheet";
+        mainStyle.href = "/teammate/teammate.css";
+        document.head.appendChild(mainStyle);
+    
+        // teammate.html과 관련된 JavaScript 파일 추가
+        const mainScript = document.createElement("script");
+        mainScript.src = "/teammate/teammate.js";
+        document.body.appendChild(mainScript);
+        
+        let login_state = localStorage.getItem('loginState');
+        // login_state가 "login"일때 로그아웃 생성
+        if (login_state === "login") {
+          // 로그인택스트 변경 
+          const loginText = document.querySelector(".loginText");
+          loginText.innerHTML = "로그아웃";
+          // 로그아웃 컨테이너 클래스명 변경
+          const loginContainer = document.querySelector(".loginContainer");
+          loginContainer.classList = "logoutContainer";
+        }
+      })
+      .catch((error) => {
+        console.error("에러:", error);
+      });
+  
+  })
+  
+  const overlays = document.querySelectorAll('.overlay');
+  
+  overlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const idElement = overlay.querySelector('.id');
+      let id = idElement.textContent;
+      
+      localStorage.setItem('id', id);
+      // 가게이동
+      fetch("/reviewpage/review.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+        .then((response) => response.text())
+        .then((html) => {
+          while (document.documentElement.firstChild) {
+            document.documentElement.removeChild(document.documentElement.firstChild);
+          }
+          
+          const search_html = document.querySelector('html');
+          const head = document.createElement('head');
+          const body = document.createElement('body');
+          search_html.appendChild(head);
+          search_html.appendChild(body);
+  
+          const range = document.createRange();
+          const parsedHTML = range.createContextualFragment(html);
+          document.body.appendChild(parsedHTML);
+  
+          
+          const mainStyle = document.createElement("link");
+          mainStyle.type = "text/css"
+          mainStyle.rel = "stylesheet";
+          mainStyle.href = "/reviewpage/reviewc.css";
+          document.head.appendChild(mainStyle);
+  
+          // review.html과 관련된 CSS 파일 추가
+          const mainScript = document.createElement("script");
+          mainScript.src = "/reviewpage/reviewj.js";
+          document.body.appendChild(mainScript);
+
+          let login_state = localStorage.getItem('loginState');
+          // login_state가 "login"일때 로그아웃 생성
+          if (login_state === "login") {
+            // 로그인택스트 변경 
+            const loginText = document.querySelector(".loginText");
+            loginText.innerHTML = "로그아웃";
+            // 로그아웃 컨테이너 클래스명 변경
+            const loginContainer = document.querySelector(".loginContainer");
+            loginContainer.classList = "logoutContainer";
+          }
+          
+        })
+        .catch((error) => {
+          console.error("에러:", error);
+        });
+
+  });
+  
+  });
+  
+  
+  
+let login_state = localStorage.getItem('loginState');
+// login_state가 "login"일때 로그아웃 생성
+if (login_state === "login") {
+  // 로그인택스트 변경 
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그아웃";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".loginContainer");
+  loginContainer.classList = "logoutContainer";
+
+  const logoutContainer = document.querySelector(".logoutContainer");
+  logoutContainer.addEventListener("click", () => {
+    // 로그인 상태 변경
+    localStorage.setItem('loginState', 'logout');
+    // 로그인택스트 변경
+    const loginText = document.querySelector(".loginText");
+    loginText.innerHTML = "로그인";
+    // 로그아웃 컨테이너 클래스명 변경
+    const loginContainer = document.querySelector(".logoutContainer");
+    loginContainer.classList = "loginContainer";
+  });
+}
+
+const logoutContainer = document.querySelector(".logoutContainer");
+logoutContainer.addEventListener("click", () => {
+  // 로그인 상태 변경
+  localStorage.setItem('loginState', 'logout');
+  // 로그인택스트 변경
+  const loginText = document.querySelector(".loginText");
+  loginText.innerHTML = "로그인";
+  // 로그아웃 컨테이너 클래스명 변경
+  const loginContainer = document.querySelector(".logoutContainer");
+  loginContainer.classList = "loginContainer";
+});
 
   
-});
-
-});
-
-
-
-
 })();

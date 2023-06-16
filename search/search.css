@@ -1,141 +1,166 @@
-
 * {
-    font-family: pretendard;
+  font-family: pretendard;
+}
+
+/* 헤더 */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100px;
+  background-color: #eee;
+}
+
+
+#inputForm {
+  padding: 0;
+  margin: 20px 0;
+  outline: 0;
+  display: flex;
+  width: 1000px;
+  height: 50px;
+}
+
+.form-select {
+  max-width: 120px;
+  margin-left: 5px;
+}
+
+.btn-warning {
+  margin-left: 4px;
+  width: 90px;
+}
+
+/* Login Form */
+.loginContainer {
+  text-align: center;
+  width: 170px;
+}
+
+.loginContainer span {
+  font-size: 24px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.logoutContainer {
+  text-align: center;
+  width: 170px;
+}
+
+.logoutContainer span {
+  font-size: 24px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.titleImg {
+  width: 350px;
+  height: 90px;
+  margin-left: 50px;
+}
+
+/* 스마트폰 반응형 */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
   }
 
-  /* 헤더 */
-.navbar {
-    display: flex;
-    justify-content: center;
+  #inputForm {
+    flex-direction: row;
     align-items: center;
-    width: auto;
-    height: 100px;
-    background-color: #eee;
-}
-  
-  /* input form */
-#inputForm {
-    padding: 0;
-    margin: 20px 0;
-    outline: 0;
-    display: flex;
-    width: 1000px;
-    height: 50px;
-}
-  
-.form-select {
-    max-width: 120px;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .mainImg {
+    margin: 0 100px;
+    width: 200px;
+    height: auto;
+  }
+
+  .loginContainer {
+    margin-bottom: 10px;
+    justify-content: center;
+    width: 250px;
+  }
+
+  .logoutContainer {
+    margin-bottom: 10px;
+    justify-content: center;
+    width: 250px;
+  }
+
+  .form-select {
     margin-left: 5px;
-}
-  
-.btn-warning {
+    margin-right: 5px;
+    flex-grow: 1;
+  }
+
+  .btn-warning {
     margin-left: 4px;
     width: 90px;
-}
-  
-  /* Login Form */
-.loginContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 350px;
-}
-  
-.loginContainer span {
-    font-size: 24px;
-    cursor: pointer;
-}
-  
-.titleImg {
-    width: 350px;
-    height: 90px;
-    margin-left: 50px;
-}
-  
-  /* 스마트폰 반응형 */
-@media (max-width: 600px) {
-    .navbar {
-      flex-direction: column;
-      height: auto;
-      padding: 10px;
-    }
-  
-    #inputForm {
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      margin: 10px 0;
-    }
-  
-    .mainImg {
-      margin: 0 100px;
-      width: 200px;
-      height: auto;
-    }
-  
-    .loginContainer {
-      margin-bottom: 10px;
-    }
-  
-    .form-select {
-      margin-left: 5px;
-      margin-right: 5px;
-      flex-grow: 1;
-    }
-  
-    .btn-warning {
-      margin-left: 4px;
-      width: 90px;
-    }
-}
-  
-  /* Menu */
-.menu {
-    border: 0.1px rgba(165, 165, 165, 0.733) solid;
-    background-color: rgb(225, 225, 225);
-    height: 50px;
-    width: auto;
-}
-  
-.menuList {
-    list-style: none;
-    display: flex;
-    position: relative;
-    left: 415px;
-    font-size: 20px;
-}
-  
-.menuList a {
-    color: black;
-    text-decoration: none;
-}
-  
-.menuList a:hover {
-    color: gray;
-    transition: 0.2s;
-}
-  
-.menuContent {
-    margin-left: 60px;
-}
-  
-@media (max-width: 600px) {
-    .menuList {
-      justify-content: center;
-      left: 0px;
-    }
-    
-    .menuContent {
-      font-size: 18px;
-      margin: 0 40px;
-    }
-    
-    .menu {
-      width: 100%;
-    }
+  }
 }
 
-/* 헤더종료 */
+@media (max-width: 1660px) {
+  #inputForm {
+    width: 900px;
+  }
+}
+
+/* Menu */
+.menu {
+  border: 0.1px rgba(165, 165, 165, 0.733) solid;
+  background-color: rgb(225, 225, 225);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.menuList {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;  
+}
+
+.menuList a {
+  color: black;
+  text-decoration: none;
+}
+
+.menuList a:hover {
+  color: gray;
+  transition: 0.2s;
+}
+
+.menuContent {
+  margin: 7px 50px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .menuList {
+    left: 0px;
+  }
+  
+  .menuContent {
+    font-size: 18px;
+    margin: 8px 40px;
+  }
+  
+  .menu {
+    width: 100%;
+  }
+}
 
 
 
@@ -188,6 +213,7 @@
   height: 250px;
   box-shadow: 0 0 5px rgb(148, 148, 148);
   background-color: #eee;
+  border-radius: 14px;
 }
 
 .info-header img {
@@ -476,4 +502,6 @@ ul {
 }
 
 
-
+.id {
+  font-size: 0px;
+}

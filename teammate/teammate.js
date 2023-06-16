@@ -1,60 +1,18 @@
 (() => {
 
-    // input 요소 클릭 이벤트 
-    const input = document.querySelectorAll('.form-control');
+    // input 요소 클릭 이벤트    
+    let input = document.querySelector('.form-control');
 
-    input.forEach(function (element) {
-        // 클릭 시 주황색 실선 표시
-        element.addEventListener('click', function () {
-            this.style.borderBottom = '3px solid orange';
-        });
-        // 클릭해제 시 실선 제거
-        element.addEventListener('blur', function () {
-            this.style.borderBottom = 'none';
-        });
+    // 클릭 시 주황색 실선 표시
+    input.addEventListener('click', function() {
+    this.style.borderBottom = '3px solid orange';
     });
+    // 클릭해제 시 실선 제거
+    input.addEventListener('blur', function() {
+    this.style.borderBottom = 'none';
+    }); 
 
-    // 값을 받아옴
-    document.addEventListener('DOM.teammateRowLoaded', get);
-    async function get() {
-        const response = await fetch("http://localhost:8080/api/teammates", {
-            method: 'GET',
-        });
-        const data = await response.json();
-        console.log(data);
-        return data;
-    }
-
-    // 조원 생성하는 클래스
-    const setEditPlaceholder = (arr) => {
-        console.log(arr);
-        const editModal = document.querySelector('.editModal');
-        const inputs = editModal.querySelectorAll('input[type="text"]');
-        const addPreview = editModal.querySelector('img');
-        console.log(inputs);
-        for (let i = 0; i <= inputs.length; i++) {
-            if (i == 0) {
-                addPreview.src = arr[i];
-            } else {
-                inputs[i - 1].setAttribute('value', arr[i]);
-            }
-        }
-    };
-
-    // 조원 추가 모달 열고 닫기
-    const modal = document.querySelector('.modal');
-    const openModal = (target, className) => {
-        target.style.display = 'block';
-        setTimeout(() => {
-            target.classList.add(className);
-        }, 100);
-    };
-    const closeModal = (target, className) => {
-        target.classList.remove(className);
-        setTimeout(() => {
-            target.style.display = 'none';
-        }, 800);
-    };
+    // 조원 생성하는 클래스 (개선 필요)
     class Mate {
         constructor(id, stdId, name, image, part, des, git) {
             this.id = id;
@@ -65,7 +23,7 @@
             this.des = des;
             this.git = git;
         }
-
+        // html에 요소를 추가하고 속성을 정의하는 함수, saveAndCreate() 에서 반복됨
         create() {
             const teammateScrollBox = document.querySelector('.teammate-scroll-box');
             const createDivAndSet = (tag, att) => {
@@ -85,7 +43,7 @@
             }
 
             // teammate 생성
-            const teammate = createDivAndSet('div', 'teammate');
+            const mate = createDivAndSet('div', 'mate');
             // profileImage img tag
             const profileImg = createDivAndSet('img', 'imgLink');
             // profileImage 요소 생성 
@@ -110,46 +68,76 @@
 
             // member 요소 생성
             deleteButton.classList.add('material-symbols-outlined');
-            deleteButton.innerText = 'close';
             editButton.classList.add('material-symbols-outlined');
+            profileImg.setAttribute('src', this.image);
+            githubImg.setAttribute('src', '/image/githublogo.png');
+            githubA.setAttribute('href', this.git);
+            studentName.innerText = this.name;
+            description.innerText = this.des;
+            part.innerText = this.part;
+            deleteButton.innerText = 'close';
             editButton.innerText = 'edit_note';
             buttonDiv.appendChild(editButton);
             buttonDiv.appendChild(deleteButton);
-            teammate.appendChild(buttonDiv);
-            profileImg.setAttribute('src', this.image);
+            mate.appendChild(buttonDiv);
             profileImage.appendChild(profileImg);
-            teammate.appendChild(profileImage);
-            studentName.innerText = this.name;
-            teammate.appendChild(studentName);
-            part.innerText = this.part;
-            teammate.appendChild(part);
-            description.innerText = this.des;
-            teammate.appendChild(description);
-            githubImg.setAttribute('src', '/image/githublogo.png');
+            mate.appendChild(profileImage);
+            mate.appendChild(studentName);
+            mate.appendChild(part);
+            mate.appendChild(description);
             githubA.appendChild(githubImg);
-            githubA.setAttribute('href', this.git);
             githubLink.appendChild(githubA);
-            teammate.appendChild(githubLink);
-            teammateScrollBox.appendChild(teammate);
+            mate.appendChild(githubLink);
+            teammateScrollBox.appendChild(mate);
         }
 
         setEventListener(index) {
-            // eventListener for deleteBtn
-            const deleteButton = document.querySelectorAll('.deleteBtn');
-            deleteButton[index].addEventListener('click', (event) => {
-                if (confirm('없애고 싶은 조원이 있나요?')) {
-                    const targetId = event.target.id;
-                    console.log(targetId);
-                    deleteTeammate(targetId)
-                        .then(result => {
-                            console.log(result);
-                            alert('삭제되었습니다!');
-                            location.reload();
+        // eventListener for deleteBtn
+        const deleteButton = document.querySelectorAll('.deleteBtn');
+        deleteButton[index].addEventListener('click', (event) => {
+            if (confirm('없애고 싶은 조원이 있나요?')) {
+                const targetId = event.target.id;
+                deleteTeammate(targetId)
+                    .then(result => {
+                        alert('삭제되었습니다!');
+                        fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                        .then((response) => response.text())
+                        .then((html) => {
+                            while (document.documentElement.firstChild) {
+                            document.documentElement.removeChild(document.documentElement.firstChild);
+                            }
+                        
+                            const search_html = document.querySelector('html');
+                            const head = document.createElement('head');
+                            const body = document.createElement('body');
+                            search_html.appendChild(head);
+                            search_html.appendChild(body);
+                    
+                            const range = document.createRange();
+                            const parsedHTML = range.createContextualFragment(html);
+                            document.body.appendChild(parsedHTML);
+                        
+                            
+                            const mainStyle = document.createElement("link");
+                            mainStyle.type = "text/css"
+                            mainStyle.rel = "stylesheet";
+                            mainStyle.href = "/teammate/teammate.css";
+                            document.head.appendChild(mainStyle);
+                        
+                            // main.html과 관련된 JavaScript 파일 추가
+                            const mainScript = document.createElement("script");
+                            mainScript.src = "/teammate/teammate.js";
+                            document.body.appendChild(mainScript);
                         })
-                        .catch(error => {
-                            console.error(error);
+                        .catch((error) => {
+                            console.error("에러:", error);
                         });
-                }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    }
+                );
+            }
             });
             // eventLister for editBtn
             const editButton = document.querySelectorAll('.editBtn');
@@ -159,7 +147,7 @@
                     .then(result => {
                         const data = Object.values(result);
                         data.shift();
-                        setEditPlaceholder(data);
+                        setInputValue(data);
                         const editSubmit = document.querySelector('#editSubmit');
                         editSubmit.value = targetId;
                     })
@@ -172,19 +160,39 @@
         }
     }
 
-    // 받아온 값을 처리
-    get()
-        .then(result => {
-            const mateList = [...result];
-            save(mateList);
-        })
-        .catch(error => {
-            console.error(error);
-        }
-        )
+    /* 실행 */
+    getTeammate()
+    .then(result => {
+        const mateList = [...result];
+        saveAndCreate(mateList);
+    })
+    .catch(error => {
+        console.error(error);
+    });
 
-    // 값을 배열 mateList에 저장
-    const save = (mateList) => {
+    getUser()
+    .then(result => {
+        if(result.user.master == 1) {
+            console.log('loggedInAdmin');
+            addTeammateButton('새로운 팀원이 생겼나요?');
+            const teammateScrollBox = document.querySelector('.teammate-scroll-box');
+            console.log(teammateScrollBox);
+            const button = teammateScrollBox.querySelectorAll('.btnDiv');
+            console.log(button);
+            button.forEach((button) => {
+                console.log(button);
+                button.classList.add('admin');
+            });
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+    /* 함수 */
+
+    // 값을 배열 mateList에 저장하고 mate 클래스의 create,setEventListener 함수를 트리거
+    const saveAndCreate = (mateList) => {
         for (let i = 0; i < mateList.length; i++) {
             const mate = new Mate(mateList[i].id,
                 mateList[i].student_id,
@@ -197,140 +205,89 @@
             mate.create();
             mate.setEventListener(i);
         }
-    }
+    };
 
-    // 특정 조원 삭제
-    async function deleteTeammate(id) {
-        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
-            method: 'DELETE',
-        });
-        const data = await response.json();
-        console.log(data);
-        return data;
-    }
+    // 유효성 검사
+    const validateInput = (modal) => {
+        const selectedModal = document.querySelector(modal);
+        const modalInput = selectedModal.querySelectorAll('input');
+        console.log(modalInput);
+        let isFirstValue = true;
+        for(let index of modalInput) {
+            if(!(index.type == 'file') && !(modal == '.editModal')) {
+                const trimValue = index.value.trim();
+                if(isFirstValue && isNaN(trimValue)) {
+                    alert('학번은 숫자를 입력해주세요.');
+                    return false;
+                }
+                if(!trimValue) {
+                    alert('올바른 값을 입력해주세요.');
+                    return false;
+                }
+            }
+            isFirstValue = false;
+        }
+        return true;
+    };
 
-    // 조원 추가 버튼(Create)
+    // 수정 모달 호출 시 기본 값 입력
+    const setInputValue = (arr) => {
+        const editModal = document.querySelector('.editModal');
+        const inputs = editModal.querySelectorAll('input[type="text"]');
+        const addPreview = editModal.querySelector('img');
+        for (let i = 0; i <= inputs.length; i++) {
+            if (i == 0) {
+                addPreview.src = arr[i];
+            } else {
+                inputs[i - 1].value = arr[i];
+            }
+        }
+    };
+
+    // 수정 중 모달을 닫을 때 입력했던 값을 지움
+    const resetInputValue = () => {
+        const editModal = document.querySelector('.editModal');
+        const inputs = editModal.querySelectorAll('input');
+        const addPreview = editModal.querySelector('img');
+        for (let i = 0; i <= inputs.length; i++) {
+            if (i == 0) {
+                addPreview.src = '';
+            } else {
+                inputs[i - 1].value = '';
+            }
+        }
+    };
+
+    // 모달 닫기
+    const closeModal = (target, className) => {
+        target.classList.remove(className);
+        setTimeout(() => {
+            target.style.display = 'none';
+        }, 800);
+    };
+
+    // 모달 열기
+    const openModal = (target, className) => {
+        target.style.display = 'block';
+        setTimeout(() => {
+            target.classList.add(className);
+        }, 100);
+    };
+
+    // 조원 추가 텍스트 버튼
     const addTeammateButton = (text) => {
-        // 유효성 검사 구현해야 함
         const button = document.createElement('button');
         button.innerHTML = text;
         button.classList.add('addButton');
-        button.addEventListener('click', () => { openModal(modal, 'opacityQue') });
+        const modal = document.querySelector('.modal');
+        button.addEventListener('click', () => { openModal( modal, 'opacityQue') });
         const team = document.querySelector('.team');
         team.appendChild(button);
-    }
-    addTeammateButton('새로운 팀원이 생겼나요?');
+    };
 
-    async function addTeammate() {
-        const addModal = document.querySelector('.modal');
-        const input = addModal.querySelectorAll('input[type="text"]');
-        const file = document.querySelector('#addProfileImage');
-        const image = file.files[0];
-        if (image) {
-            const formData = new FormData();
-            formData.append('student_id', input[0].value);
-            formData.append('name', input[1].value);
-            formData.append('profile_image', image);
-            formData.append('part', input[2].value);
-            formData.append('description', input[3].value);
-            formData.append('github_link', input[4].value);
-            const response = await fetch('http://localhost:8080/api/teammates', {
-                method: 'POST',
-                body: formData
-            });
-        }
-    }
-
-    // 추가 모달 버튼
-    const addSubmit = document.querySelector('#addSubmit');
-    addSubmit.addEventListener('click', () => {
-        if (confirm('추가하시겠습니까?')) {
-            addTeammate()
-                .then(result => {
-                    console.log(result);
-                    alert('추가되었습니다!');
-                    location.reload();
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        }
-
-    });
-    // 추가 모달 닫기
-    const modalclosebutton = document.querySelector('#closeAddModal');
-    modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
-
-    // 수정 요청 보내기
-    async function editPut(id) {
-        const editModal = document.querySelector('.editModal');
-        const input = editModal.querySelectorAll('input[type="text"]');
-        const file = document.querySelector('#editProfileImage');
-        const image = file.files[0];
-        const formData = new FormData();
-        console.log('if문 전');
-        formData.append('_method', 'PUT');
-        formData.append('student_id', input[0].value);
-        console.log(input[0].value);
-        formData.append('name', input[1].value);
-        console.log(input[1].value);
-        formData.append('part', input[2].value);
-        console.log(input[2].value);
-        formData.append('description', input[3].value);
-        console.log(input[3].value);
-        formData.append('github_link', input[4].value);
-        console.log(input[4].value);
-        if (image) {
-            console.log('if문 실행');
-            formData.append('profile_image', image);
-            console.log(image);
-        }
-        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
-            method: 'POST',
-            body: formData,
-        });
-    }
-
-    // 수정 모달 버튼
-    const editModalSubmitButton = document.querySelector('#editSubmit');
-    editModalSubmitButton.addEventListener('click', () => {
-        if (confirm('정말 수정하시겠습니까?')) {
-            const id = editModalSubmitButton.value;
-            console.log(id);
-            console.log('함수 실행 전');
-            editPut(id).
-                then(result => {
-                    console.log(result);
-                    alert('수정되었습니다!');
-                    //location.reload();
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        }
-    });
-
-    // 수정 모달 닫기
-    const editModalCloseButton = document.querySelector('#closeEditModal');
-    editModalCloseButton.addEventListener('click', () => {
-        const editModal = document.querySelector('.editModal');
-        closeModal(editModal, 'editOpacityQue');
-    });
-
-    // 아이디로 조원 정보 검색 GET
-    async function getMateById(id) {
-        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
-            method: 'GET',
-        });
-        const data = await response.json();
-        return data;
-    }
-
-
-
+    // 모달에 이미지를 업로드하면 프리뷰 해줌 ?
     const showImage = (event, imageTarget) => {
         let selectedFile = event.target.files[0];
-        console.log(selectedFile);
         if (selectedFile) {
             let reader = new FileReader();
             reader.onload = function (event) {
@@ -341,50 +298,220 @@
             reader.readAsDataURL(selectedFile);
         }
     };
+
+    // 추가, 수정 시 폼을 보내는 함수
+    const appendFormData = (modalClass, fileId, method) => {
+        const modal = document.querySelector(modalClass);
+        const input = modal.querySelectorAll('input[type="text"]');
+        const file = document.querySelector(fileId);
+        const image = file.files[0];
+        const formData = new FormData();
+        formData.append('_method', method);
+        formData.append('student_id', input[0].value);
+        formData.append('name', input[1].value);
+        formData.append('part', input[2].value);
+        formData.append('description', input[3].value);
+        formData.append('github_link', input[4].value);
+        formData.append('profile_image', image);
+        return formData;
+    }
+
+    /* 요청 */
+    //현재 유저의 정보를 요청
+    async function getUser() {
+        fetch('http://127.0.0.1:8080/api/status', {
+            method: 'GET',
+            credentials: 'include',
+        });
+        const data = await response.json();
+        return data;
+    }
+    // 조원 추가
+    async function postTeammate() {
+        fetch('http://localhost:8080/api/teammates', {
+            method: 'POST',
+            body: appendFormData('.modal', '#addProfileImage', 'POST'),
+        });
+    }
+    // 특정 조원 삭제
+    async function deleteTeammate(id) {
+        fetch(`http://localhost:8080/api/teammates/${id}`, {
+            method: 'DELETE',
+        });
+    }
+    // 조원 정보를 서버에서 받아오는 함수
+    async function getTeammate() {
+        const response = await fetch("http://localhost:8080/api/teammates", {
+            method: 'GET',
+        });
+        const data = await response.json();
+        return data;
+    }
+    // 수정 요청 보내기
+    async function putTeammate(id) {
+        fetch(`http://localhost:8080/api/teammates/${id}`, {
+            method: 'POST',
+            body: appendFormData('.editModal', '#editProfileImage', 'PUT'),
+        });
+    }
+    // 아이디로 조원 정보 검색 GET
+    async function getMateById(id) {
+        const response = await fetch(`http://localhost:8080/api/teammates/${id}`, {
+            method: 'GET',
+        });
+        const data = await response.json();
+        return data;
+    }
+
+    /* 이벤트 리스너 */
+    // 조원 추가 전송 버튼 이벤트 리스너
+    const addSubmit = document.querySelector('#addSubmit');
+    addSubmit.addEventListener('click', () => {
+        if (confirm('추가하시겠습니까?')) {
+            if((!validateInput('.modal'))) {
+                return;
+            }
+            postTeammate()
+                .then(result => {
+                    alert('추가되었습니다!');
+                    // 페이지 새로 요청
+                    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                    .then((response) => response.text())
+                    .then((html) => {
+                        while (document.documentElement.firstChild) {
+                        document.documentElement.removeChild(document.documentElement.firstChild);
+                        }
+                    
+                        const search_html = document.querySelector('html');
+                        const head = document.createElement('head');
+                        const body = document.createElement('body');
+                        search_html.appendChild(head);
+                        search_html.appendChild(body);
+                
+                        const range = document.createRange();
+                        const parsedHTML = range.createContextualFragment(html);
+                        document.body.appendChild(parsedHTML);
+                    
+                        
+                        const mainStyle = document.createElement("link");
+                        mainStyle.type = "text/css"
+                        mainStyle.rel = "stylesheet";
+                        mainStyle.href = "/teammate/teammate.css";
+                        document.head.appendChild(mainStyle);
+                    
+                        // main.html과 관련된 JavaScript 파일 추가
+                        const mainScript = document.createElement("script");
+                        mainScript.src = "/teammate/teammate.js";
+                        document.body.appendChild(mainScript);
+                    })
+                    .catch((error) => {
+                        console.error("에러:", error);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+            })
+        }
+    });
+
+    // 조원 수정 전송 버튼 이벤트 리스너
+    const editModalSubmitButton = document.querySelector('#editSubmit');
+    editModalSubmitButton.addEventListener('click', () => {
+        if (confirm('정말 수정하시겠습니까?')) {
+            if((!validateInput('.editModal'))) {
+                return;
+            }
+            const id = editModalSubmitButton.value;
+            putTeammate(id).
+                then(result => {
+                    alert('수정되었습니다!');
+                    // 페이지 새로 요청
+                    fetch("/teammate/teammate.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
+                    .then((response) => response.text())
+                    .then((html) => {
+                        while (document.documentElement.firstChild) {
+                        document.documentElement.removeChild(document.documentElement.firstChild);
+                        }
+                    
+                        const search_html = document.querySelector('html');
+                        const head = document.createElement('head');
+                        const body = document.createElement('body');
+                        search_html.appendChild(head);
+                        search_html.appendChild(body);
+                
+                        const range = document.createRange();
+                        const parsedHTML = range.createContextualFragment(html);
+                        document.body.appendChild(parsedHTML);
+                    
+                        
+                        const mainStyle = document.createElement("link");
+                        mainStyle.type = "text/css"
+                        mainStyle.rel = "stylesheet";
+                        mainStyle.href = "/teammate/teammate.css";
+                        document.head.appendChild(mainStyle);
+                    
+                        // main.html과 관련된 JavaScript 파일 추가
+                        const mainScript = document.createElement("script");
+                        mainScript.src = "/teammate/teammate.js";
+                        document.body.appendChild(mainScript);
+                    })
+                    .catch((error) => {
+                        console.error("에러:", error);
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+    });
+
+    // 추가 모달 닫기 이벤트 리스너
+    const modal = document.querySelector('.modal');
+    const modalclosebutton = document.querySelector('#closeAddModal');
+    modalclosebutton.addEventListener('click', () => { closeModal(modal, 'opacityQue') });
+
+    //  수정 모달 닫기 이벤트 리스너
+    const editModalCloseButton = document.querySelector('#closeEditModal');
+    const editModal = document.querySelector('.editModal');
+    editModalCloseButton.addEventListener('click', () => {
+        resetInputValue();
+        closeModal(editModal, 'editOpacityQue');
+    });
+    
+    // 이미지 프리뷰 이벤트 리스너
     const addImageUploader = document.querySelector('#addProfileImage');
     const editImageUploader = document.querySelector('#editProfileImage');
     addImageUploader.addEventListener('change', (event) => {
-        console.log('add');
         showImage(event, '#addPreview');
     });
+
     editImageUploader.addEventListener('change', (event) => {
-        console.log('edit');
         showImage(event, '#editPreview');
     });
 
-
-    // 스크롤 버튼
+    // 스크롤 버튼 이벤트 리스너
     const leftScrl = document.querySelector('#leftScrl');
-    const rightScrl = document.querySelector('#rightScrl');
     const scrollBox = document.querySelector('.teammate-scroll-box');
-
+    const rightScrl = document.querySelector('#rightScrl');
+    
     leftScrl.addEventListener('click', (event) => {
         leftScrl.disabled = true;
-        scrollBox.scrollBy(-375, 0);
+        scrollBox.scrollBy(-370, 0);
         setTimeout(() => {
             leftScrl.disabled = false;
         }, 500)
-        // const lastChild = scrollBox.lastElementChild;
-        // const firstChild = scrollBox.firstElementChild;
-        // scrollBox.insertBefore(lastChild, firstChild);
-        //scrollBox.style.transform = `translateX(50px)`;
     });
+
     rightScrl.addEventListener('click', (event) => {
         rightScrl.disabled = true;
-        scrollBox.scrollBy(375, 0);
+        scrollBox.scrollBy(370, 0);
         setTimeout(() => {
             rightScrl.disabled = false;
         }, 500)
-        // const firstChild = scrollBox.firstElementChild;
-        // console.log(firstChild);
-        // scrollBox.appendChild(firstChild);
-        //scrollBox.style.transform = `translateX(-50px)`;
     });
 
-    // 클릭할 때 마다 특정 위치로 요소가 이동하면 앞에있던 요소를 뒤로 보내면 될듯
 
-
-
+    /* 타 페이지 연결 관련 코드 */
 
     // 자유게시판 연결
     const board = document.querySelector('.board');
@@ -417,6 +544,17 @@
                 const mainScript = document.createElement("script");
                 mainScript.src = "/community/js/list.js";
                 document.body.appendChild(mainScript);
+
+                let login_state = localStorage.getItem('loginState');
+                // login_state가 "login"일때 로그아웃 생성
+                if (login_state === "login") {
+                    // 로그인택스트 변경 
+                    const loginText = document.querySelector(".loginText");
+                    loginText.innerHTML = "로그아웃";
+                    // 로그아웃 컨테이너 클래스명 변경
+                    const loginContainer = document.querySelector(".loginContainer");
+                    loginContainer.classList = "logoutContainer";
+                }
             })
             .catch((error) => {
                 console.error("에러:", error);
@@ -458,6 +596,17 @@
                 mainScript.src = "/signin/javascript/login.js";
                 document.body.appendChild(mainScript);
 
+                let login_state = localStorage.getItem('loginState');
+                // login_state가 "login"일때 로그아웃 생성
+                if (login_state === "login") {
+                    // 로그인택스트 변경 
+                    const loginText = document.querySelector(".loginText");
+                    loginText.innerHTML = "로그아웃";
+                    // 로그아웃 컨테이너 클래스명 변경
+                    const loginContainer = document.querySelector(".loginContainer");
+                    loginContainer.classList = "logoutContainer";
+                }
+
 
             })
     });
@@ -493,6 +642,17 @@
                 const mainScript = document.createElement("script");
                 mainScript.src = "/introducepage/introduceJ.js";
                 document.body.appendChild(mainScript);
+
+                let login_state = localStorage.getItem('loginState');
+                // login_state가 "login"일때 로그아웃 생성
+                if (login_state === "login") {
+                    // 로그인택스트 변경 
+                    const loginText = document.querySelector(".loginText");
+                    loginText.innerHTML = "로그아웃";
+                    // 로그아웃 컨테이너 클래스명 변경
+                    const loginContainer = document.querySelector(".loginContainer");
+                    loginContainer.classList = "logoutContainer";
+                }
             })
             .catch((error) => {
                 console.error("에러:", error);
@@ -501,7 +661,6 @@
     })
 
     // 검색시 화면전환
-
     const submit = document.querySelector('#inputForm');
     submit.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -552,6 +711,17 @@
                 const mainScript = document.createElement("script");
                 mainScript.src = "/search/search.js";
                 document.body.appendChild(mainScript);
+
+                let login_state = localStorage.getItem('loginState');
+                // login_state가 "login"일때 로그아웃 생성
+                if (login_state === "login") {
+                // 로그인택스트 변경 
+                const loginText = document.querySelector(".loginText");
+                loginText.innerHTML = "로그아웃";
+                // 로그아웃 컨테이너 클래스명 변경
+                const loginContainer = document.querySelector(".loginContainer");
+                loginContainer.classList = "logoutContainer";
+                }
 
 
                 if (searchResults === false) {
@@ -641,6 +811,12 @@
                     location.classList.add('location');
                     location.textContent = information.address;
 
+                    const idNumber = information.id;
+                    const id = document.createElement('p');
+                    id.textContent = idNumber;
+                    id.classList.add("id");
+                    infoHead.appendChild(id);
+
 
                     ol.appendChild(li);
                     li.appendChild(a);
@@ -687,4 +863,17 @@
         }
         return filteredArray;
     }
+
+    const logoutContainer = document.querySelector(".logoutContainer");
+    logoutContainer.addEventListener("click", () => {
+    // 로그인 상태 변경
+    localStorage.setItem('loginState', 'logout');
+    // 로그인택스트 변경
+    const loginText = document.querySelector(".loginText");
+    loginText.innerHTML = "로그인";
+    // 로그아웃 컨테이너 클래스명 변경
+    const loginContainer = document.querySelector(".logoutContainer");
+    loginContainer.classList = "loginContainer";
+    });
+
 })();
