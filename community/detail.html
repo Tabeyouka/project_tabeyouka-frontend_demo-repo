@@ -65,7 +65,7 @@
         <h1><b>커뮤니티</b></h1>
         <h5>커뮤니티는 모두의 참여와 존중으로 이루어집니다.</h5>
     </div>
-        
+
     <div class="post">
         <div class="header">
             <!-- 게시글의 제목이 들어감 -->
@@ -83,12 +83,12 @@
             <div class="text"></div>
             <div class="image">
                 <img class="postImage" src="" alt="이미지">
-              </div>
+            </div>
         </div>
         <div class="buttons">
             <button type="button" class="btn btn-secondary list">목록</button>
-            <button type="button" class="btn btn-secondary postmodify">수정</button>
-            <button type="button" class="btn btn-danger postdelete">삭제</button>
+            <button type="button" class="btn btn-secondary post-modify" style="display: block;">수정</button>
+            <button type="button" class="btn btn-danger post-delete">삭제</button>
         </div>
     </div>
     <div class="comments">
@@ -101,38 +101,39 @@
                     <button type="button" class="btn btn-light com-modify-btn">수정</button>
                     <div class="modal" tabindex="-1">
                         <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">댓글 수정</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">댓글 수정</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="modified-comment" placeholder="댓글을 입력하세요">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary com-modify-btn2">수정</button>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                              <input type="text" class="modified-comment" placeholder="댓글을 입력하세요">
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary com-modify-btn2">수정</button>
-                            </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
-                <div class="button-container">
+                <div class="button-container2">
                     <button type="button" class="btn btn-light com-delete-btn">x</button>
                 </div>
             </div>
             <!-- 댓글 내용 -->
             <div class="comment-content">
-                
+
             </div>
         </div>
-        <form action="http://localhost:8080/api/community">
-            <div class="comment-register">
-                <input class="form-control comment-input" id="text" placeholder="댓글을 입력하세요.">
-            </div>
-            <div class="comment-register-button">
-                <button type="button" class="btn btn-primary com-register-btn">등록</button>
-            </div>    
-        </form>
+    </div>
+    <div>
+        <div class="comment-register">
+            <input class="form-control comment-input" id="text" placeholder="댓글을 입력하세요.">
+        </div>
+        <div class="comment-register-button">
+            <button type="button" class="btn btn-primary com-register-btn">등록</button>
+        </div>
     </div>
 </div>
 <footer class="footer-section">
