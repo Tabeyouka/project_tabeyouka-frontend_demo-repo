@@ -319,7 +319,7 @@
     /* 요청 */
     //현재 유저의 정보를 요청
     async function getUser() {
-        fetch('http://127.0.0.1:8080/api/status', {
+        const response = await fetch('http://127.0.0.1:8080/api/status', {
             method: 'GET',
             credentials: 'include',
         });
@@ -510,7 +510,7 @@
         }, 500)
     });
 
-
+    
     /* 타 페이지 연결 관련 코드 */
 
     // 자유게시판 연결
