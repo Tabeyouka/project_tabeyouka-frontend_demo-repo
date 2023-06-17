@@ -69,7 +69,7 @@
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;
-    
+
     height: auto;
     padding: 10px;
   }
@@ -280,11 +280,13 @@
   }
 
   .comment-info{
+    margin-top: 1px;
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
     justify-content: space-between;  
     align-items: center;
+    border-top: 1px solid black;
   }
 
   .comment-info p {
@@ -299,7 +301,7 @@
   .comment-info .button-container:last-child button {
     margin-left: 20px;
   }
-
+  
   .modal-body{
     text-align: center;
   }
@@ -310,14 +312,18 @@
     padding: 5px;
   }
 
-  .delete-btn{
-    width: 40px;
+  .com-delete-btn{
+    margin-left: 10px;
   }
 
   .comment-content{
     height: auto;
     padding-top: 10px;
     padding-bottom: 30px;
+  }
+
+  .comment-content:last-child{
+    border-bottom: 1px solid black;
   }
 
   .comment-register{
