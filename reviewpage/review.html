@@ -19,42 +19,44 @@
     />
   </head>
 
-    <body>
-      <!-- header -->
-      <div class="navbar">
+  <body>
+    <!-- header -->
+    <div class="navbar">
+      <!-- {/* 로고 이미지 */} -->
+      <a href="">
+        <img src="/image/tabeyoukaLogo.png" alt="titleImg" class="titleImg" />
+      </a>
 
-        <!-- {/* 로고 이미지 */} -->
-        <a href="">
-          <img src="/image/tabeyoukaLogo.png" alt="titleImg" class='titleImg'>       
-        </a>
-
-        <!-- {/* 검색창 form */} -->
-        <!-- action="처리할 url" method="전송방식" -->
-        <form id='inputForm' >
-          <!-- 가게정보 입력 -->
-          <div class="input-group">
-            <span class="input-group-text">가게정보를 입력해주세요</span>
-            <input type="text" class="form-control" placeholder='후쿠오카에서 맛집을 찾아보자!'/>
-          </div>
-
-          <!-- 검색버튼 -->
-          <button type="submit" class="btn btn-warning">검색</button>
-        </form>
-        
-        <!-- 로그인 태그 --> 
-        <div class='loginContainer'>
-            <span class="loginText">로그인</span>
+      <!-- {/* 검색창 form */} -->
+      <!-- action="처리할 url" method="전송방식" -->
+      <form id="inputForm">
+        <!-- 가게정보 입력 -->
+        <div class="input-group">
+          <span class="input-group-text">가게정보를 입력해주세요</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="후쿠오카에서 맛집을 찾아보자!"
+          />
         </div>
-    <!-- header닫는태그 -->
+
+        <!-- 검색버튼 -->
+        <button type="submit" class="btn btn-warning">검색</button>
+      </form>
+
+      <!-- 로그인 태그 -->
+      <div class="loginContainer">
+        <span class="loginText">로그인</span>
+      </div>
+      <!-- header닫는태그 -->
     </div>
-    
 
     <!-- 메뉴 -->
     <div class="menu">
       <ul class="menuList">
-          <li class="menuContent"><a class="teammate">조원소개</a></li>
-          <li class="menuContent"><a class="introduce">현지학기제</a></li>
-          <li class="menuContent"><a class="board">자유게시판</a></li>
+        <li class="menuContent"><a class="teammate">조원소개</a></li>
+        <li class="menuContent"><a class="introduce">현지학기제</a></li>
+        <li class="menuContent"><a class="board">자유게시판</a></li>
       </ul>
     </div>
 
@@ -98,7 +100,7 @@
           <div id="comment-area-layout">
             <div id="comment-area">
               <div class="reply-body">
-                <h4 class="reply-name">상성준</h4>
+                <h4 class="reply-name" id="commentAreaName"></h4>
                 <div class="rating">
                   <i class="rating__star far fa-star"></i>
                   <i class="rating__star far fa-star"></i>
@@ -112,22 +114,40 @@
                   id="comment-input"
                   placeholder="리뷰를 작성해주세요!"
                 ></textarea>
-                <button
-                  id="comment-btn"
-                  type="submit"
-                  
-                >
-                  등록
-                </button>
+                <button id="comment-btn" type="submit">등록</button>
+                <div id="imgBtn">
+                  <input type="file" id="imageInput" />
+                  <button id="testpng">업로드</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal">
+              <div class="modalBody">
+                <p id="modalBodyTitle">수정할 내용을 입력하세요.</p>
+                <div class="rating-2">
+                  <i class="rating2__star far fa-star"></i>
+                  <i class="rating2__star far fa-star"></i>
+                  <i class="rating2__star far fa-star"></i>
+                  <i class="rating2__star far fa-star"></i>
+                  <i class="rating2__star far fa-star"></i>
+                  <p class="plzRating">별점을 선택해주세요!</p>
+                </div>
+                <textarea id="modalBodyText" cols="30" rows="10"></textarea>
+                <p id="ErrorMsg"></p>
+                <div class="buttons">
+                  <button class="modalBtn" id="modalEditBtn">수정</button>
+                  <button class="modalBtn" id="modalCancelBtn">취소</button>
+
+                  <input type="file" id="imageInput2" />
+                  <button id="testpng2">업로드</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <input type="file" id="imageInput" />
-    <button onclick="handleFileUpload()">업로드</button>
 
     <script src="./reviewj.js" type="text/js"></script>
   </body>
