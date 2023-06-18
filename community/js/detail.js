@@ -32,7 +32,7 @@
   /* 게시글 내용 */
   const content = document.querySelector(".text");
 
-  /* 게시글 이미지 */
+  /* 게시글 이미지 */ 
   const image = document.querySelector(".postImage");
 
   var postId = localStorage.getItem("postId");
