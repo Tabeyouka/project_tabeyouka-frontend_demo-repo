@@ -30,9 +30,9 @@
   const date = document.querySelector(".date");
 
   /* 게시글 내용 */
-  const content = document.querySelector(".content");
+  const content = document.querySelector(".text");
 
-  /* 게시글 이미지 */
+  /* 게시글 이미지 */ 
   const image = document.querySelector(".postImage");
 
   var postId = localStorage.getItem("postId");
@@ -45,6 +45,8 @@
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
+      console.log(data.post.image)
       // 게시물 정보를 사용하여 페이지의 요소를 업데이트
       title.innerHTML = data.post.title;
       writer.innerHTML = data.post.nickname ? data.post.nickname : "Unknown";
@@ -577,6 +579,15 @@ const createComments = () => {
  
    getUserInfo();
 
+async function reviewSearch(id) {
+  const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
+  {
+    method: 'GET',
+  });
+  const data = await response.json();
+  return data;
+}
+
 // 검색시 화면전환
 
 const submit = document.querySelector("#inputForm");
@@ -716,8 +727,14 @@ submit.addEventListener("submit", async (e) => {
 
         const reviewSpan = document.createElement("span");
         reviewSpan.classList.add("review");
-        reviewSpan.textContent =
-          "정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ ...";
+        reviewSearch(information.id)
+        .then(data => {
+          reviewSpan.textContent = data.reviews[0].review_text;
+        })
+        .catch(error => {
+          // 리뷰가 없으면 리뷰가 없다를 표시
+          reviewSpan.textContent = "리뷰가 없습니다.";
+        });
 
         const locationContainer = document.createElement("div");
         locationContainer.classList.add("location-container");

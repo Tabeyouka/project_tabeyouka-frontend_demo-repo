@@ -43,15 +43,15 @@
            // 사용자가 로그인되어 있는 상태
            console.log("사용자가 로그인되어 있습니다.");
    
-           // FormData 객체 생성(html에 있는 form 요소는 자동으로 추가)
-           const formData = new FormData(postForm);
+           // FormData 객체 ;생성(html에 있는 form 요소는 자동으로 추가)
+           const formData = new FormData(postForm)
  
            // 이미지 빈값처리(null로 하니까 오류 발생)
            const imageInput = document.getElementById("image");
            const imageFiles = imageInput.files;
  
            if (imageFiles.length === 1) {
-             imageFiles[1];
+             formData.append("image", imageFiles[0]);
            } else {
              formData.append("image", ""); // 사진을 선택하지 않은 경우 빈값
            }
@@ -400,6 +400,15 @@
   
   })
 
+  async function reviewSearch(id) {
+    const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
+    {
+      method: 'GET',
+    });
+    const data = await response.json();
+    return data;
+  }
+
   // 검색시 화면전환
 
   const submit = document.querySelector("#inputForm");
@@ -539,8 +548,14 @@
 
           const reviewSpan = document.createElement("span");
           reviewSpan.classList.add("review");
-          reviewSpan.textContent =
-            "정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ ...";
+          reviewSearch(information.id)
+          .then(data => {
+            reviewSpan.textContent = data.reviews[0].review_text;
+          })
+          .catch(error => {
+            // 리뷰가 없으면 리뷰가 없다를 표시
+            reviewSpan.textContent = "리뷰가 없습니다.";
+          });
 
           const locationContainer = document.createElement("div");
           locationContainer.classList.add("location-container");
