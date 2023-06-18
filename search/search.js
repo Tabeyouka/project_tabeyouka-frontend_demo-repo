@@ -12,7 +12,14 @@ input.addEventListener('blur', function() {
 }); 
 
 
-
+async function reviewSearch(id) {
+  const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
+  {
+    method: 'GET',
+  });
+  const data = await response.json();
+  return data;
+}
 
 const submit = document.querySelector('#inputForm');
 submit.addEventListener('submit', async (e) => {
@@ -152,7 +159,14 @@ submit.addEventListener('submit', async (e) => {
       
       const reviewSpan = document.createElement('span');
       reviewSpan.classList.add('review');
-      reviewSpan.textContent = '정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ ...';
+      reviewSearch(information.id)
+      .then(data => {
+        reviewSpan.textContent = data.reviews[0].review_text;
+      })
+      .catch(error => {
+        // 리뷰가 없으면 리뷰가 없다를 표시
+        reviewSpan.textContent = "리뷰가 없습니다.";
+      });
       
       const locationContainer = document.createElement('div');
       locationContainer.classList.add('location-container');
