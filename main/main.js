@@ -144,7 +144,6 @@ async function request(id) {
   return data;
 }
 
-
 // 받아온 정보 사용
 const storeTitle = document.querySelectorAll('.title');
 const storeSubtitle = document.querySelectorAll('.desc');
@@ -152,6 +151,7 @@ const storeAddress = document.querySelectorAll('.location');
 const tags = document.querySelectorAll('.tags');
 const storePoint = document.querySelectorAll('.star');
 const votes = document.querySelectorAll('.commenter');
+const review = document.querySelectorAll('.review');
 const sliderImage = document.querySelectorAll('.gallery img');
 
 const imageChange = () => {
@@ -181,6 +181,14 @@ const imageChange = () => {
       storeSubtitle[i].innerText = title;
       storeAddress[i].innerText = address;
       tags[i].innerText = menu_type;
+      reviewSearch(result.restaurant.id)
+      .then(data => {
+        review[i].innerText = data.reviews[0].review_text;
+      })
+      .catch(error => {
+        // 리뷰가 없으면 리뷰가 없다를 표시
+        review[i].innerText = "리뷰가 없습니다.";
+      });
       storePoint[i].innerHTML += PointCalculation(total_points);
       storePoint[i].innerHTML += ` ${total_points}`;
       votes[i].innerText = `${total_votes}명`;
@@ -220,7 +228,14 @@ setInterval(() => {
 
 }, 5000);
 
-
+async function reviewSearch(id) {
+  const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
+  {
+    method: 'GET',
+  });
+  const data = await response.json();
+  return data;
+}
 
 
 
@@ -239,12 +254,14 @@ submit.addEventListener('submit', async (e) => {
       method: 'GET',
     });
     const data = await response.json();
-
+    
     const search_complete = filterArrayByWord(data, search_word);
 
     return search_complete;
   }
   const searchResults = await requestSearch();
+
+  
   
   fetch("/search/search.html", { credentials: "include" })
   .then((response) => response.text())
@@ -306,9 +323,12 @@ submit.addEventListener('submit', async (e) => {
       const loginContainer = document.querySelector(".loginContainer");
       loginContainer.classList = "logoutContainer";
     }
+    
     // 검색결과의 length만큼 요소 생성
     for (let i = 0; i <= searchResults.length; i++ ) {
-      information = searchResults[i];
+      const information = searchResults[i];
+      // const review_text = reviewSearch(information.id);
+      // console.log(review_text); 
       
       const ol = document.querySelector('.searchInfo-space');
       
@@ -368,10 +388,20 @@ submit.addEventListener('submit', async (e) => {
       
       const reviewContainer = document.createElement('div');
       reviewContainer.classList.add('review-container');
-      
+
       const reviewSpan = document.createElement('span');
       reviewSpan.classList.add('review');
-      reviewSpan.textContent = '정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ 정말 맛있어요 ~ ...';
+      
+      reviewSearch(information.id)
+      .then(data => {
+        reviewSpan.textContent = data.reviews[0].review_text;
+      })
+      .catch(error => {
+        // 리뷰가 없으면 리뷰가 없다를 표시
+        reviewSpan.textContent = "리뷰가 없습니다.";
+      });
+      
+      
       
       const locationContainer = document.createElement('div');
       locationContainer.classList.add('location-container');
@@ -443,7 +473,6 @@ board.addEventListener('click', () => {
   fetch("http://127.0.0.1:8080/api/status", { credentials: "include" }) // 로그인 여부 확인 요청에도 쿠키를 포함
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.message);
       const isLoggedIn = data.message === 'User is logged in';
 
       // list.html로 이동
