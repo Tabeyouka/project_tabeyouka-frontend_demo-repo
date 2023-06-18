@@ -74,13 +74,16 @@
     } else if (!nicknameRegex.test(nickName.value)) {
       setError(nickName, "3~15자 이내의 닉네임을 입력해주세요.");
       isNicknameValid = false;
+    } else if (allUser.includes(nickName.value)) {
+      setError(nickName, "이미 같은 닉네임이 있습니다.");
+      isNicknameValid = false;
     } else {
       setError(nickName, "");
       isNicknameValid = true;
     }
   });
 
-  // Email 중복확인용 user 정보 불러오기
+  // Email, nickName 중복확인용 user 정보 불러오기
 
   let allUser = [];
   const loadUser = () => {
@@ -103,6 +106,7 @@
         console.log("길이는 :", data.users.length);
         for (i = 0; i < data.users.length; i++) {
           allUser.push(data.users[i].email);
+          allUser.push(data.users[i].nickname);
         }
 
         console.log("패치", allUser);

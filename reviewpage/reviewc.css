@@ -7,13 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  width: 100%; /* 수정 */
-  max-width: 100%; /* 추가 */
-  height: auto;
+  width: auto;
+  height: 100px;
   background-color: #eee;
 }
-
 
 #inputForm {
   padding: 0;
@@ -36,8 +33,6 @@
 
 /* Login Form */
 .loginContainer {
-  display: flex;
-  align-items: center;
   text-align: center;
   width: 170px;
 }
@@ -69,19 +64,15 @@
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;
-    
     height: auto;
     padding: 10px;
   }
 
   #inputForm {
-    padding: 0;
-    margin: 20px 0;
-    outline: 0;
-    display: flex;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
-    max-width: 100%;
-    height: 40px;
+    margin: 10px 0;
   }
 
   .mainImg {
@@ -92,14 +83,14 @@
 
   .loginContainer {
     margin-bottom: 10px;
-    display: flex;
-    width: 100px;
+    justify-content: center;
+    width: 250px;
   }
 
   .logoutContainer {
     margin-bottom: 10px;
     justify-content: center;
-    width: 100px;
+    width: 250px;
   }
 
   .form-select {
@@ -136,7 +127,7 @@
   justify-content: center;
   font-size: 20px;
   margin: 0;
-  padding: 0;  
+  padding: 0;
 }
 
 .menuList a {
@@ -159,50 +150,166 @@
   .menuList {
     left: 0px;
   }
-  
+
   .menuContent {
     font-size: 18px;
     margin: 8px 40px;
   }
-  
+
   .menu {
     width: 100%;
   }
 }
 
-/* 리뷰 댓글 */
+/* 리뷰페이지 */
 
-.review {
-  padding-top: 10px;
-  font-size: 25px;
+@media (max-width: 768px) {
+  #reviewSecton {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    background-color: #f6f1f1;
+    /* border: 1px solid lightyellow; */
+    border-top: none;
+    width: 100% !important;
+    margin: 0;
+  }
+
+  .titleSection {
+    font-size: 1rem;
+  }
+
+  .mainName {
+    font-size: 2rem !important;
+  }
+}
+
+#reviewSecton {
+  background-color: #f6f1f1;
+  /* border: 1px solid lightyellow; */
+  border-top: none;
+  width: 70%;
+
+  margin: 0 auto;
+}
+
+.titleSection {
+  padding-top: 30px;
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column; /* 세로로 아래로 배치 */
+}
+
+.tags {
+  color: rgb(175, 171, 171);
+  padding-bottom: 20px;
+}
+
+.imageSection {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 10px;
+}
+
+.mainName {
+  padding-top: 20px;
+  width: 100%;
+  border-top: 1px solid lightgrey;
+  font-size: 3rem;
   font-weight: bold;
 }
 
+.mainImg {
+  padding: 10px;
+  width: 50%;
+  height: 50%;
+  border-radius: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  object-fit: cover;
+}
+
+.informationSection {
+  padding-left: 3%;
+  font-size: 18px;
+  border-bottom: 2px solid black;
+  padding-bottom: 3%;
+  padding-top: 3%;
+}
+
+.review {
+  font-size: 2rem;
+  padding-left: 3%;
+  padding-top: 3%;
+}
+
+.informationTitle {
+  color: gray;
+  padding-right: 25px;
+}
+
+.informationSection table {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+/* 리뷰 댓글 */
+
 #comment-layout {
   border: 1px solid lightgray;
-  border-left: none;
-  border-right: none;
+  border-radius: 10px;
 }
 
 .reply-body {
-  /* border-bottom: 1px solid lightgray; */
+  border-bottom: 1px solid lightgray;
   padding-left: 15px;
-  margin-top: 10px;
+
+  box-sizing: border-box; /* 패딩을 요소 크기에 포함시킴 */
+}
+
+.reply-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  /* width: 100%; */
+  width: calc(100%);
 }
 
 .reply-content {
   padding-left: 20px;
 }
 
+.image-element {
+  max-width: 40%;
+  height: auto;
+}
+
+.reply-edit {
+  background-color: nF6F1F1;
+  padding: 0%;
+  margin: 0%;
+  border: none;
+  float: right;
+}
+.reply-del {
+  background-color: F6F1F1;
+  border: none;
+  float: right;
+}
+
 #comment-area-layout {
-  border: 1px solid lightgray;
+  border: 1px solid F6F1F1;
+  border-radius: 10px;
   margin-top: 50px;
-  border-left: none;
-  border-right: none;
 }
 
 #comment-input {
-  width: 98%;
+  width: 90%;
   height: 10vh;
   margin-left: 20px;
   display: block;
@@ -220,7 +327,6 @@
   font-size: 15px;
   color: white;
 }
-
 .rating {
   width: 180px;
 }
@@ -230,28 +336,121 @@
   color: #dabd18b2;
 }
 
-/* 
-address
-: 
-"후쿠오카현 후쿠오카시 주오구 하루요시 2-12-5"
-id
-: 
-5
-image
-: 
-"http://localhost:8080/storage/images/restaurant_images/150x150_square_9c297f9f2943674a787a65127e229bc2.jpg"
-menu_type
-: 
-"호르몬(내장), 이자카야"
-phone_number
-: 
-null
-title
-: 
-"yakinikushimpaku"
-total_points
-: 
-0
-total_votes
-: 
-0 */
+.rating2__star {
+  cursor: pointer;
+  color: #dabd18b2;
+}
+
+@media (max-width: 768px) {
+  .modalBody {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80% !important;
+    height: 60% !important;
+    padding: 20px;
+  }
+  .modalBtn {
+    width: 30%;
+    margin-bottom: 20px;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .modalBody {
+    width: 80% !important;
+    height: 60% !important;
+    padding: 20px;
+  }
+  .modalBtn {
+    width: 30%;
+    margin-bottom: 20px;
+  }
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: none;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modalBody {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 40%;
+  padding: 20px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#modalBodyTitle {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+}
+
+#modalBodyText {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 60%;
+  border: solid 2px #1e90ff;
+  font-size: 16px;
+
+  outline: none;
+}
+
+.buttons {
+  padding-top: 10px;
+  float: right;
+}
+
+.modalBtn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+#ErrorMsg {
+  color: red;
+}
+
+#imgBtn {
+  margin-top: 10px;
+  display: inline-flex;
+  margin-right: 8%;
+  margin-left: 15px;
+  float: right;
+
+  background-color: gray;
+  border: none;
+
+  font-size: 15px;
+  color: white;
+}
