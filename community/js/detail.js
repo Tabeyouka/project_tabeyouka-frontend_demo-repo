@@ -30,7 +30,7 @@
   const date = document.querySelector(".date");
 
   /* 게시글 내용 */
-  const content = document.querySelector(".content");
+  const content = document.querySelector(".text");
 
   /* 게시글 이미지 */
   const image = document.querySelector(".postImage");
@@ -45,6 +45,8 @@
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
+      console.log(data.post.image)
       // 게시물 정보를 사용하여 페이지의 요소를 업데이트
       title.innerHTML = data.post.title;
       writer.innerHTML = data.post.nickname ? data.post.nickname : "Unknown";
