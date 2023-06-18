@@ -7,6 +7,8 @@
   const passwordInput = document.querySelector("#passwd-input");
   passwordInput.addEventListener("blur", handlePasswordBlur);
 
+  //////////////////
+
  // 이메일 정규 표현식
  var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -147,11 +149,9 @@
             return statusResponse.json();
           })
           .then((statusResult) => {
-            console.log(statusResult.message);
             // /api/status의 응답을 확인
             if (statusResult.message === "User is logged in") {
               // 사용자가 로그인되어 있는 상태
-              console.log("사용자가 로그인되어 있습니다.");
               fetch("/main/main.html", { credentials: "include" }) // 메인 페이지 요청에도 쿠키를 포함
                 .then((response) => response.text())
                 .then((html) => {

@@ -25,11 +25,9 @@
       method: "GET",
     })
       .then((response) => {
-        console.log("서버 통신 완료");
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         return data.posts; // 정렬되지 않은 게시글 데이터 반환
       })
       .catch((error) => console.log(error));
@@ -77,7 +75,7 @@
       <div class="col date">${formatDate(post.created_at)}</div>
     `;
 
-    // 닉네임 확인 위함(게시글 작성자랑 status 유저정보 비교 후 동일하면 작성, 삭제 버튼 노출 여부 결정 위함)
+    // 닉네임 확인 위함(게시글 작성자랑 status 유저정보 비교 후 동일하면 수정, 삭제 버튼 노출 여부 결정 위함)
       postRow.addEventListener("click", () => {
         fetch(`http://127.0.0.1:8080/api/community/${post.id}`, {
           headers: {
@@ -665,7 +663,6 @@ board.addEventListener('click', () => {
   fetch("http://127.0.0.1:8080/api/status", { credentials: "include" }) // 로그인 여부 확인 요청에도 쿠키를 포함
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.message);
       const isLoggedIn = data.message === 'User is logged in';
 
       // list.html로 이동
