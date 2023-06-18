@@ -63,7 +63,7 @@
     noticeData.forEach((notice) => {
       const noticeText = document.createElement("div");
       noticeText.className = "notice-body";
-      noticeText.textContent = notice.article;
+      noticeText.innerHTML = notice.article;
       noticeContent.appendChild(noticeText);
     });
   };
@@ -97,6 +97,24 @@
       });
   };
   noticeLoad();
+
+  // 현지학기제 모달
+  const localSemester = document.querySelector('#local-semester');
+  const lsModal = document.querySelector('.lsModal');
+  localSemester.addEventListener('click', () => {
+    lsModal.style.display = 'block';
+    setTimeout(() => {
+      lsModal.classList.add('opacityQue');
+    }, 100);
+  });
+
+  const closelsModal = document.querySelector('#closelsModal');
+  closelsModal.addEventListener('click', () => {
+    lsModal.classList.remove('opacityQue');
+    setTimeout(() => {
+      lsModal.style.display = 'none';
+    }, 800);
+  });
 
   // 본문 수정
 
