@@ -120,12 +120,16 @@ postForm.addEventListener("submit", (event) => {
         const formData = new FormData(postForm);
         const nickname = data.post.nickname;
         const author_id = data.post.author_id;
+
         // 이미지 파일을 formData에 추가 (사진을 선택하지 않았을 경우 빈 배열 추가)
         const imageInput = document.getElementById("image");
         const imageFiles = imageInput.files;
+
         // 이미지 파일 append
-        if (imageFiles.length === 1) {
-          imageFiles[1];
+        if (imageFiles.length == 0) {
+          imageFiles[0];
+          formData.append("image", imageFiles[0]);
+          console.log(formData);
         } else {
           formData.append("image", ""); // 사진을 선택하지 않은 경우 빈값
         }
