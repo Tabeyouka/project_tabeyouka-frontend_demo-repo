@@ -173,14 +173,10 @@
     getUser()
     .then(result => {
         if(result.user.master == 1) {
-            console.log('loggedInAdmin');
             addTeammateButton('새로운 팀원이 생겼나요?');
             const teammateScrollBox = document.querySelector('.teammate-scroll-box');
-            console.log(teammateScrollBox);
             const button = teammateScrollBox.querySelectorAll('.btnDiv');
-            console.log(button);
             button.forEach((button) => {
-                console.log(button);
                 button.classList.add('admin');
             });
         }
@@ -211,20 +207,19 @@
     const validateInput = (modal) => {
         const selectedModal = document.querySelector(modal);
         const modalInput = selectedModal.querySelectorAll('input');
-        console.log(modalInput);
         let isFirstValue = true;
         for(let index of modalInput) {
-            if(!(index.type == 'file') && !(modal == '.editModal')) {
                 const trimValue = index.value.trim();
+                // 학번은 첫번째 값이기에 첫번째 값인지 판단하고 숫자인지 확인
                 if(isFirstValue && isNaN(trimValue)) {
                     alert('학번은 숫자를 입력해주세요.');
                     return false;
                 }
+                // 그 이외에 값은 공백으 제거하고 값이 있는지확인
                 if(!trimValue) {
                     alert('올바른 값을 입력해주세요.');
                     return false;
                 }
-            }
             isFirstValue = false;
         }
         return true;
