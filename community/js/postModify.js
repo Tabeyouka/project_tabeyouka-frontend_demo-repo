@@ -126,10 +126,8 @@ postForm.addEventListener("submit", (event) => {
         const imageFiles = imageInput.files;
 
         // 이미지 파일 append
-        if (imageFiles.length == 0) {
-          imageFiles[0];
+        if (imageFiles.length === 1) {
           formData.append("image", imageFiles[0]);
-          console.log(formData);
         } else {
           formData.append("image", ""); // 사진을 선택하지 않은 경우 빈값
         }
