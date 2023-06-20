@@ -245,7 +245,7 @@
         const mainStyle = document.createElement("link");
         mainStyle.rel = "stylesheet";
         mainStyle.type = "text/css";
-        mainStyle.href = "/Register/main.css";
+        mainStyle.href = "/Register/Register.css";
         document.head.appendChild(mainStyle);
 
         // 메인.html과 관련된 JavaScript 파일 추가
