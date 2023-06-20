@@ -29,16 +29,13 @@
         return statusResponse.json();
       })
       .then((data) => {
-        console.log("응답 받음:", data);
+        // console.log("응답 받음:", data);
         userInfo = data.user;
-        console.log("패치", userInfo.nickname);
+
         commentData2.nickname = userInfo.nickname;
         commentData2.author_id = userInfo.id;
         editCommentData.nickname = userInfo.nickname;
         editCommentData.author_id = userInfo.id;
-
-        console.log(commentData2);
-        console.log("수정", editCommentData);
 
         // 댓글 입력창 name을 로그인한 사용자의 nickname으로 변경
         document.querySelector("#commentInputName").textContent =
@@ -47,7 +44,6 @@
   };
 
   getUserInfo();
-  console.log(userInfo);
 
   const modifyBtn = document.querySelector(".modify-btn");
 
@@ -84,10 +80,9 @@
         }
       })
       .then((data) => {
-        console.log("응답 받음:", data);
+        // console.log("응답 받음:", data);
         noticeData = [];
         noticeData = [data];
-        console.log(noticeData);
 
         createText();
       })
@@ -99,20 +94,20 @@
   noticeLoad();
 
   // 현지학기제 모달
-  const localSemester = document.querySelector('#local-semester');
-  const lsModal = document.querySelector('.lsModal');
-  localSemester.addEventListener('click', () => {
-    lsModal.style.display = 'block';
+  const localSemester = document.querySelector("#local-semester");
+  const lsModal = document.querySelector(".lsModal");
+  localSemester.addEventListener("click", () => {
+    lsModal.style.display = "block";
     setTimeout(() => {
-      lsModal.classList.add('opacityQue');
+      lsModal.classList.add("opacityQue");
     }, 100);
   });
 
-  const closelsModal = document.querySelector('#closelsModal');
-  closelsModal.addEventListener('click', () => {
-    lsModal.classList.remove('opacityQue');
+  const closelsModal = document.querySelector("#closelsModal");
+  closelsModal.addEventListener("click", () => {
+    lsModal.classList.remove("opacityQue");
     setTimeout(() => {
-      lsModal.style.display = 'none';
+      lsModal.style.display = "none";
     }, 800);
   });
 
@@ -154,7 +149,7 @@
       body: JSON.stringify(noticeData2),
     })
       .then((response) => {
-        console.log("응답 받음:", response);
+        // console.log("응답 받음:", response);
         modifySection.innerHTML = ""; // 본문 내용을 비우기. 안 비우면 중복으로 들어감.
         noticeLoad();
       })
@@ -169,7 +164,7 @@
   // 입력받은 값을 commentData2에 저장
   const commentValue = document.querySelector("#comment-input");
   commentValue.addEventListener("input", () => {
-    console.log("2", commentData2);
+    // console.log("2", commentData2);
     commentData2.comment_text = commentValue.value;
   });
 
@@ -184,8 +179,8 @@
       body: JSON.stringify(commentData2),
     })
       .then((response) => {
-        console.log("응답 받음:", response);
-        console.log("작성작성");
+        // console.log("응답 받음:", response);
+        // console.log("작성작성");
         commentLoad();
         commentValue.value = ""; // 댓글 작성 후 input 초기화
       })
@@ -251,7 +246,7 @@
         const replyText = e.target.closest(".reply-text01");
         editCommentData.id = replyText.getAttribute("data-id1");
         checkUser.author_id = replyText.getAttribute("data-id2");
-        console.log("editcomment의 이메일", checkUser);
+        // console.log("editcomment의 이메일", checkUser);
         //모달 창 띄우기
         if (userInfo.id != checkUser.author_id) {
           alert("수정 권한이 없습니다.");
@@ -259,7 +254,7 @@
           const modal = document.querySelector(".modal");
           modal.style.display = "block";
 
-          console.log("댓글의 고유 아이디:", editCommentData);
+          // console.log("댓글의 고유 아이디:", editCommentData);
         }
       });
     });
@@ -272,9 +267,9 @@
       } else {
         document.querySelector("#ErrorMsg").innerHTML = "";
       }
-      console.log(modalBodyText.value);
+      // console.log(modalBodyText.value);
       editCommentData.comment_text = modalBodyText.value;
-      console.log("수정데이터입니다.", editCommentData);
+      // console.log("수정데이터입니다.", editCommentData);
     });
 
     // 수정완료 버튼을 누르면 수정된 데이터를 서버로 POST 후 댓글을 다시 불러옴
@@ -296,11 +291,11 @@
           body: JSON.stringify(editCommentData),
         })
           .then((response) => {
-            console.log("응답 받음:", response);
+            // console.log("응답 받음:", response);
             commentLoad();
           })
           .catch((error) => {
-            console.error("오류 발생:", error);
+            // console.error("오류 발생:", error);
           });
         return;
       }
@@ -328,7 +323,7 @@
         delCommentData.id = replyText.getAttribute("data-id1");
         checkUser.author_id = replyText.getAttribute("data-id2");
 
-        console.log("댓글의 고유 아이디:", delCommentData);
+        // console.log("댓글의 고유 아이디:", delCommentData);
 
         if (checkUser.author_id != userInfo.id) {
           alert("삭제 권한이 없습니다.");
@@ -345,7 +340,7 @@
               body: JSON.stringify(delCommentData),
             })
               .then((response) => {
-                console.log("응답 받음:", response);
+                // console.log("응답 받음:", response);
                 commentLoad();
               })
               .catch((error) => {
@@ -376,9 +371,9 @@
         }
       })
       .then((data) => {
-        console.log("응답 받음:", data);
+        // console.log("응답 받음:", data);
         commentData = data;
-        console.log(commentData);
+        // console.log(commentData);
 
         createComments(); // fetch 완료 후 댓글 생성 함수 호출
       })
@@ -485,10 +480,12 @@
   });
 
   async function reviewSearch(id) {
-    const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
-    {
-      method: 'GET',
-    });
+    const response = await fetch(
+      `http://localhost:8080/api/restaurants/${id}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -633,13 +630,13 @@
           const reviewSpan = document.createElement("span");
           reviewSpan.classList.add("review");
           reviewSearch(information.id)
-          .then(data => {
-            reviewSpan.textContent = data.reviews[0].review_text;
-          })
-          .catch(error => {
-            // 리뷰가 없으면 리뷰가 없다를 표시
-            reviewSpan.textContent = "리뷰가 없습니다.";
-          });
+            .then((data) => {
+              reviewSpan.textContent = data.reviews[0].review_text;
+            })
+            .catch((error) => {
+              // 리뷰가 없으면 리뷰가 없다를 표시
+              reviewSpan.textContent = "리뷰가 없습니다.";
+            });
 
           const locationContainer = document.createElement("div");
           locationContainer.classList.add("location-container");
