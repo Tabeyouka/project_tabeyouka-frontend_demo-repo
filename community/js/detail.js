@@ -70,7 +70,7 @@
   const date = document.querySelector(".date");
 
   /* 게시글 내용 */
-  const content = document.querySelector(".text");
+  const text = document.querySelector(".text");
 
   /* 게시글 이미지 */ 
   const image = document.querySelector(".postImage");
@@ -92,8 +92,6 @@
       writer.innerHTML = data.post.nickname ? data.post.nickname : "Unknown";
       date.textContent = formatDate(data.post.created_at);
       text.textContent = data.post.text;
-
-      image.className = "image-element";
       image.src = data.post.image;
     })
     .catch((error) => {
