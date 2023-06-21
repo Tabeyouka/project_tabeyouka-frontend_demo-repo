@@ -19,7 +19,7 @@
 
   // 이메일 체크 함수
   email.addEventListener("input", () => {
-    console.log(email.value);
+    // console.log(email.value);
     if (email.value === "") {
       setError(email, "이메일을 입력해주세요.");
       isEmailValid = false;
@@ -37,7 +37,7 @@
 
   // 비밀번호 체크 함수
   password.addEventListener("input", () => {
-    console.log(password.value);
+    // console.log(password.value);
     if (password.value === "") {
       setError(password, "비밀번호를 입력해주세요.");
       isPwdValid = false;
@@ -52,7 +52,7 @@
 
   // 비밀번호 2차 체크 함수
   passwordCheck.addEventListener("input", () => {
-    console.log(passwordCheck.value);
+    // console.log(passwordCheck.value);
     if (passwordCheck.value === "") {
       setError(passwordCheck, "비밀번호를 다시 입력해주세요.");
       isPwd2Vaild = false;
@@ -67,7 +67,7 @@
 
   // 닉네임 체크 함수
   nickName.addEventListener("input", () => {
-    console.log(nickName.value);
+    // console.log(nickName.value);
     if (nickName.value === "") {
       setError(nickName, "닉네임을 입력해주세요.");
       isNicknameValid = false;
@@ -102,14 +102,14 @@
       })
       .then((data) => {
         // Get한 데이터중 email을 allUser안에 넣어줌
-        console.log("응답 받음:", data);
-        console.log("길이는 :", data.users.length);
+        // console.log("응답 받음:", data);
+        // console.log("길이는 :", data.users.length);
         for (i = 0; i < data.users.length; i++) {
           allUser.push(data.users[i].email);
           allUser.push(data.users[i].nickname);
         }
 
-        console.log("패치", allUser);
+        // console.log("패치", allUser);
       })
 
       .catch((error) => {
@@ -136,7 +136,7 @@
       body: JSON.stringify(userData),
     })
       .then((response) => {
-        console.log("응답 받음:", response);
+        // console.log("응답 받음:", response);
         // 로그인 성공 시 SPA로 main 페이지 요소들을 보여줌
         fetch("/signin/login.html", { credentials: "include" })
           .then((response) => response.text())
