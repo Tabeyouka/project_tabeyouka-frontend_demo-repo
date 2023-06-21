@@ -26,7 +26,7 @@
         }
       })
       .then((data) => {
-        console.log("리뷰응답:", data);
+        // console.log("리뷰응답:", data);
         commentData2.append("restaurant_id", data.restaurant.id);
         // commentData2.append("rating", data.reivews.rating);
         reviewData3 = data.reviews;
@@ -59,7 +59,7 @@
         return statusResponse.json();
       })
       .then((data) => {
-        console.log("응답 받음:", data.user);
+        // console.log("응답 받음:", data.user);
         userInfo = data.user;
         commentData2.append("author_id", data.user.id); //commentData2에 id 저장
         commentData2.append("nickname", data.user.nickname); //commentData2에 nickname 저장
@@ -99,7 +99,7 @@
       body: commentData2,
     })
       .then((response) => {
-        console.log("응답 받음:", response);
+        // console.log("응답 받음:", response);
         reviewDataLoad();
       })
       .catch((error) => {
@@ -204,7 +204,7 @@
         body: editReviewData,
       })
         .then((response) => {
-          console.log("응답 받음:", response);
+          // console.log("응답 받음:", response);
           reviewDataLoad();
         })
         .catch((error) => {
@@ -252,11 +252,11 @@
               body: JSON.stringify(delCommentData),
             })
               .then((response) => {
-                console.log("응답 받음:", response);
+                // console.log("응답 받음:", response);
                 reviewDataLoad();
               })
               .catch((error) => {
-                console.error("오류 발생:", error);
+                // console.error("오류 발생:", error);
               });
           } else {
             return;
@@ -360,7 +360,7 @@
         }
       })
       .then((data) => {
-        console.log("응답 받음:", data);
+        // console.log("응답 받음:", data);
         restaurantData = data;
 
         //가게정보 입력
@@ -522,10 +522,12 @@
   });
 
   async function reviewSearch(id) {
-    const response = await fetch(`http://localhost:8080/api/restaurants/${id}`,
-    {
-      method: 'GET',
-    });
+    const response = await fetch(
+      `http://localhost:8080/api/restaurants/${id}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -659,13 +661,13 @@
           const reviewSpan = document.createElement("span");
           reviewSpan.classList.add("review");
           reviewSearch(information.id)
-          .then(data => {
-            reviewSpan.textContent = data.reviews[0].review_text;
-          })
-          .catch(error => {
-            // 리뷰가 없으면 리뷰가 없다를 표시
-            reviewSpan.textContent = "리뷰가 없습니다.";
-          });
+            .then((data) => {
+              reviewSpan.textContent = data.reviews[0].review_text;
+            })
+            .catch((error) => {
+              // 리뷰가 없으면 리뷰가 없다를 표시
+              reviewSpan.textContent = "리뷰가 없습니다.";
+            });
 
           const locationContainer = document.createElement("div");
           locationContainer.classList.add("location-container");
